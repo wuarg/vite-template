@@ -25,6 +25,9 @@ export default defineConfig({
       ignored: ['./config/*', './locales/*'],
     },
   },
+  esbuild: {
+    pure: ['console.log'],
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

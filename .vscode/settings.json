@@ -12,7 +12,7 @@
   "editor.formatOnSave": true,
   "editor.cursorStyle": "block-outline",
   "editor.cursorBlinking": "phase",
-  "editor.cursorSmoothCaretAnimation": true,
+  "editor.cursorSmoothCaretAnimation": "on",
   "editor.formatOnPaste": true,
   "editor.formatOnSaveMode": "modifications",
   "editor.formatOnType": false,
