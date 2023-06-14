@@ -14,7 +14,7 @@
         console.log('provider, address---', provider, address);
         call(
           provider,
-          import.meta.env.VITE_ERC_ADDRESS || '0xe0f0A02b8707E26E3ECd6F0Cdb91cD169Fe6d2d2', // ARB Mainnet
+          '0x6B175474E89094C44Da98b954EedeAC495271d0F', // ARB Mainnet
           address,
         );
       });

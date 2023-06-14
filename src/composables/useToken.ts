@@ -42,12 +42,11 @@ export function useToken() {
   async function call(provider: Web3Provider, tokenAddress: string, userAddress: string) {
     const calls = genCalls(tokenAddress, userAddress);
     const { call, results } = useMulticall(provider);
-    console.log('call, results----->', call, results);
 
     await call(calls);
 
     const [[_name], [_totalSupply], [_decimals], [_symbol], { balance: _balance }] = results.value;
-
+    console.log('result----', result);
     name.value = _name;
     totalSupply.value = _totalSupply;
     decimals.value = _decimals;
