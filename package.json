@@ -73,7 +73,8 @@
     "vue": "^3.2.25",
     "vue-dapp": "^0.8.0",
     "vue-i18n": "9",
-    "vue-router": "^4.0.15"
+    "vue-router": "^4.0.15",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@iconify/json": "^2.1.43",

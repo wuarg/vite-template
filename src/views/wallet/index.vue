@@ -5,7 +5,7 @@
 
 <template>
   121212
-  <XToken />
+  <!-- <XToken /> -->
 </template>
 
 <style scoped lang="less"></style>
