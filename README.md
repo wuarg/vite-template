@@ -1,4 +1,4 @@
-# vite-taicu
+# vite-dapp
 
 ![Website](https://img.shields.io/website?url=http%3A%2F%2Ftaicu.soulfree.cn)
 
@@ -6,7 +6,7 @@
 
 跳过项目之始的配置环节，快速实现想法。`new FastifyIdea();`
 
-<a target="_blank" href="https://taicu.soulfree.cn">演示</a>
+<a target="_blank" href="/">演示</a>
 
 ## 特性
 
@@ -40,7 +40,7 @@ yarn prettier
 
 ### 自动部署 git pages
 
-Go to [GitHub Pages](https://github.com/AxyLm/vite-taicu/settings/pages)
+Go to [GitHub Pages]()
 
 1. Under "Build and deployment", under "Source", select **Deploy from a branch**.
 2. Under "Build and deployment", under "Branch", select **gh-pages**

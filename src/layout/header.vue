@@ -1,7 +1,7 @@
 <template>
   <header class="header sticky top-0 flex h-16 items-center justify-between px-10 sm:h-20">
     <div class="bg delay-400 absolute transition-colors"></div>
-    <div class=""> <span class="title">太簇</span></div>
+    <div class=""> <span class="title">vue+dapp</span></div>
     <div>
       <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
