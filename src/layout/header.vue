@@ -20,10 +20,12 @@
           <icon-carbon:logo-github class="h-6 w-6" />
         </button>
       </a>
+      <walletConnect />
     </div>
   </header>
 </template>
 <script setup lang="ts">
+  import walletConnect from '~/components/walletConnect.vue';
   import { isDark, useThemeChang } from '~/composables';
   // import { useI18n } from "vue-i18n";
   import { useI18n } from '~/modules/i18n';
