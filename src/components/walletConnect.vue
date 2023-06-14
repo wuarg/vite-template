@@ -67,7 +67,7 @@
 </script>
 
 <template>
-  <div v-if="isActivated" class="inline-block">
+  <div v-if="isActivated" class="ml-4 inline-block">
     <!-- chainId -->
     <!-- {{ chainId }} -->
     <!-- Account -->
