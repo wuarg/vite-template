@@ -11,11 +11,6 @@
     "typescript",
     "prettier"
   ],
-  "homepage": "https://taicu.soulfree.cn/",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AxyLm/vite-taicu"
-  },
   "license": "MIT",
   "author": {
     "name": "wy",
