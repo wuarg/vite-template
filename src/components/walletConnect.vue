@@ -71,13 +71,13 @@
     <!-- chainId -->
     <!-- {{ chainId }} -->
     <!-- Account -->
-    <div class="inline-block rounded-2xl bg-gray-100 py-2 px-3 sm:hidden">
+    <div class="bg inline-block rounded-2xl py-2 px-3 sm:hidden">
       {{ shortenAddress(address) }}
     </div>
 
     <div class="hidden items-center rounded-3xl border border-solid py-1 px-2 sm:flex">
       <div class="mr-1 px-1">{{ displayEther(balance) }} ETH</div>
-      <div class="inline-block rounded-2xl bg-gray-100 py-2 px-3">
+      <div class="bg inline-block rounded-2xl py-2 px-3">
         {{ shortenAddress(address) }}
       </div>
     </div>
@@ -103,4 +103,16 @@
   </button>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  .bg {
+    background: #1d4ed8;
+    color: #fff;
+  }
+  // .dark {
+  //   .bg {
+  //     background: #fff !important;
+  //     box-shadow: 0px 0px 25px 5px rgb(0 0 0 / 12%) !important;
+  //     color: #333;
+  //   }
+  // }
+</style>
