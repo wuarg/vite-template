@@ -3,12 +3,12 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 // 根据ABI定义合约接口
-import erc20Abi from '../../abi/Erc20.json';
+import erc20Abi from '~/abi/Erc20.json';
 const ercABI = new ethers.utils.Interface(erc20Abi); // 在这里填入你的ercABI定义
 const TokenAddress =
   import.meta.env.VITE_ERC_ADDRESS || '0xe0f0A02b8707E26E3ECd6F0Cdb91cD169Fe6d2d2'; //erc20地址
 
-import testAbi from '../../abi/TestAbi.json';
+import testAbi from '~/abi/TestAbi.json';
 const contractABI = new ethers.utils.Interface(testAbi); // 在这里填入你的contractABI定义
 const contractAddress =
   import.meta.env.VITE_CONTRACT_ADDRESS || '0x1cdE0c0B1520b6F642507dC898a4648901dbE771'; // 填入你的合约地址
