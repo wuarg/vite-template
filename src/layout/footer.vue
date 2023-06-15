@@ -24,6 +24,11 @@
         ><sup>{{ str }}</sup> {{ $t('home') }}</span
       >
     </router-link>
+    <router-link to="/wallet" class="mx-4" active-class="font-normal">
+      <span
+        ><sup>{{ str }}</sup> wallet</span
+      >
+    </router-link>
   </div>
 </template>
 <style lang="less" scoped>
