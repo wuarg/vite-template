@@ -51,7 +51,7 @@ export const TokenManager = {
     }
   },
 
-  async getImageList(tokenName) {
+  async getImageList() {
     const now10Minutes = Math.floor(new Date().getTime() / 1000 / 600);
     try {
       const url = '/assets/json/image_list.json?r=' + now10Minutes;

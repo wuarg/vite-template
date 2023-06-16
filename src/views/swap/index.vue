@@ -202,7 +202,7 @@
       const willShowTokenSelection = ref(false);
       const tokenSelectionIndex = ref(0);
       const willDisable = ref(false);
-      const buttonMessageArray = ref([]);
+      const buttonMessageArray = ref<string[]>([]);
       const willShowSlippage = ref(false);
       const willShowInfo = ref(false);
       const infoMinOrMax = ref(false);
@@ -233,31 +233,31 @@
       const alertTitleEN = ref('');
       const alertBodyCN = ref('');
       const alertBodyEN = ref('');
-      const interval = ref(null);
+      const interval = ref<number | null>(null);
 
-      const ngOnInit = async () => {
-        const myIOST = ContractService.getIOST();
-        console.log('myIOST---', myIOST);
-        await TokenManager.constructor(myIOST);
-        await SwapManager.constructor(myIOST);
-        buttonMessageArray.value = ['请输入兑换额'];
-        loadInitialBalance();
+      // const ngOnInit = async () => {
+      //   const myIOST = ContractService.getIOST();
+      //   console.log('myIOST---', myIOST);
+      //   await TokenManager.constructor(myIOST);
+      //   await SwapManager.constructor(myIOST);
+      //   buttonMessageArray.value = ['请输入兑换额'];
+      //   loadInitialBalance();
 
-        const slippageValueNew = parseInt(localStorage.getItem('-xg-slippage'));
-        if ([1, 5, 10, 50, 100].indexOf(slippageValueNew) >= 0) {
-          slippageValue.value = slippageValueNew;
-        }
+      //   const slippageValueNew = parseInt(localStorage.getItem('-xg-slippage'));
+      //   if ([1, 5, 10, 50, 100].indexOf(slippageValueNew) >= 0) {
+      //     slippageValue.value = slippageValueNew;
+      //   }
 
-        interval.value = setInterval(() => {
-          _refresh();
-        }, 10 * 1e3);
+      //   interval.value = setInterval(() => {
+      //     _refresh();
+      //   }, 10 * 1e3);
 
-        isMobile.value = _isMobile();
-      };
+      //   isMobile.value = _isMobile();
+      // };
 
-      const ngOnDestroy = () => {
-        clearInterval(interval.value);
-      };
+      // const ngOnDestroy = () => {
+      //   clearInterval(interval.value);
+      // };
 
       const _isMobile = () => {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
