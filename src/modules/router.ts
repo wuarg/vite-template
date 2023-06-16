@@ -5,8 +5,10 @@ import {
   Router,
   RouteRecordRaw,
 } from 'vue-router';
+import { MetaMaskStore } from '~/modules/connector';
+import { useEthereumStore } from '~/stores/ethereum.store';
 import { type App } from 'vue';
-import Layout from '~/layout/index.vue';
+import Layout from '~/layout/app-index.vue';
 
 //
 import NProgress from 'nprogress';
@@ -26,23 +28,36 @@ const routes: RouteRecordRaw[] = [
     name: 'Layout',
     path: '/',
     component: Layout,
-    redirect: 'about',
+    redirect: 'wallet',
     children: [
+      // {
+      //   name: 'Home',
+      //   path: 'home',
+      //   component: () => import('~/views/home/index.vue'),
+      // },
+      // {
+      //   name: 'About',
+      //   path: 'about',
+      //   component: () => import('~/views/about/index.vue'),
+      // },
       {
-        name: 'Home',
-        path: 'home',
-        component: () => import('~/views/home/index.vue'),
-      },
-      {
-        name: 'About',
-        path: 'about',
-        component: () => import('~/views/about/index.vue'),
+        name: 'Wallet',
+        path: 'wallet',
+        component: () => import('~/views/wallet/index.vue'),
       },
     ],
   },
 ];
 
 const beforeEach: NavigationGuardWithThis<undefined> = (to, from, next) => {
+  try {
+    const { ethereumState } = useEthereumStore();
+    if (!ethereumState.accountConnected.value) {
+      // MetaMaskStore();
+    }
+  } catch (error) {
+    console.log(error);
+  }
   next();
 };
 
