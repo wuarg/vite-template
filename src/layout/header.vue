@@ -9,6 +9,9 @@
       <router-link to="/home" class="mx-4" active-class="font-normal">
         <span>{{ $t('home') }}</span>
       </router-link>
+      <router-link to="/swap" class="mx-4" active-class="font-normal">
+        <span>swap</span>
+      </router-link>
       <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
         <icon-carbon-moon v-else class="h-6 w-6" />
