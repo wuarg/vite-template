@@ -4,11 +4,12 @@
 <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
   export default defineComponent({
-    name: 'Swap',
+    name: '',
     setup() {
       onMounted(() => {
         // connectWith(connectors[0]);
       });
+      return {};
     },
     computed: {},
   });
