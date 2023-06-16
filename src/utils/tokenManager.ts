@@ -1,11 +1,11 @@
 import { environment } from './iostConfig';
-
-export class TokenManager {
-  _iost: any = null;
+const _iost = null;
+export const TokenManager = {
+  // _iost: any = null;
 
   constructor(iost: any) {
     this._iost = iost;
-  }
+  },
 
   async getTokenBalance(token: string, who?: string) {
     try {
@@ -18,7 +18,7 @@ export class TokenManager {
     } catch (e) {
       return 0;
     }
-  }
+  },
 
   async getSupply(token: string) {
     const obj = await this._iost.rpc.blockchain.getContractStorage(
@@ -28,7 +28,7 @@ export class TokenManager {
       true,
     );
     return JSON.parse(obj.data) || 0;
-  }
+  },
 
   async getTokenInfo(token) {
     try {
@@ -38,7 +38,7 @@ export class TokenManager {
     } catch (e) {
       return null;
     }
-  }
+  },
 
   async getDefaultList() {
     const now10Minutes = Math.floor(new Date().getTime() / 1000 / 600);
@@ -49,7 +49,7 @@ export class TokenManager {
     } catch (e) {
       return null;
     }
-  }
+  },
 
   async getImageList(tokenName) {
     const now10Minutes = Math.floor(new Date().getTime() / 1000 / 600);
@@ -60,7 +60,7 @@ export class TokenManager {
     } catch (e) {
       return null;
     }
-  }
+  },
 
   getMergedList(allPairs: string[][]) {
     const list = [];
@@ -75,5 +75,5 @@ export class TokenManager {
     }
 
     return list;
-  }
-}
+  },
+};

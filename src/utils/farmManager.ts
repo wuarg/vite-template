@@ -7,18 +7,19 @@ const ROUND_DOWN = 1;
 const UNIVERSAL_PRECISION = 12;
 
 const XG_LIST = ['xg_3', 'xg_30', 'xg_90', 'xg_180'];
+const _iost = null;
 
-export class FarmManager {
-  _iost: any = null;
+export const FarmManager = {
+  // _iost: any = null;
 
   constructor(iost: any) {
     this._iost = iost;
-  }
+  },
 
   async getNow() {
     const now = Math.floor(+(await this._iost.rpc.blockchain.getChainInfo()).head_block_time / 1e9);
     return now;
-  }
+  },
 
   async getTokenArray() {
     const obj = await this._iost.rpc.blockchain.getContractStorage(
@@ -27,7 +28,7 @@ export class FarmManager {
       true,
     );
     return JSON.parse(obj.data) || [];
-  }
+  },
 
   async getTotalAlloc() {
     const obj = await this._iost.rpc.blockchain.getContractStorage(
@@ -36,7 +37,7 @@ export class FarmManager {
       true,
     );
     return +obj.data || 0;
-  }
+  },
 
   async getPool(token) {
     const obj = await this._iost.rpc.blockchain.getContractStorage(
@@ -46,7 +47,7 @@ export class FarmManager {
       true,
     );
     return JSON.parse(obj.data) || null;
-  }
+  },
 
   async getFullName(token) {
     const obj = await this._iost.rpc.blockchain.getContractStorage(
@@ -56,7 +57,7 @@ export class FarmManager {
       true,
     );
     return obj.data;
-  }
+  },
 
   _getPairName(token0: string, token1: string) {
     let pairName;
@@ -66,7 +67,7 @@ export class FarmManager {
       pairName = token1 + '/' + token0;
     }
     return pairName;
-  }
+  },
 
   async getPair(tokenA: string, tokenB: string) {
     const pairName = this._getPairName(tokenA, tokenB);
@@ -77,7 +78,7 @@ export class FarmManager {
       true,
     );
     return JSON.parse(obj.data) || null;
-  }
+  },
 
   async getUserInfo() {
     const obj = await this._iost.rpc.blockchain.getContractStorage(
@@ -87,12 +88,12 @@ export class FarmManager {
       true,
     );
     return JSON.parse(obj.data) || {};
-  }
+  },
 
   async getUserInfoOfToken(token: string) {
     const info = await this.getUserInfo();
     return info[token] || null;
-  }
+  },
 
   _getMultiplier(fromTime, toTime) {
     fromTime = Math.max(fromTime, environment.startTime);
@@ -114,7 +115,7 @@ export class FarmManager {
       .times(environment.bonusEndTime - fromTime)
       .plus(new BigNumber(environment.xgPerDayRegular).times(toTime - environment.bonusEndTime))
       .div(3600 * 24);
-  }
+  },
 
   getRewardPending(now: number, totalAlloc: number, pool: any, userInfoToken: any) {
     if (!userInfoToken) {
@@ -136,7 +137,7 @@ export class FarmManager {
       .minus(userInfoToken.rewardDebt);
 
     return result.gt(0) ? result.toFixed(XG_PRECISION, ROUND_DOWN) : '0';
-  }
+  },
 
   getExtraPending(now: number, totalAlloc: number, pool: any, userInfoToken: any) {
     if (!userInfoToken) {
@@ -152,7 +153,7 @@ export class FarmManager {
       .minus(userInfoToken.extraDebt);
 
     return result.gt(0) ? result.toFixed(pool.extraPrecision, ROUND_DOWN) : '0';
-  }
+  },
 
   async getXUSDPairPrice(token) {
     if (token == 'xusd') return 1;
@@ -181,7 +182,7 @@ export class FarmManager {
         return +((pair.reserve1 / pair.xlpSupply) * 2).toFixed(6);
       }
     }
-  }
+  },
 
   async getXUSDPrice(token) {
     if (token == 'xusd') return 1;
@@ -200,7 +201,7 @@ export class FarmManager {
     } else {
       return +(pair.reserve1 / pair.reserve0).toFixed(6);
     }
-  }
+  },
 
   extractTokenName(fullName) {
     const array = fullName.split('-');
@@ -209,7 +210,7 @@ export class FarmManager {
     } else {
       return fullName;
     }
-  }
+  },
 
   async getCanUnlock(token, amount, today, days) {
     const mapObj = await this._iost.rpc.blockchain.getContractStorage(
@@ -244,7 +245,7 @@ export class FarmManager {
 
     // The actually withdraw amount.
     return new BigNumber(amount).minus(remain).toFixed(6, ROUND_DOWN);
-  }
+  },
 
   async getInfoArray() {
     const now = Math.floor(new Date().getTime() / 1000);
@@ -344,5 +345,5 @@ export class FarmManager {
     doMore();
 
     return infoArray;
-  }
-}
+  },
+};
