@@ -1,44 +1,71 @@
-<script setup lang="ts">
-  import { useAppStore } from '~/stores/app';
-  const { countPlus, count } = useAppStore();
-</script>
-
 <template>
-  <div>
-    <div>
-      <span class="fm1 text-5xl">swap</span>
-    </div>
-    <p class="mt-5">
-      <button class="btn w-32" @click="countPlus()">
-        Plus: {{ $pinia.state.value.app.count }}
-      </button>
-    </p>
+  <div class="p-10">
+    swap
+
+    {{ profile }}
   </div>
 </template>
+<script lang="ts">
+  import { defineComponent, ref, onMounted } from 'vue';
+  import { ContractService } from '~/utils/contractServe';
+  import { environment } from '~/utils/iostConfig';
+  import { BankManager } from '~/utils/bankManager';
+  import { SwapManager } from '~/utils/swapManager';
+  export default defineComponent({
+    name: '',
+    setup() {
+      const waiting = ref(false);
+      const profile = ref<Record<string, any>>({});
+      console.log('ContractService---', ContractService);
+      onMounted(() => {
+        // connectWith(connectors[0]);
+        load();
+      });
+      const load = async () => {
+        waiting.value = true;
 
+        const walletReady = await ContractService.init();
+        const account = ContractService.getUserAddress();
+        const myIOST = ContractService.getIOST();
+        console.log('walletReady---', walletReady);
+        console.log('account---', account);
+        console.log('myIOST---', myIOST);
+        await BankManager.constructor(myIOST);
+        await SwapManager.constructor(myIOST);
+
+        if (walletReady && account) {
+          profile.value.account = ContractService.getUserAddress();
+          profile.value.allPairs = await SwapManager.allPairs();
+
+          setInterval(() => {
+            loadPrices();
+          }, 60000);
+          loadPrices();
+
+          profile.value.walletReady = true;
+        } else {
+          profile.value.account = '';
+          profile.value.allPairs = [];
+          profile.value.walletReady = false;
+        }
+
+        waiting.value = false;
+      };
+      const loadPrices = async () => {
+        profile.value.iostPrice = +(await BankManager.getOraclePrice());
+        profile.value.xusdPrice = +(
+          profile.value.iostPrice * +(await SwapManager.getIOSTXUSDRatio())
+        ).toFixed(2);
+      };
+      return {
+        profile,
+      };
+    },
+    computed: {},
+  });
+</script>
 <style lang="less" scoped>
   .wrap {
     height: 100vh;
-  }
-
-  .fm1 {
-    font-family: 'Josefin Sans', sans-serif;
-    font-weight: 300;
-  }
-
-  .fm2 {
-    font-family: sans-serif;
-  }
-
-  .btn {
-    @apply text-base-1 shadow-lg transition-colors;
-    @apply h-8 rounded-md px-2 font-normal;
-    @apply bg-skin-500 outline-skin-700  dark:bg-skin-600 dark:outline-skin-700;
-
-    @apply ring-skin-600 ring-offset-1 hover:ring-2 dark:ring-skin-500 dark:active:ring-skin-500;
-    @apply ring-offset-base-light  active:bg-skin-400   dark:ring-offset-base-dark;
-    @apply dark:ring-offset-skin-900 dark:active:bg-skin-700;
-
-    @apply disabled:active:bg-skin-300  dark:disabled:active:bg-skin-600;
   }
 </style>

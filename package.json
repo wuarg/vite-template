@@ -83,6 +83,7 @@
     "@vitejs/plugin-vue": "^2.3.3",
     "@vueuse/core": "^8.4.2",
     "autoprefixer": "^10.4.7",
+    "bignumber.js": "^9.0.1",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
