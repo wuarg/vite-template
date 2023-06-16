@@ -4,7 +4,7 @@
 <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
   export default defineComponent({
-    name: '',
+    name: 'TemplateVue',
     setup() {
       onMounted(() => {
         // connectWith(connectors[0]);
