@@ -3,6 +3,12 @@
     <div class="bg delay-400 absolute transition-colors"></div>
     <div class=""> <span class="title">IOST</span></div>
     <div>
+      <router-link to="/about" class="mx-4" active-class="font-normal">
+        <span> {{ $t('about.link_name') }}</span>
+      </router-link>
+      <router-link to="/home" class="mx-4" active-class="font-normal">
+        <span>{{ $t('home') }}</span>
+      </router-link>
       <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
         <icon-carbon-moon v-else class="h-6 w-6" />
@@ -10,7 +16,7 @@
       <button class="nav-btn ml-2 text-center" @click="toggleLocale()">
         <icon-carbon-language class="h-6 w-6" />
       </button>
-      <a href="http://soulfree.cn" target="_blank" class="ml-2 text-center">
+      <!-- <a href="http://soulfree.cn" target="_blank" class="ml-2 text-center">
         <button class="nav-btn">
           <icon-mdi:blogger class="h-6 w-6" />
         </button>
@@ -19,7 +25,7 @@
         <button class="nav-btn">
           <icon-carbon:logo-github class="h-6 w-6" />
         </button>
-      </a>
+      </a> -->
     </div>
   </header>
 </template>
