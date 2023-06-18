@@ -1,21 +1,15 @@
 <template>
-  <div class="p-10"> swap </div>
+  <SwapBox />
 </template>
+
 <script lang="ts">
-  import { defineComponent, ref, onMounted } from 'vue';
+  import { defineComponent } from 'vue';
+  import SwapBox from '~/components/swap/SwapBox.vue';
+
   export default defineComponent({
-    name: 'TemplateVue',
-    setup() {
-      onMounted(() => {
-        // connectWith(connectors[0]);
-      });
-      return {};
+    name: 'Swap',
+    components: {
+      SwapBox,
     },
-    computed: {},
   });
 </script>
-<style lang="less" scoped>
-  .wrap {
-    height: 100vh;
-  }
-</style>

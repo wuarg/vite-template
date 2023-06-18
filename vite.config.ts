@@ -12,6 +12,12 @@ export default defineConfig({
     postcss: {
       plugins: [require('postcss-import'), require('tailwindcss'), require('autoprefixer')],
     },
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+        // additionalData: '@import "~/styles/variables.less";',
+      },
+    },
   },
   resolve: {
     alias: {
