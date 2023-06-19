@@ -1,5 +1,5 @@
 <template>
-  <section class="swap-box">
+  <section class="swap-box m-auto">
     <header class="box-header">
       <h3 class="box-title">Swap</h3>
       <TransactionSettings />

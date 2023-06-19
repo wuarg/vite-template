@@ -1,5 +1,7 @@
 <template>
-  <SwapBox />
+  <div class="text-align m-auto p-20">
+    <SwapBox />
+  </div>
 </template>
 
 <script lang="ts">
