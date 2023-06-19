@@ -48,6 +48,11 @@ const routes: RouteRecordRaw[] = [
         path: 'demo',
         component: () => import('~/views/demo/index.vue'),
       },
+      {
+        name: 'Data',
+        path: 'data',
+        component: () => import('~/views/data/index.vue'),
+      },
     ],
   },
 ];

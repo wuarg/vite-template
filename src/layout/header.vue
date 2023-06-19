@@ -3,14 +3,17 @@
     <div class="bg delay-400 absolute transition-colors"></div>
     <div class=""> <span class="title">test</span></div>
     <div>
-      <router-link to="/about" class="mx-4" active-class="font-normal">
+      <router-link to="/about" class="mx-4" active-class="font-black">
         <span> {{ $t('about.link_name') }}</span>
       </router-link>
-      <router-link to="/home" class="mx-4" active-class="font-normal">
+      <router-link to="/home" class="mx-4" active-class="font-black">
         <span>{{ $t('home') }}</span>
       </router-link>
-      <router-link to="/swap" class="mx-4" active-class="font-normal">
+      <router-link to="/swap" class="mx-4" active-class="font-black">
         <span>swap</span>
+      </router-link>
+      <router-link to="/data" class="mx-4" active-class="font-black">
+        <span>数据</span>
       </router-link>
       <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
