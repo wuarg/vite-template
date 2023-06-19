@@ -43,6 +43,11 @@ const routes: RouteRecordRaw[] = [
         path: 'swap',
         component: () => import('~/views/swap/index.vue'),
       },
+      {
+        name: 'Demo',
+        path: 'demo',
+        component: () => import('~/views/demo/index.vue'),
+      },
     ],
   },
 ];
