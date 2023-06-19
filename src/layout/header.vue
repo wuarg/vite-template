@@ -1,7 +1,7 @@
 <template>
   <header class="header sticky top-0 flex h-16 items-center justify-between px-10 sm:h-20">
     <div class="bg delay-400 absolute transition-colors"></div>
-    <div class=""> <span class="title">IOST</span></div>
+    <div class=""> <span class="title">test</span></div>
     <div>
       <router-link to="/about" class="mx-4" active-class="font-normal">
         <span> {{ $t('about.link_name') }}</span>
