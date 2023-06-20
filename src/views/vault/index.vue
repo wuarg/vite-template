@@ -44,7 +44,16 @@
         </div>
       </div>
     </div>
-    <ManagerModal :will-show-vault-manage="willShowVaultManage" @onHide="hideVault" />
+    <ManagerModal
+      :will-show-vault-manage="willShowVaultManage"
+      :full-name="vaultManageFullName"
+      :token="vaultManageToken"
+      :precision="vaultManagePrecision"
+      :extra="vaultManageExtra"
+      :extra-precision="vaultManageExtraPrecision"
+      :lock-days="vaultManageLockDays"
+      @onHide="hideVault"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -158,6 +167,12 @@
         infoArray,
         xusdPrice,
         willShowVaultManage,
+        vaultManageFullName,
+        vaultManageToken,
+        vaultManagePrecision,
+        vaultManageExtra,
+        vaultManageExtraPrecision,
+        vaultManageLockDays,
         showVault,
         hideVault,
         onRefreshVaultManage,

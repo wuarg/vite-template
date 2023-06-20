@@ -8,26 +8,66 @@
         and acknowledge that you have read and understand the
         <a href="https://uniswap.org/disclaimer/" target="_blank">Uniswap protocol disclaimer</a>.
       </Info>
-      222
+      <VaultManager
+        :full-name="fullName"
+        :token="token"
+        :precision="precision"
+        :extra="extra"
+        :extra-precision="extraPrecision"
+        :lock-days="lockDays"
+      />
     </Modal>
   </div>
 </template>
 <script lang="ts">
   import Modal from '~/components/core/Modal.vue';
   import Info from '~/components/core/Info.vue';
-  import { defineComponent, ref, onMounted, watch, SetupContext } from 'vue';
+  import VaultManager from '~/views/vault/vaultManager.vue';
+  import { defineComponent, ref, toRefs, onMounted, watch, SetupContext } from 'vue';
   export default defineComponent({
     name: 'TemplateVue',
     components: {
       Modal,
       Info,
+      VaultManager,
     },
     props: {
       willShowVaultManage: {
         type: Boolean,
+        default: false,
+      },
+      profile: {
+        type: Object,
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        default: () => {},
+      },
+      fullName: {
+        type: String,
+        default: '',
+      },
+      token: {
+        type: String,
+        default: '',
+      },
+      precision: {
+        type: Number,
+        default: 0,
+      },
+      extra: {
+        type: Number,
+        default: 0,
+      },
+      extraPrecision: {
+        type: Number,
+        default: 0,
+      },
+      lockDays: {
+        type: Number,
+        default: 0,
       },
     },
     setup(props, context: SetupContext) {
+      // const { token, fullName, precision, extra, extraPrecision, lockDays } = toRefs(props);
       watch(
         () => props.willShowVaultManage,
         (newValue, oldValue) => {
@@ -52,6 +92,12 @@
       };
       return {
         childRef,
+        // token,
+        // fullName,
+        // precision,
+        // extra,
+        // extraPrecision,
+        // lockDays,
         onHide,
       };
     },
