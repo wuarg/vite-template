@@ -297,7 +297,7 @@
                 .div(pair.value.xlpSupply)
                 .toFixed(pair.value.precision1, ROUND_DOWN);
             }
-
+            console.log('isInList(token.value)---', isInList(token.value), token.value);
             if (isInList(token.value)) {
               const today = Math.floor(now.value / 3600 / 24);
               canUnlockAmount.value = await FarmManager.getCanUnlock(
@@ -306,6 +306,7 @@
                 today,
                 lockDays.value,
               );
+              console.log('canUnlockAmount00000----', canUnlockAmount.value);
             }
           } catch (error) {
             console.error(error);
@@ -316,9 +317,9 @@
       };
       const isInList = (token: any) => {
         return (
-          XG_LIST.value.indexOf(token.value) >= 0 ||
-          ['xplus_30', 'xplus_60', 'xplus_90'].indexOf(token.value) >= 0 ||
-          ['iost_30', 'iost_90'].indexOf(token.value) >= 0
+          XG_LIST.value.indexOf(token) >= 0 ||
+          ['xplus_30', 'xplus_60', 'xplus_90'].indexOf(token) >= 0 ||
+          ['iost_30', 'iost_90'].indexOf(token) >= 0
         );
       };
       const isBonusUnlocked = () => {
