@@ -17,33 +17,29 @@
       <div
         v-for="(info, index) in infoArray"
         :key="index"
-        class="card-item text-white my-4 mx-auto w-1/2 rounded-md p-4 shadow-md"
+        class="card-item text-white my-8 mx-auto w-1/2 rounded-md p-4 shadow-md"
       >
-        <div class="row">
-          <div class="col text-left">
+        <div class="flex p-2">
+          <div class="flex-1 justify-items-start text-left">
             {{ info.fullName }}
             <span v-if="info.lockDays">(锁仓{{ info.lockDays }}天)</span>
             × {{ info.alloc }}
             <span v-if="info.canVote" class="text-info">[投票权]</span>
           </div>
-          <div class="col col-auto text-right">
+          <div class="grid flex-1 justify-items-end">
             <button class="btn btn-sm btn-dark" @click="showVault(info)">管理</button>
           </div>
         </div>
         <div class="xg-pool-line">
-          <div class="row">
-            <div class="col text-left"> 总抵押 </div>
-            <div class="col text-right">
-              <!-- ${{
-                profile.xusdPrice
-                  ? (info.totalInXUSD * profile.xusdPrice).toFixed(2)
-                  : info.totalInXUSD
-              }} -->
+          <div class="flex p-2">
+            <div class="grid flex-1 justify-items-start"> 总抵押 </div>
+            <div v-if="xusdPrice" class="grid flex-1 justify-items-end">
+              ${{ xusdPrice ? (info.totalInXUSD * xusdPrice).toFixed(2) : info.totalInXUSD }}
             </div>
           </div>
-          <div class="row">
-            <div class="col text-left"> 年化收益(估算) </div>
-            <div class="col text-right"> {{ +(info.apy * 100).toFixed(2) }}% </div>
+          <div class="flex p-2">
+            <div class="grid flex-1 justify-items-start"> 年化收益(估算) </div>
+            <div class="grid flex-1 justify-items-end"> {{ +(info.apy * 100).toFixed(2) }}% </div>
           </div>
         </div>
       </div>
@@ -79,9 +75,11 @@
       const willShowVaultManage = ref(false);
       const willShowFarmVote = ref(false);
       const willShowFarmVote2 = ref(false);
+      const xusdPrice = ref(0);
 
       onMounted(() => {
-        // 2
+        console.log('appStore.getXusdPrice--', appStore.getXusdPrice);
+        xusdPrice.value = appStore.getXusdPrice;
         load();
         // interval.value = setInterval(() => {
         //   _tick();
@@ -150,6 +148,7 @@
       return {
         waiting,
         infoArray,
+        xusdPrice,
         showVault,
         onRefreshVaultManage,
         showFarmVote,
