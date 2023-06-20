@@ -41,7 +41,7 @@
   import { TokenManager } from '~/utils/tokenManager';
 
   export default defineComponent({
-    name: 'TemplateVue',
+    name: 'DataVue',
     setup() {
       const appStore = commonStore();
       const waiting = ref(false);

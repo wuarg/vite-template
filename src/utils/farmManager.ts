@@ -324,7 +324,7 @@ export const FarmManager = {
           tokenPrice = await this.getXUSDPairPrice(halfTokenName);
         }
 
-        const apy;
+        // let apy;
         /*
         if (!(+info.total)) {
           apy = 0;
@@ -335,7 +335,7 @@ export const FarmManager = {
         } else {
           apy = 0;
         }*/
-        apy = (xplusPrice * 8888 * 365 * info.alloc) / 80 / (tokenPrice * info.total);
+        const apy = (xplusPrice * 8888 * 365 * info.alloc) / 80 / (tokenPrice * info.total);
 
         info.totalInXUSD = +(tokenPrice * info.total).toFixed(2);
         info.apy = apy;

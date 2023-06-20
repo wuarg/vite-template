@@ -12,7 +12,7 @@
   import { TokenManager } from '~/utils/tokenManager';
 
   export default defineComponent({
-    name: 'TemplateVue',
+    name: 'Template2Vue',
     setup() {
       const waiting = ref(false);
       onMounted(() => {

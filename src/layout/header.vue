@@ -12,6 +12,9 @@
       <router-link to="/swap" class="mx-4" active-class="font-black">
         <span>swap</span>
       </router-link>
+      <router-link to="/vault" class="mx-4" active-class="font-black">
+        <span>理财</span>
+      </router-link>
       <router-link to="/data" class="mx-4" active-class="font-black">
         <span>数据</span>
       </router-link>
