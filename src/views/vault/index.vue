@@ -54,6 +54,8 @@
       :lock-days="vaultManageLockDays"
       @onHide="hideVault"
     />
+    <VoteOneModal :will-show-farm-vote="willShowFarmVote" />
+    <VoteTwoModal :will-show-farm-vote2="willShowFarmVote2" />
   </div>
 </template>
 <script lang="ts">
@@ -63,11 +65,15 @@
   import { ContractService } from '~/utils/contractServe';
   import { FarmManager } from '~/utils/farmManager';
   import ManagerModal from './managerModal.vue';
+  import VoteOneModal from '~/views/vault/voteOneModal.vue';
+  import VoteTwoModal from '~/views/vault/voteTwoModal.vue';
 
   export default defineComponent({
     name: 'VaultVue',
     components: {
       ManagerModal,
+      VoteOneModal,
+      VoteTwoModal,
     },
     setup() {
       const waiting = ref(false);
@@ -173,6 +179,8 @@
         vaultManageExtra,
         vaultManageExtraPrecision,
         vaultManageLockDays,
+        willShowFarmVote,
+        willShowFarmVote2,
         showVault,
         hideVault,
         onRefreshVaultManage,
