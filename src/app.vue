@@ -2,6 +2,7 @@
   <router-view></router-view>
 </template>
 <script lang="ts">
+  import { commonStore } from '~/stores/modules/common';
   import { defineComponent, ref, onMounted } from 'vue';
   import { ContractService } from '~/utils/contractServe';
   import { environment } from '~/utils/iostConfig';
@@ -10,6 +11,7 @@
   export default defineComponent({
     name: '',
     setup() {
+      const appStore = commonStore();
       const waiting = ref(false);
       const profile = ref<Record<string, any>>({});
       console.log('ContractService---', ContractService);
@@ -26,6 +28,9 @@
         console.log('walletReady---', walletReady);
         console.log('account---', account);
         console.log('myIOST---', myIOST);
+        appStore.setWalletReady(walletReady);
+        appStore.setAccounte(account);
+        appStore.setMyIOST(myIOST);
         await BankManager.constructor(myIOST);
         await SwapManager.constructor(myIOST);
 
@@ -37,7 +42,6 @@
             loadPrices();
           }, 60000);
           loadPrices();
-
           profile.value.walletReady = true;
         } else {
           profile.value.account = '';
@@ -53,6 +57,7 @@
           profile.value.iostPrice * +(await SwapManager.getIOSTXUSDRatio())
         ).toFixed(2);
       };
+      appStore.setProfile(profile.value);
       return {
         profile,
       };

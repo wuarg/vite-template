@@ -1,5 +1,5 @@
 <template>
-  <div class="m-auto p-10">
+  <div v-if="waiting" class="m-auto p-10">
     <button class="btn">整体</button>
     <div class="jumbotron xg-analytics-jumbotron xg-analytics-bound text-center">
       <h6 class="text-center" style="margin-top: 8px"> xg流通量: {{ xgSupply }} </h6>
@@ -32,6 +32,7 @@
   </div>
 </template>
 <script lang="ts">
+  import { commonStore } from '~/stores/modules/common';
   import { defineComponent, ref, onMounted } from 'vue';
   import { environment } from '~/utils/iostConfig';
   import { ContractService } from '~/utils/contractServe';
@@ -42,8 +43,8 @@
   export default defineComponent({
     name: 'TemplateVue',
     setup() {
+      const appStore = commonStore();
       const waiting = ref(false);
-      const profile = ref<Record<string, any>>({});
 
       const xgSupply = ref(0);
       const xgPrice = ref(0);
@@ -57,23 +58,27 @@
 
       const stabFund = ref(0);
       const iostLocked = ref(0);
-
+      const myIOST = appStore.getMyIOST;
+      const walletReady = appStore.getWalletReady;
+      const account = appStore.getAccount;
       onMounted(() => {
         // 2
         load();
       });
       const load = async () => {
+        xusdPrice.value = appStore.getXusdPrice;
         waiting.value = true;
-        const walletReady = await ContractService.init();
-        const account = ContractService.getUserAddress();
-        const myIOST = ContractService.getIOST();
-        console.log('walletReady---', walletReady);
+        // const walletReady = await ContractService.init();
+        // const account = ContractService.getUserAddress();
+        // const myIOST = ContractService.getIOST();
+        console.log('walletReady---', walletReady, appStore.getXusdPrice);
         console.log('account---', account);
         console.log('myIOST---', myIOST);
         await BurnerManager.constructor(myIOST);
         await SwapManager.constructor(myIOST);
         await TokenManager.constructor(myIOST);
         if (walletReady && account) {
+          xusdPrice.value = appStore.getXusdPrice;
           try {
             // 发起第一个异步请求
             xgSupply.value = (await TokenManager.getSupply(environment.xg)) / 1e6;
@@ -122,6 +127,7 @@
         poolXG,
         stabFund,
         iostLocked,
+        waiting,
       };
     },
     computed: {},
