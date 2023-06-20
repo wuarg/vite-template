@@ -7,15 +7,15 @@
         </div>
 
         <div class="xg-vault-manage-pannel card bg-primary">
-          <div class="row" style="margin-bottom: 14px">
-            <div class="col col-4 text-left"> Stake </div>
-            <div class="col col-8 text-right"> 可用: {{ tokenBalance }} {{ fullName }} </div>
+          <div class="flex items-center" style="margin-bottom: 14px">
+            <div class="col-4 grow text-left"> Stake </div>
+            <div class="col-8 grow text-right"> 可用: {{ tokenBalance }} {{ fullName }} </div>
           </div>
-          <div class="row" style="margin-bottom: 2px">
-            <div class="col">
+          <div class="flex items-center" style="margin-bottom: 2px">
+            <div class="grow">
               <input
                 v-model="amountDeposit"
-                class="form-control"
+                class="form-control border-rose-600 h-10 w-full rounded border-2"
                 type="text"
                 placeholder="0.0"
                 :disabled="waitingDeposit"
@@ -24,7 +24,7 @@
                 @change="enterAmount()"
               />
             </div>
-            <div class="col col-auto">
+            <div class="col-auto grow text-right">
               <button
                 class="btn btn-sm btn-light"
                 style="margin-right: 6px"
@@ -39,7 +39,7 @@
 
         <div style="margin-top: 10px">
           <button
-            class="input-btn btn"
+            class="btn"
             :class="{ 'btn-danger': !waitingDeposit, 'btn-light': waitingDeposit }"
             style="width: 100%"
             type="button"
@@ -54,39 +54,43 @@
           <h5>当前资产</h5>
         </div>
 
-        <div class="xg-vault-manage-pannel" style="padding: 2px 30px">
-          <div class="row" style="margin-bottom: 14px">
-            <div class="col col-4 text-left"> 本金 </div>
-            <div class="col col-8 text-right"> {{ poolAmount }} {{ fullName }} </div>
+        <div class="xg-vault-manage-pannel" style="padding: 2px 0">
+          <div class="flex items-center" style="margin-bottom: 14px">
+            <div class="col-4 grow text-left"> 本金 </div>
+            <div class="col-8 grow text-right"> {{ poolAmount }} {{ fullName }} </div>
           </div>
-          <div v-if="canUnlockAmount" class="row" style="margin-bottom: 14px">
-            <div class="col col-4 text-left"> 可解锁本金 </div>
-            <div class="col col-8 text-right"> {{ canUnlockAmount }} {{ fullName }} </div>
+          <div v-if="canUnlockAmount" class="flex items-center" style="margin-bottom: 14px">
+            <div class="col-4 grow text-left"> 可解锁本金 </div>
+            <div class="col-8 grow text-right"> {{ canUnlockAmount }} {{ fullName }} </div>
           </div>
-          <div v-if="token.indexOf('xlp') == 0" class="row" style="margin-bottom: 14px">
-            <div class="col col-4 text-left">
+          <div
+            v-if="token.indexOf('xlp') == 0"
+            class="flex items-center"
+            style="margin-bottom: 14px"
+          >
+            <div class="col-4 grow text-left">
               约等于<br />
               (有延迟)
             </div>
-            <div v-if="pair" class="col col-8 text-right">
+            <div v-if="pair" class="col-8 grow text-right">
               {{ token0Balance || 0 }} {{ pair.token0 }}<br />+ {{ token1Balance || 0 }}
               {{ pair.token1 }}
             </div>
           </div>
-          <div class="row" style="margin-bottom: 14px">
-            <div class="col col-4 text-left"> 盈利 </div>
-            <div class="col col-8 text-right"> {{ pendingAmount }} xplus </div>
+          <div class="flex items-center" style="margin-bottom: 14px">
+            <div class="col-4 grow text-left"> 盈利 </div>
+            <div class="col-8 grow text-right"> {{ pendingAmount }} xplus </div>
           </div>
-          <div v-if="extra" class="row" style="margin-bottom: 14px">
-            <div class="col col-4 text-left"> 额外盈利 </div>
-            <div class="col col-8 text-right">
+          <div v-if="extra" class="flex items-center" style="margin-bottom: 14px">
+            <div class="col-4 grow text-left"> 额外盈利 </div>
+            <div class="col-8 grow text-right">
               <span>{{ extraPendingAmount }} {{ extra }}</span>
             </div>
           </div>
         </div>
 
-        <div class="row" style="margin: 10px -5px">
-          <div class="col col-6" style="padding: 0 5px">
+        <div class="flex items-center" style="margin: 10px -5px">
+          <div class="col-6 grow" style="padding: 0 5px">
             <button
               class="input-btn btn"
               :class="{ 'btn-warning': !waitingWithdraw, 'btn-light': waitingWithdraw }"
@@ -98,7 +102,7 @@
               {{ waitingWithdraw ? '提交中...' : '提取全部' }}
             </button>
           </div>
-          <div class="col col-6" style="padding: 0 5px">
+          <div class="col-6 grow" style="padding: 0 5px">
             <button
               class="input-btn btn"
               :class="{ 'btn-success': !waitingClaim, 'btn-light': waitingClaim }"
@@ -111,11 +115,11 @@
             </button>
           </div>
         </div>
-        <div>
+        <!-- <div>
           <button class="btn btn-dark" style="width: 100%; margin-top: 10px" @click="cancel()">
             关闭
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
