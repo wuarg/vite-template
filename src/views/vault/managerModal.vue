@@ -1,13 +1,6 @@
 <template>
   <div class="p-10">
-    11
     <Modal ref="childRef" title="管理" @onHide="onHide">
-      <Info>
-        By connecting a wallet, you agree to Uniswap Labs’
-        <a href="https://uniswap.org/terms-of-service/" target="_blank">Terms of Service</a>
-        and acknowledge that you have read and understand the
-        <a href="https://uniswap.org/disclaimer/" target="_blank">Uniswap protocol disclaimer</a>.
-      </Info>
       <VaultManager
         :full-name="fullName"
         :token="token"
@@ -21,14 +14,13 @@
 </template>
 <script lang="ts">
   import Modal from '~/components/core/Modal.vue';
-  import Info from '~/components/core/Info.vue';
+  // import Info from '~/components/core/Info.vue';
   import VaultManager from '~/views/vault/vaultManager.vue';
   import { defineComponent, ref, toRefs, onMounted, watch, SetupContext } from 'vue';
   export default defineComponent({
     name: 'TemplateVue',
     components: {
       Modal,
-      Info,
       VaultManager,
     },
     props: {

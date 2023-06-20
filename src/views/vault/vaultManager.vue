@@ -121,6 +121,7 @@
   </div>
 </template>
 <script lang="ts">
+  // import BaseInput from '~/components/core/Input.vue';
   import { BigNumber } from 'bignumber.js';
   import { commonStore } from '~/stores/modules/common';
   import { defineComponent, ref, onMounted, toRefs } from 'vue';
@@ -133,6 +134,9 @@
 
   export default defineComponent({
     name: 'Template2Vue',
+    components: {
+      // BaseInput,
+    },
     props: {
       profile: {
         type: Object,
