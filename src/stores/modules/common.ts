@@ -7,9 +7,12 @@ export const commonStore = defineStore('common', {
     return {
       walletReady: false,
       account: '',
+      iostPrice: 0,
+      xusdPrice: 0,
       myIOST: {},
       profile: {},
       myObject: {} as Record<string, any>,
+      allPairs: [],
     };
   },
   getters: {
@@ -29,10 +32,13 @@ export const commonStore = defineStore('common', {
       return state.myObject;
     },
     getIostPrice(state) {
-      return state.profile.iostPrice;
+      return state.iostPrice;
     },
     getXusdPrice(state) {
-      return state.profile.xusdPrice;
+      return state.xusdPrice;
+    },
+    getAllPairs(state) {
+      return state.allPairs;
     },
   },
   actions: {
@@ -47,6 +53,15 @@ export const commonStore = defineStore('common', {
     },
     setProfile(profile: any) {
       this.profile = profile;
+    },
+    setIostPrice(iostPrice: number) {
+      this.iostPrice = iostPrice;
+    },
+    setXusdPrice(xusdPrice: number) {
+      this.xusdPrice = xusdPrice;
+    },
+    setAllPairs(allPairs: Array) {
+      this.allPairs = allPairs;
     },
     setObjectProperty(key: string, value: any) {
       this.myObject[key] = value;

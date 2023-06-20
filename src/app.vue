@@ -13,6 +13,9 @@
     setup() {
       const appStore = commonStore();
       const waiting = ref(false);
+      const iostPrice = ref(0);
+      const xusdPrice = ref(0);
+      const allPairs = ref([]);
       const profile = ref<Record<string, any>>({});
       console.log('ContractService---', ContractService);
       onMounted(() => {
@@ -35,9 +38,10 @@
         await SwapManager.constructor(myIOST);
 
         if (walletReady && account) {
+          allPairs.value = await SwapManager.allPairs();
+          appStore.setAllPairs(allPairs.value);
           profile.value.account = ContractService.getUserAddress();
-          profile.value.allPairs = await SwapManager.allPairs();
-
+          profile.value.allPairs = allPairs.value;
           setInterval(() => {
             loadPrices();
           }, 60000);
@@ -48,19 +52,19 @@
           profile.value.allPairs = [];
           profile.value.walletReady = false;
         }
-
         waiting.value = false;
       };
       const loadPrices = async () => {
-        profile.value.iostPrice = +(await BankManager.getOraclePrice());
-        profile.value.xusdPrice = +(
-          profile.value.iostPrice * +(await SwapManager.getIOSTXUSDRatio())
-        ).toFixed(2);
+        iostPrice.value = +(await BankManager.getOraclePrice());
+        xusdPrice.value = +(iostPrice.value * +(await SwapManager.getIOSTXUSDRatio())).toFixed(2);
+        appStore.setXusdPrice(xusdPrice.value);
+        appStore.setIostPrice(iostPrice.value);
+        profile.value.iostPrice = iostPrice.value;
+        profile.value.xusdPrice = xusdPrice.value;
       };
+      console.log('iostPrice.value---', iostPrice.value);
       appStore.setProfile(profile.value);
-      return {
-        profile,
-      };
+      return {};
     },
     computed: {},
   });
