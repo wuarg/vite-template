@@ -12,6 +12,12 @@
       <router-link to="/swap" class="mx-4" active-class="font-black">
         <span>swap</span>
       </router-link>
+      <router-link to="/pool" class="mx-4" active-class="font-black">
+        <span>做市</span>
+      </router-link>
+      <router-link to="/xusd" class="mx-4" active-class="font-black">
+        <span>铸币</span>
+      </router-link>
       <router-link to="/vault" class="mx-4" active-class="font-black">
         <span>理财</span>
       </router-link>

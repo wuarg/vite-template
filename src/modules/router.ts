@@ -58,6 +58,16 @@ const routes: RouteRecordRaw[] = [
         path: 'vault',
         component: () => import('~/views/vault/index.vue'),
       },
+      {
+        name: 'Pool',
+        path: 'pool',
+        component: () => import('~/views/pool/index.vue'),
+      },
+      {
+        name: 'Xusd',
+        path: 'xusd',
+        component: () => import('~/views/xusd/index.vue'),
+      },
     ],
   },
 ];
