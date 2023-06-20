@@ -1,5 +1,5 @@
 <template>
-  <div v-if="waiting" class="m-auto p-10">
+  <div class="m-auto p-10">
     <button class="btn">整体</button>
     <div class="jumbotron xg-analytics-jumbotron xg-analytics-bound text-center">
       <h6 class="text-center" style="margin-top: 8px"> xg流通量: {{ xgSupply }} </h6>
@@ -112,6 +112,7 @@
           } catch (error) {
             console.error(error);
           }
+          waiting.value = false;
         } else {
           console.log('未连接钱包');
         }
