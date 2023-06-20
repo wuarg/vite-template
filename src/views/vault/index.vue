@@ -44,6 +44,7 @@
         </div>
       </div>
     </div>
+    <ManagerModal :will-show-vault-manage="willShowVaultManage" @onHide="hideVault" />
   </div>
 </template>
 <script lang="ts">
@@ -52,9 +53,13 @@
   import { environment } from '~/utils/iostConfig';
   import { ContractService } from '~/utils/contractServe';
   import { FarmManager } from '~/utils/farmManager';
+  import ManagerModal from './managerModal.vue';
 
   export default defineComponent({
     name: 'VaultVue',
+    components: {
+      ManagerModal,
+    },
     setup() {
       const waiting = ref(false);
       const appStore = commonStore();
@@ -103,12 +108,12 @@
             });
             infoArray.value.sort((a: any, b: any) => b.alloc - a.alloc);
 
-            waiting.value = false;
             now.value = await FarmManager.getNow();
             nowLocal.value = Math.floor(new Date().getTime() / 1000);
           } catch (error) {
             console.error(error);
           }
+          waiting.value = false;
         } else {
           console.log('未连接钱包');
         }
@@ -123,6 +128,9 @@
         vaultManageExtraPrecision.value = info.extraPrecision;
         vaultManageLockDays.value = parseInt(info.lockDays);
         willShowVaultManage.value = true;
+      };
+      const hideVault = () => {
+        willShowVaultManage.value = false;
       };
 
       const onRefreshVaultManage = () => {
@@ -149,7 +157,9 @@
         waiting,
         infoArray,
         xusdPrice,
+        willShowVaultManage,
         showVault,
+        hideVault,
         onRefreshVaultManage,
         showFarmVote,
         onCloseFarmVote,

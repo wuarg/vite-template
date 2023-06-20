@@ -34,7 +34,7 @@
   </transition>
 </template>
 
-<script>
+<script lang="ts">
   import { defineComponent } from 'vue';
   import BaseButton from '~/components/core/Button.vue';
 
@@ -89,10 +89,10 @@
   }
   .app-modal-content {
     width: 100%;
-    max-width: 400px;
-    border: 1px solid @darkSecondaryBackground;
+    max-width: 600px;
+    border: 1px solid @lightSecondaryBackground;
     border-radius: 20px;
-    background-color: @darkBackground;
+    background-color: @lightBackground;
     overflow: hidden;
   }
   .app-modal-header {
@@ -117,8 +117,8 @@
   }
   .app-modal-footer {
     padding: 16px;
-    background-color: @darkSecondaryBackground;
-    border-top: 1px solid @darkBorderColor;
+    background-color: @lightSecondaryBackground;
+    border-top: 1px solid @lightBorderColor;
   }
   .fade-enter-active,
   .fade-leave-active {
