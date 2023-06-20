@@ -54,8 +54,8 @@
       :lock-days="vaultManageLockDays"
       @onHide="hideVault"
     />
-    <VoteOneModal :will-show-farm-vote="willShowFarmVote" />
-    <VoteTwoModal :will-show-farm-vote2="willShowFarmVote2" />
+    <VoteOneModal :will-show-farm-vote="willShowFarmVote" @onHide="onCloseFarmVote" />
+    <VoteTwoModal :will-show-farm-vote2="willShowFarmVote2" @onHide="onCloseFarmVote2" />
   </div>
 </template>
 <script lang="ts">
