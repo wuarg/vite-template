@@ -131,6 +131,11 @@
         </div>
       </div>
     </Modal>
+    <TokenSelect
+      :will-show-token-selection="willShowTokenSelection"
+      @onSelect="onTokenSelection($event)"
+      @onHide="onCloseTokenSelection()"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -141,10 +146,12 @@
   import { ContractService } from '~/utils/contractServe';
   import { SwapManager } from '~/utils/swapManager';
   import { TokenManager } from '~/utils/tokenManager';
+  import TokenSelect from '~/views/pool/tokenSelect.vue';
   export default defineComponent({
     name: 'CreatePairVue',
     components: {
       Modal,
+      TokenSelect,
     },
     props: {
       willShowCreatePair: {
@@ -240,6 +247,7 @@
       };
 
       const onTokenSelection = async ($event: any) => {
+        console.log('onTokenSelection-----', $event);
         const tokenName = $event.tokenName;
         const balance = $event.balance;
         const imageList = await TokenManager.getImageList();
@@ -273,6 +281,8 @@
         }
 
         willShowTokenSelection.value = false;
+        console.log('willShowTokenSelection---22-', willShowTokenSelection.value);
+        onCloseTokenSelection();
         preProcess();
       };
 
@@ -465,6 +475,9 @@
         willDisable,
         submit,
         buttonMessageArray,
+        willShowTokenSelection,
+        onTokenSelection,
+        onCloseTokenSelection,
       };
     },
     computed: {},
