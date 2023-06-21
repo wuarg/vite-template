@@ -56,6 +56,42 @@
       const myIOST = appStore.getMyIOST;
       const walletReady = appStore.getWalletReady;
       const account = appStore.getAccount;
+
+      const willShowTokenSelection = ref(false);
+      const tokenSelectionIndex = ref(0);
+      const fromTokenName = ref('---');
+      const fromTokenImage = ref('_');
+      const fromBalance = ref(0);
+      const toTokenName = ref('iost');
+      const toTokenImage = ref('iost');
+
+      const toBalance = ref(0);
+      const iostBalance = ref(0);
+
+      const amountIn = ref('');
+      const amountInOld = ref('');
+      const amountOut = ref('');
+      const amountOutOld = ref('');
+
+      const workingOnOut = ref(true);
+      const ratioValue = ref(0);
+      const ratioDirection = ref(false);
+      const shareOfPool = ref(0);
+
+      const willShowSlippage = ref(false);
+      const slippageValue = ref(10);
+
+      const willDisable = ref(true);
+
+      // pair: any = null;
+      // interval: any = null;
+
+      const buttonMessageArray = ref<Record<string, any>>([]);
+      const alertTitleCN = ref('');
+      const alertTitleEN = ref('');
+      const alertBodyCN = ref('');
+      const alertBodyEN = ref('');
+      const willShowAlertMessage = ref(false);
       onMounted(() => {
         load();
       });
