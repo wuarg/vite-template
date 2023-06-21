@@ -100,6 +100,13 @@
       @onAdd="onAddLiquidity()"
       @onHide="onCloseAddLiquidity()"
     />
+    <RemoveLiquidity
+      :will-show-remove-liquidity="willShowRemoveLiquidity"
+      :token0="removeLiquidityToken0"
+      :token1="removeLiquidityToken1"
+      @onRemove="onRemoveLiquidity($event)"
+      @onHide="onCloseRemoveLiquidity()"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -110,11 +117,13 @@
   import { SwapManager } from '~/utils/swapManager';
   import CreatePair from '~/views/pool/createPair.vue';
   import AddLiquidity from '~/views/pool/addLiquidity.vue';
+  import RemoveLiquidity from '~/views/pool/removeLiquidity.vue';
   export default defineComponent({
     name: 'PoolVue',
     components: {
       CreatePair,
       AddLiquidity,
+      RemoveLiquidity,
     },
     setup() {
       const waiting = ref(false);
@@ -258,6 +267,11 @@
         willShowAddLiquidity,
         addLiquidityTokenA,
         addLiquidityTokenB,
+        willShowRemoveLiquidity,
+        removeLiquidityToken0,
+        removeLiquidityToken1,
+        onRemoveLiquidity,
+        onCloseRemoveLiquidity,
         onCreatePair,
         onCloseCreatePair,
         onAddLiquidity,
