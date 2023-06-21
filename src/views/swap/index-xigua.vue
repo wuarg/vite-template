@@ -249,7 +249,7 @@
       //   }
 
       //   interval.value = setInterval(() => {
-      //     _refresh();
+      //     refresh();
       //   }, 10 * 1e3);
 
       //   isMobile.value = _isMobile();
@@ -277,7 +277,7 @@
         tokenSelectionIndex.value = index;
       };
 
-      const _refresh = () => {
+      const refresh = () => {
         if (waiting.value) return;
         if (workingOnOut.value) {
           _showOut();
@@ -320,7 +320,7 @@
           toBalance.value = balance;
         }
 
-        _refresh();
+        refresh();
       };
 
       const onCloseTokenSelection = () => {
@@ -351,7 +351,7 @@
         amountOut.value = tempAmount;
         amountOutOld.value = tempAmountOld;
 
-        _refresh();
+        refresh();
       };
 
       const reverseRatio = () => {
@@ -369,7 +369,7 @@
       const onSlippage = ($event: any) => {
         slippageValue.value = $event.value;
         willShowSlippage.value = false;
-        _refresh();
+        refresh();
       };
 
       const onCloseSlippage = () => {

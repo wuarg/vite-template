@@ -21,7 +21,7 @@
 
       <div v-if="waiting">
         <img
-          src="/assets/images/loading.gif"
+          src="../../assets/xigua/loading.gif"
           style="margin: 100px auto; display: block; width: 80px"
         />
       </div>

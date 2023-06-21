@@ -18,7 +18,7 @@
         </div>
 
         <div class="xg-bank-container card">
-          <ng-container v-if="tabId === 0">
+          <div v-if="tabId === 0">
             <div class="xg-bank-pannel card bg-primary">
               <div class="flex items-center" style="margin-bottom: 14px">
                 <div class="grid"> 抵押 </div>
@@ -57,9 +57,9 @@
                 {{ waiting ? '抵押中...' : '抵押IOST' }}
               </button>
             </div>
-          </ng-container>
+          </div>
 
-          <ng-container v-if="tabId === 1">
+          <div v-if="tabId === 1">
             <div class="xg-bank-pannel card bg-primary">
               <div class="flex items-center" style="margin-bottom: 14px">
                 <div class="col-4 grid"> 解锁 </div>
@@ -118,9 +118,9 @@
                 {{ waiting ? '解锁中...' : 'VOST解锁' }}
               </button>
             </div>
-          </ng-container>
+          </div>
 
-          <ng-container v-if="tabId === 2">
+          <div v-if="tabId === 2">
             <div class="xg-bank-pannel card bg-primary">
               <div class="flex items-center" style="margin-bottom: 14px">
                 <div class="col-4 grid"> 借出 </div>
@@ -159,9 +159,9 @@
                 {{ waiting ? '借出中...' : '借出XUSD' }}
               </button>
             </div>
-          </ng-container>
+          </div>
 
-          <ng-container v-if="tabId === 3">
+          <div v-if="tabId === 3">
             <div class="xg-bank-pannel card bg-primary">
               <div class="flex items-center" style="margin-bottom: 14px">
                 <div class="col-4 grid"> 归还 </div>
@@ -200,7 +200,7 @@
                 {{ waiting ? '归还中...' : '归还XUSD' }}
               </button>
             </div>
-          </ng-container>
+          </div>
         </div>
 
         <div class="card xg-bank-info">
@@ -279,9 +279,9 @@
           try {
             // 发起第一个异步请求
             // this.interval = setInterval(() => {
-            //   _refresh();
+            //   refresh();
             // }, 10 * 1e3);
-            _refresh();
+            refresh();
           } catch (error) {
             console.error(error);
           }
@@ -290,7 +290,7 @@
           console.log('未连接钱包');
         }
       };
-      const _refresh = async () => {
+      const refresh = async () => {
         const all = [
           (async () => {
             iostBalance.value = await TokenManager.getTokenBalance('iost');
@@ -338,7 +338,7 @@
           await ContractService.lock(+amountLock.value);
 
           amountLock.value = '';
-          _refresh();
+          refresh();
 
           // this.showAlert('抵押成功', 'Transaction Succeeded', '', '');
         } catch (err) {
@@ -362,7 +362,7 @@
           await ContractService.unlockWithVOST(+amountUnlock.value);
 
           amountUnlock.value = '';
-          _refresh();
+          refresh();
 
           // this.showAlert('解锁成功', 'Transaction Succeeded', '', '');
         } catch (err) {
@@ -386,7 +386,7 @@
           await ContractService.unlockWithDelay(+amountUnlock.value);
 
           amountUnlock.value = '';
-          _refresh();
+          refresh();
 
           // this.showAlert('解锁成功', 'Transaction Succeeded', '', '');
         } catch (err) {
@@ -410,7 +410,7 @@
           await ContractService.unlockImmediately(+amountUnlock.value);
 
           amountUnlock.value = '';
-          _refresh();
+          refresh();
 
           // this.showAlert('解锁成功', 'Transaction Succeeded', '', '');
         } catch (err) {
@@ -446,7 +446,7 @@
         try {
           await ContractService.borrow(+amountBorrow.value);
           amountBorrow.value = '';
-          _refresh();
+          refresh();
 
           // this.showAlert('借出成功', 'Transaction Succeeded', '', '');
         } catch (err) {
@@ -470,7 +470,7 @@
           await ContractService.payBack(+amountPayBack.value);
 
           amountPayBack.value = '';
-          _refresh();
+          refresh();
 
           // this.showAlert('归还成功', 'Transaction Succeeded', '', '');
         } catch (err) {
@@ -509,7 +509,7 @@
         amountUnlock,
         amountBorrow,
         amountPayBack,
-        _refresh,
+        refresh,
         goMaxLock,
         goMaxUnlock,
         goMaxBorrow,
