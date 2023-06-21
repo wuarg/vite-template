@@ -15,6 +15,11 @@
   import Modal from '~/components/core/Modal.vue';
   import Info from '~/components/core/Info.vue';
   import { defineComponent, ref, onMounted, watch, SetupContext } from 'vue';
+  import { commonStore } from '~/stores/modules/common';
+  import { environment } from '~/utils/iostConfig';
+  import { ContractService } from '~/utils/contractServe';
+  import { SwapManager } from '~/utils/swapManager';
+  import { TokenManager } from '~/utils/tokenManager';
   export default defineComponent({
     name: 'TemplateVue',
     components: {
@@ -36,10 +41,6 @@
         },
       );
 
-      onMounted(() => {
-        // connectWith(connectors[0]);
-      });
-
       const childRef = ref(null);
       const callChildMethod = () => {
         if (childRef.value) {
@@ -48,6 +49,30 @@
       };
       const onHide = () => {
         context.emit('onHide');
+      };
+
+      const waiting = ref(false);
+      const appStore = commonStore();
+      const myIOST = appStore.getMyIOST;
+      const walletReady = appStore.getWalletReady;
+      const account = appStore.getAccount;
+      onMounted(() => {
+        load();
+      });
+      const load = async () => {
+        waiting.value = true;
+        await SwapManager.constructor(myIOST);
+        await TokenManager.constructor(myIOST);
+        if (walletReady && account) {
+          try {
+            // 发起第一个异步请求
+          } catch (error) {
+            console.error(error);
+          }
+          waiting.value = false;
+        } else {
+          console.log('未连接钱包');
+        }
       };
       return {
         childRef,
