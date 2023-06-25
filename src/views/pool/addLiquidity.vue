@@ -30,6 +30,14 @@
       willShowAddLiquidity: {
         type: Boolean,
       },
+      tokenA: {
+        type: String,
+        default: 'iost',
+      },
+      tokenB: {
+        type: String,
+        default: 'iost',
+      },
     },
     setup(props, context: SetupContext) {
       watch(
@@ -83,6 +91,9 @@
 
       const willDisable = ref(true);
 
+      const tokenA = ref(props.tokenA);
+      const tokenB = ref(props.tokenB);
+      const pair = ref<Record<string, any>>({});
       // pair: any = null;
       // interval: any = null;
 
@@ -92,8 +103,18 @@
       const alertBodyCN = ref('');
       const alertBodyEN = ref('');
       const willShowAlertMessage = ref(false);
+
       onMounted(() => {
         load();
+        const slippageValueType = parseInt(localStorage.getItem('-xg-slippage'));
+        if ([1, 5, 10, 50, 100].indexOf(slippageValueType) >= 0) {
+          slippageValue.value = slippageValueType;
+        }
+
+        // this.interval = setInterval(() => {
+        //   // Every 10 seconds, preprocess in case reserver changes.
+        //   this.preProcess(true);
+        // }, 10 * 1e3);
       });
       const load = async () => {
         waiting.value = true;
@@ -102,6 +123,24 @@
         if (walletReady && account) {
           try {
             // 发起第一个异步请求
+            if (tokenA.value && props.tokenB) {
+              fromTokenName.value = tokenA.value;
+              fromTokenImage.value = tokenA.value;
+              toTokenName.value = tokenB.value;
+              toTokenImage.value = tokenB.value;
+              pair.value = await SwapManager.getPair(tokenA.value, tokenB.value);
+              buttonMessageArray.value = ['请输入数额', 'Enter an amount'];
+            } else {
+              buttonMessageArray.value = ['请选择代币', 'Select a token'];
+            }
+
+            if (fromTokenName.value) {
+              fromBalance.value = +(await TokenManager.getTokenBalance(fromTokenName.value)) || 0;
+            }
+
+            if (toTokenName.value) {
+              toBalance.value = +(await TokenManager.getTokenBalance(toTokenName.value)) || 0;
+            }
           } catch (error) {
             console.error(error);
           }
@@ -110,6 +149,292 @@
           console.log('未连接钱包');
         }
       };
+
+      const showTokenSelection = (index: number) => {
+        willShowTokenSelection.value = true;
+        tokenSelectionIndex.value = index;
+      };
+
+      const onTokenSelection = async ($event: any) => {
+        const tokenName = $event.tokenName;
+        const balance = $event.balance;
+        const imageList = await TokenManager.getImageList();
+
+        if (tokenSelectionIndex.value == 0) {
+          fromTokenName.value = tokenName;
+          fromTokenImage.value = imageList.indexOf(tokenName) >= 0 ? tokenName : '_';
+
+          if (fromTokenName.value == 'iost') {
+            fromBalance.value = Math.max(balance - 20000, 0);
+          } else {
+            fromBalance.value = balance;
+          }
+
+          if (toTokenName.value == fromTokenName.value) {
+            toTokenName.value = '---';
+          }
+        } else {
+          toTokenName.value = tokenName;
+          toTokenImage.value = imageList.indexOf(tokenName) >= 0 ? tokenName : '_';
+
+          if (toTokenName.value == 'iost') {
+            toBalance.value = Math.max(balance - 20000, 0);
+          } else {
+            toBalance.value = balance;
+          }
+
+          if (fromTokenName.value == toTokenName.value) {
+            fromTokenName.value = '---';
+          }
+        }
+
+        willShowTokenSelection.value = false;
+        preProcess(true);
+      };
+
+      const onCloseTokenSelection = () => {
+        willShowTokenSelection.value = false;
+      };
+
+      const goMaxFrom = () => {
+        amountIn.value = fromBalance.value.toString();
+        enterFromAmount();
+      };
+
+      const goMaxTo = () => {
+        amountOut.value = toBalance.value.toString();
+        enterToAmount();
+      };
+
+      const preProcess = async (willReloadPair: any) => {
+        if (fromTokenName.value == '---' || toTokenName.value == '---') {
+          willDisable.value = true;
+          buttonMessageArray.value = ['请选择代币', 'Select a token'];
+          return;
+        }
+
+        if (willReloadPair) {
+          pair.value = await SwapManager.getPair(fromTokenName.value, toTokenName.value);
+        }
+
+        if (!pair.value) {
+          willDisable.value = true;
+          buttonMessageArray.value = ['交易对不存在', "Pair doesn't exist"];
+          return;
+        }
+
+        var valueIn = parseFloat(amountIn.value);
+        var valueOut = parseFloat(amountOut.value);
+
+        if ((workingOnOut.value && !valueIn) || (!workingOnOut.value && !valueOut)) {
+          willDisable.value = true;
+          buttonMessageArray.value = ['请输入数额', 'Enter an amount'];
+
+          // When the user deletes, the other value should also delete.
+          if (+pair.value.reserve0 && +pair.value.reserve1) {
+            if (workingOnOut.value) {
+              amountOut.value = '';
+              amountOutOld.value = '';
+            } else {
+              amountIn.value = '';
+              amountInOld.value = '';
+            }
+          }
+          return;
+        }
+
+        if (
+          pair.value.token0 == fromTokenName.value &&
+          +pair.value.reserve0 &&
+          +pair.value.reserve1
+        ) {
+          if (workingOnOut.value) {
+            amountOut.value = ((valueIn * pair.value.reserve1) / pair.value.reserve0).toFixed(
+              pair.value.precision1,
+            );
+            amountOutOld.value = amountOut.value;
+            valueOut = parseFloat(amountOut.value);
+          } else {
+            amountIn.value = ((valueOut * pair.value.reserve0) / pair.value.reserve1).toFixed(
+              pair.value.precision0,
+            );
+            amountInOld.value = amountIn.value;
+            valueIn = parseFloat(amountIn.value);
+          }
+        } else if (+pair.value.reserve0 && +pair.value.reserve1) {
+          if (workingOnOut.value) {
+            amountOut.value = ((valueIn * pair.value.reserve0) / pair.value.reserve1).toFixed(
+              pair.value.precision0,
+            );
+            amountOutOld.value = amountOut.value;
+            valueOut = parseFloat(amountOut.value);
+          } else {
+            amountIn.value = ((valueOut * pair.value.reserve1) / pair.value.reserve0).toFixed(
+              pair.value.precision1,
+            );
+            amountInOld.value = amountIn.value;
+            valueIn = parseFloat(amountIn.value);
+          }
+        }
+
+        if (!valueIn || !valueOut) {
+          willDisable.value = true;
+          buttonMessageArray.value = ['请输入数额', 'Enter an amount'];
+          return;
+        }
+
+        if (ratioDirection.value) {
+          ratioValue.value = +(valueIn / valueOut).toPrecision(4);
+        } else {
+          ratioValue.value = +(valueOut / valueIn).toPrecision(4);
+        }
+
+        if (+pair.value.xlpSupply > 0) {
+          shareOfPool.value =
+            (await SwapManager.getTokenBalance(pair.value.xlp)) / pair.value.xlpSupply;
+        } else {
+          shareOfPool.value = 1;
+        }
+
+        if (valueIn > fromBalance.value) {
+          willDisable.value = true;
+          buttonMessageArray.value = [
+            fromTokenName.value + '余额不足',
+            fromTokenName.value + ' not enough balance',
+          ];
+          return;
+        }
+
+        if (valueOut > toBalance.value) {
+          willDisable.value = true;
+          buttonMessageArray.value = [
+            toTokenName.value + '余额不足',
+            toTokenName.value + ' not enough balance',
+          ];
+          return;
+        }
+
+        willDisable.value = false;
+        buttonMessageArray.value = ['提交', 'Submit'];
+      };
+
+      const enterFromAmount = async () => {
+        workingOnOut.value = true;
+
+        if (isNaN(+amountIn.value)) {
+          amountIn.value = amountInOld.value;
+          return;
+        }
+
+        amountIn.value = amountIn.value.trim();
+        amountInOld.value = amountIn.value;
+        preProcess(false);
+      };
+
+      const enterToAmount = async () => {
+        workingOnOut.value = false;
+
+        if (isNaN(+amountOut.value)) {
+          amountOut.value = amountOutOld.value;
+          return;
+        }
+
+        amountOut.value = amountOut.value.trim();
+        amountOutOld.value = amountOut.value;
+        preProcess(false);
+      };
+
+      const checkAmount = ($event: any) => {
+        if (environment.allowedKeycodes.indexOf($event.which) < 0) {
+          return false;
+        }
+
+        return true;
+      };
+
+      const reverseRatio = () => {
+        ratioDirection.value = !ratioDirection.value;
+        preProcess(false);
+      };
+
+      const showSlippage = () => {
+        willShowSlippage.value = true;
+      };
+
+      const onSlippage = ($event: any) => {
+        slippageValue.value = $event.value;
+        willShowSlippage.value = false;
+      };
+
+      const onCloseSlippage = () => {
+        willShowSlippage.value = false;
+      };
+
+      const submit = async () => {
+        await addLiquidity();
+      };
+
+      const cancel = () => {
+        // this.onClose.emit();
+        context.emit('onClose');
+      };
+
+      const addLiquidity = async () => {
+        waiting.value = true;
+        try {
+          const res = await ContractService.addLiquidity(
+            fromTokenName.value,
+            toTokenName.value,
+            +amountIn.value,
+            +amountOut.value,
+            +(+amountIn.value * (1 - slippageValue.value / 1000)).toFixed(pair.value.precision0),
+            +(+amountOut.value * (1 - slippageValue.value / 1000)).toFixed(pair.value.precision1),
+          );
+
+          // this.showAlert('流动性添加成功', 'Liquidity added successfully',
+          //    '如果还没有看到，请几秒后刷新页面',
+          //    'If you don\'t see what you added, please refresh the page in a few seconds')
+
+          amountIn.value = '';
+          amountInOld.value = '';
+          amountOut.value = '';
+          amountOutOld.value = '';
+          preProcess(true);
+
+          if (fromTokenName.value) {
+            fromBalance.value = +(await TokenManager.getTokenBalance(fromTokenName.value)) || 0;
+          }
+
+          if (toTokenName.value) {
+            toBalance.value = +(await TokenManager.getTokenBalance(toTokenName.value)) || 0;
+          }
+
+          // this.onAdd.emit();
+          context.emit('onAdd');
+        } catch (err) {
+          // if (err.indexOf('gas not enough') >= 0) {
+          //   this.showAlert('Gas不足', 'Gas not enough',
+          //       '请通过抵押获得更多', 'Please pledge IOST to get more');
+          // } else if (err.indexOf('pay ram failed') >= 0) {
+          //   this.showAlert('Ram不足', 'Ram not enough',
+          //       '请通过购买获得更多', 'Please buy some with IOST');
+          // } else if (err.indexOf('Xigua: no pair') >= 0) {
+          //   this.showAlert('添加失败', 'Transaction Failed', '该交易对不存在', 'The pair doesn\'t exit')
+          // } else {
+          //   this.showAlert('添加失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          // }
+        }
+
+        waiting.value = false;
+      };
+
+      // showAlert(titleCN: string, titleEN: string, bodyCN: string, bodyEN: string) {
+      //   this.alertTitleCN = titleCN;
+      //   this.alertTitleEN = titleEN;
+      //   this.alertBodyCN = bodyCN;
+      //   this.alertBodyEN = bodyEN;
+      //   this.willShowAlertMessage = true;
+      // }
       return {
         childRef,
         onHide,
