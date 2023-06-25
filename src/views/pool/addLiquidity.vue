@@ -1,19 +1,146 @@
 <template>
   <div class="p-10">
     <Modal ref="childRef" title="添加流动性" @onHide="onHide">
-      <Info>
-        By connecting a wallet, you agree to Uniswap Labs’
-        <a href="https://uniswap.org/terms-of-service/" target="_blank">Terms of Service</a>
-        and acknowledge that you have read and understand the
-        <a href="https://uniswap.org/disclaimer/" target="_blank">Uniswap protocol disclaimer</a>.
-      </Info>
-      222
+      <div class="xg-add-liquidity">
+        <div class="card xg-add-liquidity-outerbox">
+          <div>
+            <h5>添加流动性</h5>
+          </div>
+
+          <div class="xg-add-liquidity-pannel card bg-primary">
+            <div class="row" style="margin-bottom: 14px">
+              <div class="col col-4"> 币种A </div>
+              <div class="col col-8 text-right"> 可用: {{ fromBalance }} </div>
+            </div>
+            <div class="row" style="margin-bottom: 2px">
+              <div class="col">
+                <input
+                  v-model="amountIn"
+                  class="form-control"
+                  type="text"
+                  placeholder="0.0"
+                  :disabled="waiting"
+                  @keydown="checkAmount($event)"
+                  @keyup="enterFromAmount()"
+                  @change="enterFromAmount()"
+                />
+              </div>
+              <div class="col col-auto">
+                <button
+                  class="btn btn-sm btn-light"
+                  style="margin-right: 6px"
+                  :disabled="waiting"
+                  @click="goMaxFrom()"
+                >
+                  最大
+                </button>
+                <button
+                  class="btn btn-sm btn-dark"
+                  :disabled="waiting"
+                  @click="showTokenSelection(0)"
+                >
+                  <img
+                    v-if="fromTokenName != '---'"
+                    src="/src/assets/tokens/{{fromTokenImage}}.png"
+                    width="20"
+                  />
+                  {{ fromTokenName }} ↓
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="xg-add-liquidity-plus text-center">
+            <span> + </span>
+          </div>
+          <div class="xg-add-liquidity-pannel card bg-primary">
+            <div class="row" style="margin-bottom: 14px">
+              <div class="col col-4"> 币种B </div>
+              <div class="col col-8 text-right"> 可用: {{ toBalance }} </div>
+            </div>
+            <div class="row" style="margin-bottom: 2px">
+              <div class="col">
+                <input
+                  v-model="amountOut"
+                  class="form-control"
+                  type="text"
+                  placeholder="0.0"
+                  :disabled="waiting"
+                  @keydown="checkAmount($event)"
+                  @keyup="enterToAmount()"
+                  @change="enterToAmount()"
+                />
+              </div>
+              <div class="col col-auto">
+                <button
+                  class="btn btn-sm btn-light"
+                  style="margin-right: 6px"
+                  :disabled="waiting"
+                  @click="goMaxTo()"
+                >
+                  最大
+                </button>
+                <button class="btn btn-sm btn-dark" @click="showTokenSelection(1)">
+                  <img
+                    v-if="toTokenName != '---'"
+                    src="/src/assets/tokens/{{toTokenImage}}.png"
+                    width="20"
+                  />
+                  {{ toTokenName }} ↓
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="amountIn && amountOut && ratioValue" class="row" style="margin-top: 10px">
+            <div class="col col-auto text-left">
+              当前比例 (<a href="javascript: void(0)" @click="!waiting && reverseRatio()">反向</a>)
+            </div>
+            <div class="col text-right">
+              <span v-if="ratioDirection">
+                {{ '1 ' + toTokenName + ' = ' + ratioValue + ' ' + fromTokenName }}
+              </span>
+              <span v-if="!ratioDirection">
+                {{ '1 ' + fromTokenName + ' = ' + ratioValue + ' ' + toTokenName }}
+              </span>
+            </div>
+          </div>
+
+          <div v-if="amountIn && amountOut && shareOfPool" class="row" style="margin-top: 10px">
+            <div class="col col-auto text-left"> 流动池占比 </div>
+            <div class="col text-right"> {{ +(shareOfPool * 100).toFixed(4) }}% </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px; margin-down: 10px">
+            <div class="col col-9 text-left">
+              滑点 (<a href="javascript: void(0)" @click="!waiting && showSlippage()">更改</a>)
+            </div>
+            <div class="col text-right"> {{ slippageValue / 10 }}% </div>
+          </div>
+
+          <div style="margin-top: 10px">
+            <button
+              class="input-btn btn"
+              :class="{ 'btn-danger': !waiting, 'btn-light': waiting }"
+              style="width: 100%"
+              type="button"
+              :disabled="willDisable || waiting"
+              @click="submit()"
+            >
+              {{ waiting ? '提交中...' : buttonMessageArray[0] }}
+            </button>
+          </div>
+          <!-- <div>
+            <button class="btn btn-dark" style="width: 100%; margin-top: 10px" @click="cancel()">{{
+              ['取消', 'Cancel'][language]
+            }}</button>
+          </div> -->
+        </div>
+      </div>
     </Modal>
   </div>
 </template>
 <script lang="ts">
   import Modal from '~/components/core/Modal.vue';
-  import Info from '~/components/core/Info.vue';
   import { defineComponent, ref, onMounted, watch, SetupContext } from 'vue';
   import { commonStore } from '~/stores/modules/common';
   import { environment } from '~/utils/iostConfig';
@@ -24,7 +151,6 @@
     name: 'TemplateVue',
     components: {
       Modal,
-      Info,
     },
     props: {
       willShowAddLiquidity: {
@@ -438,6 +564,30 @@
       return {
         childRef,
         onHide,
+        waiting,
+        fromBalance,
+        amountIn,
+        fromTokenName,
+        fromTokenImage,
+        toBalance,
+        amountOut,
+        toTokenName,
+        toTokenImage,
+        ratioDirection,
+        ratioValue,
+        shareOfPool,
+        slippageValue,
+        willDisable,
+        buttonMessageArray,
+        checkAmount,
+        enterFromAmount,
+        goMaxFrom,
+        showTokenSelection,
+        enterToAmount,
+        goMaxTo,
+        reverseRatio,
+        showSlippage,
+        submit,
       };
     },
     computed: {},
