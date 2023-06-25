@@ -142,6 +142,11 @@
       @onSelect="onTokenSelection($event)"
       @onHide="onCloseTokenSelection()"
     />
+    <Slippage
+      :will-show-slippage="willShowSlippage"
+      @onSelect="onSlippage($event)"
+      @onHide="onCloseSlippage()"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -153,11 +158,13 @@
   import { SwapManager } from '~/utils/swapManager';
   import { TokenManager } from '~/utils/tokenManager';
   import TokenSelect from '~/views/pool/tokenSelect.vue';
+  import Slippage from '~/views/pool/slippage.vue';
   export default defineComponent({
     name: 'TemplateVue',
     components: {
       Modal,
       TokenSelect,
+      Slippage,
     },
     props: {
       willShowAddLiquidity: {
@@ -587,6 +594,7 @@
         willDisable,
         buttonMessageArray,
         willShowTokenSelection,
+        willShowSlippage,
         checkAmount,
         enterFromAmount,
         goMaxFrom,
@@ -598,6 +606,8 @@
         submit,
         onTokenSelection,
         onCloseTokenSelection,
+        onSlippage,
+        onCloseSlippage,
       };
     },
     computed: {},
