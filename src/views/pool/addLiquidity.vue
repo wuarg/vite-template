@@ -137,6 +137,11 @@
         </div>
       </div>
     </Modal>
+    <TokenSelect
+      :will-show-token-selection="willShowTokenSelection"
+      @onSelect="onTokenSelection($event)"
+      @onHide="onCloseTokenSelection()"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -147,10 +152,12 @@
   import { ContractService } from '~/utils/contractServe';
   import { SwapManager } from '~/utils/swapManager';
   import { TokenManager } from '~/utils/tokenManager';
+  import TokenSelect from '~/views/pool/tokenSelect.vue';
   export default defineComponent({
     name: 'TemplateVue',
     components: {
       Modal,
+      TokenSelect,
     },
     props: {
       willShowAddLiquidity: {
@@ -579,6 +586,7 @@
         slippageValue,
         willDisable,
         buttonMessageArray,
+        willShowTokenSelection,
         checkAmount,
         enterFromAmount,
         goMaxFrom,
@@ -588,6 +596,8 @@
         reverseRatio,
         showSlippage,
         submit,
+        onTokenSelection,
+        onCloseTokenSelection,
       };
     },
     computed: {},
