@@ -498,7 +498,6 @@
       };
 
       const showSlippage = () => {
-        console.log('22222');
         willShowSlippage.value = true;
       };
 
