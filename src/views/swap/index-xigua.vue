@@ -149,7 +149,16 @@
         </div>
       </div>
     </div>
-
+    <TokenSelect
+      :will-show-token-selection="willShowTokenSelection"
+      @onSelect="onTokenSelection($event)"
+      @onHide="onCloseTokenSelection()"
+    />
+    <Slippage
+      :will-show-slippage="willShowSlippage"
+      @onSelect="onSlippage($event)"
+      @onHide="onCloseSlippage()"
+    />
     <!-- <app-token-selection
       #tokenSelection
       style="height: 100%; width: 100%; z-index: 4; position: fixed; top: 0"
@@ -188,8 +197,14 @@
   import { ContractService } from '~/utils/contractServe';
   import { SwapManager } from '~/utils/swapManager';
   import { TokenManager } from '~/utils/tokenManager';
+  import TokenSelect from '~/views/pool/tokenSelect.vue';
+  import Slippage from '~/views/pool/slippage.vue';
   export default defineComponent({
     name: 'Swap',
+    components: {
+      TokenSelect,
+      Slippage,
+    },
     setup() {
       const ROUND_DOWN = 1;
       onMounted(() => {
@@ -722,6 +737,10 @@
         reverseRatio,
         showSlippage,
         goSwap,
+        onCloseTokenSelection,
+        onTokenSelection,
+        onSlippage,
+        onCloseSlippage,
       };
     },
     computed: {},

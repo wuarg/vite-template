@@ -41,7 +41,7 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'Swap',
         path: 'swap',
-        component: () => import('~/views/swap/index.vue'),
+        component: () => import('~/views/swap/index-xigua.vue'),
       },
       {
         name: 'Demo',
