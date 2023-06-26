@@ -24,6 +24,9 @@
       <router-link to="/data" class="mx-4" active-class="font-black">
         <span>数据</span>
       </router-link>
+      <router-link to="/nft" class="mx-4" active-class="font-black">
+        <span>NFT</span>
+      </router-link>
       <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
         <icon-carbon-moon v-else class="h-6 w-6" />

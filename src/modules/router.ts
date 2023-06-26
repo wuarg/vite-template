@@ -68,6 +68,11 @@ const routes: RouteRecordRaw[] = [
         path: 'xusd',
         component: () => import('~/views/xusd/index.vue'),
       },
+      {
+        name: 'NFT',
+        path: 'nft',
+        component: () => import('~/views/nft/index.vue'),
+      },
     ],
   },
 ];
