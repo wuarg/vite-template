@@ -37,7 +37,7 @@
                 >
                   <img
                     v-if="fromTokenName != '---'"
-                    src="/assets/tokens/{{fromTokenImage}}.png"
+                    :src="`/src/assets/tokens/${fromTokenImage}.png`"
                     width="20"
                   />
                   {{ fromTokenName }} ↓
@@ -70,7 +70,7 @@
                 <button class="btn btn-sm btn-dark" @click="showTokenSelection(1)">
                   <img
                     v-if="toTokenName != '---'"
-                    src="/assets/tokens/{{toTokenImage}}.png"
+                    :src="`/src/assets/tokens/${toTokenImage}.png`"
                     width="20"
                   />
                   {{ toTokenName }} ↓
@@ -93,7 +93,7 @@
           </div>
           <div class="row" style="margin: 10px 0px">
             <div class="col col-9">
-              滑点 (<a href="javascript: void(0)" @click="!waiting && showSlippage()">更改</a>)
+              滑点 (<button @click="!waiting && showSlippage()">更改</button>)
             </div>
             <div class="col text-right"> {{ slippageValue / 10 }}% </div>
           </div>
@@ -191,6 +191,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
+  import { commonStore } from '~/stores/modules/common';
   import { BigNumber } from 'bignumber.js';
   import { environment } from '~/utils/iostConfig';
 
@@ -199,6 +200,9 @@
   import { TokenManager } from '~/utils/tokenManager';
   import TokenSelect from '~/views/pool/tokenSelect.vue';
   import Slippage from '~/views/pool/slippage.vue';
+
+  const ROUND_DOWN = 1;
+
   export default defineComponent({
     name: 'Swap',
     components: {
@@ -206,14 +210,14 @@
       Slippage,
     },
     setup() {
-      const ROUND_DOWN = 1;
-      onMounted(() => {
-        // connectWith(connectors[0]);
-      });
       const waiting = ref(false);
+      const appStore = commonStore();
+      const myIOST = appStore.getMyIOST;
+      const walletReady = appStore.getWalletReady;
+      const account = appStore.getAccount;
       const profile = ref<Record<string, any>>({});
-      const swapManager = ref(null);
-      const tokenManager = ref(null);
+      // const swapManager = ref(null);
+      // const tokenManager = ref(null);
       const willShowTokenSelection = ref(false);
       const tokenSelectionIndex = ref(0);
       const willDisable = ref(false);
@@ -249,30 +253,34 @@
       const alertBodyCN = ref('');
       const alertBodyEN = ref('');
       const interval = ref<number | null>(null);
-
-      // const ngOnInit = async () => {
-      //   const myIOST = ContractService.getIOST();
-      //   console.log('myIOST---', myIOST);
-      //   await TokenManager.constructor(myIOST);
-      //   await SwapManager.constructor(myIOST);
-      //   buttonMessageArray.value = ['请输入兑换额'];
-      //   loadInitialBalance();
-
-      //   const slippageValueNew = parseInt(localStorage.getItem('-xg-slippage'));
-      //   if ([1, 5, 10, 50, 100].indexOf(slippageValueNew) >= 0) {
-      //     slippageValue.value = slippageValueNew;
-      //   }
-
-      //   interval.value = setInterval(() => {
-      //     refresh();
-      //   }, 10 * 1e3);
-
-      //   isMobile.value = _isMobile();
-      // };
-
-      // const ngOnDestroy = () => {
-      //   clearInterval(interval.value);
-      // };
+      onMounted(() => {
+        load();
+      });
+      const load = async () => {
+        waiting.value = true;
+        await SwapManager.constructor(myIOST);
+        await TokenManager.constructor(myIOST);
+        if (walletReady && account) {
+          try {
+            // 发起第一个异步请求
+            buttonMessageArray.value = ['请输入兑换额'];
+            loadInitialBalance();
+            const slippageValueNew = parseInt(localStorage.getItem('-xg-slippage'));
+            if ([1, 5, 10, 50, 100].indexOf(slippageValueNew) >= 0) {
+              slippageValue.value = slippageValueNew;
+            }
+            //   interval.value = setInterval(() => {
+            //     refresh();
+            //   }, 10 * 1e3);
+            isMobile.value = _isMobile();
+          } catch (error) {
+            console.error(error);
+          }
+          waiting.value = false;
+        } else {
+          console.log('未连接钱包');
+        }
+      };
 
       const _isMobile = () => {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -378,6 +386,7 @@
         }
       };
       const showSlippage = () => {
+        console.log('genggg-----');
         willShowSlippage.value = true;
       };
 
@@ -691,8 +700,8 @@
       return {
         waiting,
         profile,
-        swapManager,
-        tokenManager,
+        // swapManager,
+        // tokenManager,
         willShowTokenSelection,
         tokenSelectionIndex,
         willDisable,

@@ -41,7 +41,7 @@
                 >
                   <img
                     v-if="fromTokenName != '---'"
-                    src="/src/assets/tokens/{{fromTokenImage}}.png"
+                    :src="`/src/assets/tokens/${fromTokenImage}.png`"
                     width="20"
                   />
                   {{ fromTokenName }} ↓
@@ -82,7 +82,7 @@
                 <button class="btn btn-sm btn-dark" @click="showTokenSelection(1)">
                   <img
                     v-if="toTokenName != '---'"
-                    src="/src/assets/tokens/{{toTokenImage}}.png"
+                    :src="`/src/assets/tokens/${toTokenImage}.png`"
                     width="20"
                   />
                   {{ toTokenName }} ↓

@@ -66,11 +66,22 @@
       watch(
         () => props.willShowSlippage,
         (newValue, oldValue) => {
+          console.log('newValue, oldValue---', newValue, oldValue);
           if (newValue === true) {
             callChildMethod();
           }
         },
       );
+      const childRef = ref(null);
+      const callChildMethod = () => {
+        if (childRef.value) {
+          (childRef.value as any).show();
+        }
+      };
+      const onHide = () => {
+        context.emit('onHide');
+      };
+
       const waiting = ref(false);
       const appStore = commonStore();
       const myIOST = appStore.getMyIOST;
@@ -115,16 +126,9 @@
         // this.onClose.emit();
         context.emit('onClose');
       };
-      const childRef = ref(null);
-      const callChildMethod = () => {
-        if (childRef.value) {
-          (childRef.value as any).show();
-        }
-      };
-      const onHide = () => {
-        context.emit('onHide');
-      };
+
       return {
+        childRef,
         slippageValue,
         confirm,
         close,
