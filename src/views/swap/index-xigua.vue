@@ -1,6 +1,6 @@
 <template>
   <div class="swap p-10">
-    <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow-y: auto">
+    <div style="">
       <div :class="{ 'xg-swap': !isMobile }">
         <div class="xg-swap-container card" style="margin: 10px auto 0 auto">
           <div class="xg-swap-pannel card bg-primary">
@@ -159,34 +159,6 @@
       @onSelect="onSlippage($event)"
       @onHide="onCloseSlippage()"
     />
-    <!-- <app-token-selection
-      #tokenSelection
-      style="height: 100%; width: 100%; z-index: 4; position: fixed; top: 0"
-      *ngIf="willShowTokenSelection"
-      [profile]="profile"
-      (onSelect)="onTokenSelection($event)"
-  (onClose)="onCloseTokenSelection()">
-    </app-token-selection>
-
-    <app-slippage
-      #slippage
-      style="height: 100%; width: 100%; z-index: 4; position: fixed; top: 0"
-      *ngIf="willShowSlippage"
-      (onSelect)="onSlippage($event)"
-      (onClose)="onCloseSlippage()"
-    >
-    </app-slippage>
-
-    <app-alert-message
-      #alertMessage
-      [titleCN]="alertTitleCN"
-      [titleEN]="alertTitleEN"
-      [bodyCN]="alertBodyCN"
-      [bodyEN]="alertBodyEN"
-      style="height: 100%; width: 100%; z-index: 14; position: absolute; top: 0"
-      *ngIf="willShowAlertMessage"
-  (onClose)="closeAlert()">
-    </app-alert-message> -->
   </div>
 </template>
 <script lang="ts">
@@ -756,86 +728,4 @@
     methods: {},
   });
 </script>
-<style lang="less" scoped>
-  .xg-swap {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    max-width: 90%;
-  }
-
-  .xg-swap-container {
-    padding: 20px;
-    width: 400px;
-    max-width: 100%;
-    transition: 1s;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    user-drag: none;
-    -webkit-user-drag: none;
-  }
-
-  .xg-swap-pannel {
-    border: none;
-    padding: 12px 30px;
-  }
-
-  .xg-swap-pannel .row .col {
-    padding-right: 4px;
-    padding-left: 4px;
-  }
-
-  .xg-swap-pannel .row .col input {
-    height: auto;
-    background-color: #3a3f44;
-    border-color: #3a3f44;
-    color: white;
-    padding: 0;
-  }
-
-  .xg-swap-reverse {
-    margin: 4px;
-  }
-
-  .xg-swap-reverse span {
-    display: inline-block;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer;
-  }
-
-  .xg-swap-reverse span:hover {
-    color: white;
-  }
-
-  .xg-swap-info {
-    position: relative;
-    top: -104px;
-    width: 380px;
-    max-width: 90%;
-    margin: auto;
-    padding: 24px 20px 20px 20px;
-    background-color: #22282e;
-    border: 0;
-    z-index: -1;
-    visibility: hidden;
-    transition: transform 1s;
-  }
-
-  .xg-swap-info.active {
-    visibility: visible;
-    transform: translate(0px, 100px);
-  }
-</style>
+<style lang="less" scoped></style>
