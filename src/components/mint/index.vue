@@ -10,17 +10,22 @@
       <div class="mx-auto my-10 w-1/3 text-center">
         <BaseProgress :percentage="progress" />
       </div>
-      <button @click="increaseProgress">MINT</button>
+      <BaseButton class="mint-button" variant="text-text" @click="increaseProgress">
+        MINT
+      </BaseButton>
+      <!-- <button @click="increaseProgress">MINT</button> -->
     </div>
   </div>
 </template>
 <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
   import BaseProgress from '~/components/core/Progress.vue';
+  import BaseButton from '~/components/core/Button.vue';
   export default defineComponent({
     name: 'Mint',
     components: {
       BaseProgress,
+      BaseButton,
     },
     setup() {
       onMounted(() => {
@@ -41,4 +46,13 @@
     computed: {},
   });
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+  .mint-button {
+    background: url('../../assets/img/button.png') no-repeat !important;
+    background-size: 100% 100% !important;
+    display: inline-block;
+    width: 200px;
+    height: 60px;
+    color: #333;
+  }
+</style>
