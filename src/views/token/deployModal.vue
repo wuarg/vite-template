@@ -28,6 +28,7 @@
       );
       const childRef = ref(null);
       const callChildMethod = () => {
+        console.log('callChildMethod---', childRef.value);
         if (childRef.value) {
           (childRef.value as any).show();
         }
