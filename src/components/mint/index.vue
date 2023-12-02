@@ -1,7 +1,13 @@
 <template>
   <div class="mint-container p-10">
-    <p class="mt-16 text-3xl">The frst inscription platform on IOST</p>
+    <p class="mt-10 text-3xl">The frst inscription platform on IOST</p>
     <img src="/src/assets/img/banner.png" class="mb-10 mt-8 inline w-1/3" alt="" />
+    <div class="mint-process">
+      <p class="mint-process__price">
+        <span class="p-20"> IOST Labes</span>
+        <span class="p-20"> 价格: 10 I0ST</span>
+      </p>
+    </div>
   </div>
 </template>
 <script lang="ts">
