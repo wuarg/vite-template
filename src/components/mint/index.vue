@@ -10,26 +10,44 @@
       <div class="mx-auto my-10 w-1/3 text-center">
         <BaseProgress :percentage="progress" />
       </div>
-      <BaseButton class="mint-button" variant="text-text" @click="increaseProgress">
-        MINT
-      </BaseButton>
-      <!-- <button @click="increaseProgress">MINT</button> -->
+      <BaseButton class="mint-button" variant="text-text" @click="openModal"> MINT </BaseButton>
     </div>
+    <Modal ref="mintModalRef" title="Select a token" no-body-padding>
+      <template #headerTitle>
+        <BaseButton
+          class="back-to-select-token-button svg-image-to-white"
+          variant="text"
+          no-padding
+        >
+          <img src="" />
+        </BaseButton>
+        <h3 class="header-title"> Manage </h3>
+      </template>
+      33333
+
+      <template #footer>
+        <BaseButton class="manage-tokens-button" variant="text-primary" block no-padding>
+          Manage Token Lists
+        </BaseButton>
+      </template>
+    </Modal>
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, onMounted } from 'vue';
+  import { defineComponent, ref, onMounted, getCurrentInstance } from 'vue';
   import BaseProgress from '~/components/core/Progress.vue';
   import BaseButton from '~/components/core/Button.vue';
+  import Modal from '~/components/core/Modal.vue';
   export default defineComponent({
     name: 'Mint',
     components: {
       BaseProgress,
       BaseButton,
+      Modal,
     },
     setup() {
       onMounted(() => {
-        // connectWith(connectors[0]);
+        //
       });
       const progress = ref(50);
       const increaseProgress = () => {
@@ -37,13 +55,18 @@
           progress.value += 10;
         }
       };
-
       return {
         progress,
         increaseProgress,
       };
     },
     computed: {},
+    methods: {
+      openModal() {
+        const a = 0;
+        console.log(0);
+      },
+    },
   });
 </script>
 <style lang="less" scoped>
