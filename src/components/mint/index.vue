@@ -7,18 +7,34 @@
         <span class="p-20"> IOST Labes</span>
         <span class="p-20"> 价格: 10 I0ST</span>
       </p>
+      <BaseProgress :percentage="progress" />
+      <button @click="increaseProgress">Increase Progress</button>
     </div>
   </div>
 </template>
 <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
+  import BaseProgress from '~/components/core/Progress.vue';
   export default defineComponent({
     name: 'Mint',
+    components: {
+      BaseProgress,
+    },
     setup() {
       onMounted(() => {
         // connectWith(connectors[0]);
       });
-      return {};
+      const progress = ref(50);
+      const increaseProgress = () => {
+        if (progress.value < 100) {
+          progress.value += 10;
+        }
+      };
+
+      return {
+        progress,
+        increaseProgress,
+      };
     },
     computed: {},
   });
