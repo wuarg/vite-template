@@ -16,8 +16,27 @@
       <template #headerTitle>
         <h3 class="header-title"> IOST 铭文 </h3>
       </template>
-      33333
-
+      <div class="mint-info">
+        <div class="mint-info-item mb-5 flex justify-between">
+          <span>协议类型</span>
+          <span>IRC-100</span>
+        </div>
+        <div class="mint-info-item mb-5 flex justify-between">
+          <span>名字</span>
+          <span>IOST</span>
+        </div>
+        <div class="mint-info-item mb-5 flex justify-between">
+          <span>总量</span>
+          <span>21000000</span>
+        </div>
+        <div class="mint-info-item flex justify-between">
+          <span>数量</span>
+          <span>1000</span>
+        </div>
+      </div>
+      <div class="mint-tip pt-5">
+        <p>在Mint过程中，每张铭文将消耗10OST至黑洞地址</p>
+      </div>
       <template #footer>
         <BaseButton class="mint-button" variant="text-text"> OK </BaseButton>
       </template>
@@ -64,6 +83,7 @@
   });
 </script>
 <style lang="less" scoped>
+  @import '~/style/variables.less';
   .mint-button {
     background: url('../../assets/img/button.png') no-repeat !important;
     background-size: 100% 100% !important;
@@ -71,5 +91,20 @@
     width: 200px;
     height: 60px;
     color: #333;
+  }
+  .mint-info-item {
+    background: #c5afff;
+    padding: 10px;
+    span {
+      font-family: REEJI-TaikoMagicGB-Flash, REEJI-TaikoMagicGB-Flash;
+      font-weight: bold;
+    }
+  }
+  .mint-tip {
+    p {
+      font-family: REEJI-TaikoMagicGB-Flash, REEJI-TaikoMagicGB-Flash;
+      color: @success;
+      font-weight: bold;
+    }
   }
 </style>

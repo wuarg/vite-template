@@ -99,7 +99,7 @@
     // background-attachment: fixed;
   }
   .app-modal-header {
-    padding: 20px 30px;
+    padding: 30px 30px 15px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid @lightBorderColor;
