@@ -26,7 +26,16 @@
       <button :disabled="currentPage === 1" @click="previousPage">
         <img src="/src/assets/img/left.png" class="w-1/2" />
       </button>
-      <span class="mx-3">{{ currentPage }} / {{ totalPages }}</span>
+      <span class="mx-3">
+        <a
+          v-for="page in visiblePageOptions"
+          :key="page"
+          :class="{ selected: page === currentPage }"
+          @click="gotoPage(page)"
+        >
+          {{ page }}
+        </a>
+      </span>
       <button :disabled="currentPage === totalPages" @click="nextPage">
         <img src="/src/assets/img/right.png" class="w-1/2" />
       </button>
@@ -50,6 +59,28 @@
 
   const totalPages = computed(() => Math.ceil(props.data.length / itemsPerPage));
 
+  const totalPageOptions = computed(() =>
+    Array.from({ length: totalPages.value }, (_, index) => index + 1),
+  );
+
+  const visiblePageOptions = computed(() => {
+    const visiblePages = [];
+    const totalVisiblePages = 5; // You can adjust this based on your design
+    let startPage = Math.max(1, currentPage.value - Math.floor(totalVisiblePages / 2));
+    let endPage = startPage + totalVisiblePages - 1;
+
+    if (endPage > totalPages.value) {
+      endPage = totalPages.value;
+      startPage = Math.max(1, endPage - totalVisiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      visiblePages.push(i);
+    }
+
+    return visiblePages;
+  });
+
   const previousPage = () => {
     if (currentPage.value > 1) {
       currentPage.value--;
@@ -61,5 +92,10 @@
       currentPage.value++;
     }
   };
+
+  const gotoPage = (page: any) => {
+    currentPage.value = page;
+  };
+
   const hasActions = computed(() => props.columns.some((column: any) => column.key === 'actions'));
 </script>

@@ -88,6 +88,46 @@
           amount: '2233332',
           time: '22222',
         },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          amount: '2233332',
+          time: '22222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          amount: '2233332',
+          time: '22222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          amount: '2233332',
+          time: '22222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          amount: '2233332',
+          time: '22222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          amount: '2233332',
+          time: '22222',
+        },
         // Add more data as needed
       ];
       const handleEdit = (row: any) => {
