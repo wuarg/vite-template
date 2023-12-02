@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-duplicate-attributes -->
 <template>
   <input
     type="text"
@@ -22,6 +23,9 @@
           return ['medium', 'large'].includes(value);
         },
       },
+      bg: {
+        type: Boolean,
+      },
     },
     methods: {
       inputHandler(e) {
@@ -34,23 +38,24 @@
 <style lang="less" scoped>
   @import '~/style/variables.less';
   .app-input {
-    width: 100%;
+    // width: 100%;
     background: none;
     font-size: 16px;
     padding: 5px 12px;
     border-radius: 20px;
-    border: 1px solid @darkBorderSecondaryColor;
-    background-color: @darkSecondaryBackground;
+    // border: 1px solid @darkBorderSecondaryColor;
+    // background-color: @darkSecondaryBackground;
+    color: @darkSecondaryBackground;
     box-sizing: border-box;
 
     &.size-large {
       font-size: 18px;
-      padding: 16px;
+      padding: 16px 50px;
     }
     &,
     &:focus {
       outline: none;
-      color: #fff;
+      color: @darkSecondaryBackground;
     }
   }
 </style>
