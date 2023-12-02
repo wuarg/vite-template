@@ -7,7 +7,9 @@
         <span class="p-20"> IOST Labes</span>
         <span class="p-20"> 价格: 10 I0ST</span>
       </p>
-      <BaseProgress :percentage="progress" />
+      <div class="mx-auto my-10 w-1/3 text-center">
+        <BaseProgress :percentage="progress" />
+      </div>
       <button @click="increaseProgress">Increase Progress</button>
     </div>
   </div>

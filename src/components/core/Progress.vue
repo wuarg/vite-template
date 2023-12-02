@@ -19,17 +19,17 @@
   });
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+  @import '~/style/variables.less';
   .progress-container {
-    width: 100%;
-    height: 20px;
+    height: 10px;
     background-color: #f0f0f0;
-    margin-bottom: 10px;
+    border-radius: 10px;
   }
-
   .progress-bar {
     height: 100%;
-    background-color: #1890ff;
+    border-radius: 10px;
+    background-color: @success;
     transition: width 0.3s ease-in-out;
   }
 </style>
