@@ -1,16 +1,10 @@
 <template>
-  <div class="home-container">
-    <BaseMint />
-  </div>
+  <div class="p-10"> template </div>
 </template>
 <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
-  import BaseMint from '~/components/mint/index.vue';
   export default defineComponent({
-    name: 'HomeContainer',
-    components: {
-      BaseMint,
-    },
+    name: 'TemplateVue',
     setup() {
       onMounted(() => {
         // connectWith(connectors[0]);
@@ -20,4 +14,8 @@
     computed: {},
   });
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+  .wrap {
+    height: 100vh;
+  }
+</style>

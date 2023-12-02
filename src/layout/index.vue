@@ -2,8 +2,8 @@
   <div class="layout">
     <LayoutHeader />
     <div class="px-4 pl-8 text-center sm:px-20">
-      <p class="mt-16 text-3xl">The frst inscription platform on IOST</p>
-      <img src="/src/assets/img/banner.png" class="mb-10 mt-8 inline w-1/3" alt="" />
+      <!-- <p class="mt-16 text-3xl">The frst inscription platform on IOST</p>
+      <img src="/src/assets/img/banner.png" class="mb-10 mt-8 inline w-1/3" alt="" /> -->
       <div>
         <router-view></router-view>
       </div>
