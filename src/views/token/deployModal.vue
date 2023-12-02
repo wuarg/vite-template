@@ -5,8 +5,12 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, onMounted, SetupContext, watch } from 'vue';
+  import Modal from '~/components/core/Modal.vue';
   export default defineComponent({
     name: 'Deplay',
+    components: {
+      Modal,
+    },
     props: {
       deplayVisible: {
         type: Boolean,

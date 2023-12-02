@@ -13,7 +13,7 @@
     <p class="font-bold">识别所有操作，包括部署、铸造和交易</p>
     <div class="my-10 flex justify-between">
       <h1 class="mb-5 text-left text-xl font-bold">代币列表</h1>
-      <button>部署</button>
+      <button @click="handleDeplayModal()">部署</button>
     </div>
     <div class="my-10 flex justify-between">
       <BaseTabs :tabs="tabs" :initial-tab="selectedTabIndex" @change="handleTabSelected" />
@@ -50,7 +50,11 @@
         </template>
       </BaseTable>
     </div>
-    <deployModal :deplay-visible="deplayVisible" />
+    <deployModal
+      :deplay-visible="deplayVisible"
+      @onOk="handleOkDeplay()"
+      @onHide="handleHideDeplay()"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -151,6 +155,16 @@
       };
 
       const deplayVisible = ref(false);
+      const handleDeplayModal = () => {
+        console.log('2222');
+        deplayVisible.value = true;
+      };
+      const handleOkDeplay = () => {
+        deplayVisible.value = false;
+      };
+      const handleHideDeplay = () => {
+        deplayVisible.value = false;
+      };
       return {
         tabs,
         searchToken,
@@ -160,6 +174,9 @@
         tableData2,
         handleEdit,
         deplayVisible,
+        handleOkDeplay,
+        handleHideDeplay,
+        handleDeplayModal,
       };
     },
     computed: {},
