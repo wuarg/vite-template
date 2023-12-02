@@ -12,23 +12,14 @@
       </div>
       <BaseButton class="mint-button" variant="text-text" @click="openModal"> MINT </BaseButton>
     </div>
-    <Modal ref="childRef" title="Select a token" no-body-padding>
+    <Modal ref="childRef" title="">
       <template #headerTitle>
-        <BaseButton
-          class="back-to-select-token-button svg-image-to-white"
-          variant="text"
-          no-padding
-        >
-          <img src="" />
-        </BaseButton>
-        <h3 class="header-title"> Manage </h3>
+        <h3 class="header-title"> IOST 铭文 </h3>
       </template>
       33333
 
       <template #footer>
-        <BaseButton class="manage-tokens-button" variant="text-primary" block no-padding>
-          Manage Token Lists
-        </BaseButton>
+        <BaseButton class="mint-button" variant="text-text"> OK </BaseButton>
       </template>
     </Modal>
   </div>

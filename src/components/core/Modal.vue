@@ -11,7 +11,7 @@
           <BaseButton class="close-modal-button" variant="text" @click="hide">
             <img
               class="svg-image-to-white"
-              src="../../assets/images/icons/close-icon.svg"
+              src="../../assets/img/close.png"
               alt="close modal icon"
             />
           </BaseButton>
@@ -54,7 +54,7 @@
     },
     data() {
       return {
-        isVisible: false,
+        isVisible: true,
       };
     },
     methods: {
@@ -90,15 +90,19 @@
   .app-modal-content {
     width: 100%;
     max-width: 600px;
-    border: 1px solid @lightSecondaryBackground;
+    // border: 1px solid @lightSecondaryBackground;
     border-radius: 20px;
-    background-color: @lightBackground;
+    // background-color: @lightBackground;
     overflow: hidden;
+    background: url('../../assets/img/mint-modal.png') no-repeat;
+    background-size: 100% 100%;
+    // background-attachment: fixed;
   }
   .app-modal-header {
-    padding: 16px;
+    padding: 20px 30px;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid @lightBorderColor;
     .header-title {
       margin: 0;
     }
@@ -109,7 +113,7 @@
   }
   .app-modal-body {
     &:not(.no-body-padding) {
-      padding: 0 16px;
+      padding: 20px 30px;
       &.no-footer {
         padding-bottom: 16px;
       }
@@ -117,8 +121,8 @@
   }
   .app-modal-footer {
     padding: 16px;
-    background-color: @lightSecondaryBackground;
-    border-top: 1px solid @lightBorderColor;
+    // background-color: @lightSecondaryBackground;
+    // border-top: 1px solid @lightBorderColor;
   }
   .fade-enter-active,
   .fade-leave-active {
