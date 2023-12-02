@@ -42,6 +42,7 @@
       });
 
       return {
+        childRef,
         onHide,
       };
     },
