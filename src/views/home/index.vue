@@ -10,7 +10,7 @@
         </template>
 
         <!-- Slot for customizing body cells -->
-        <template #cell="{ cell }"> {{ cell }} </template>
+        <template #cell="{ cell }"> {{ cell }}</template>
       </BaseTable>
     </div>
     <div class="my-10 flex justify-between">
@@ -32,8 +32,9 @@
         <template #cell="{ cell }"> {{ cell }}</template>
         <!-- Custom slot for actions -->
         <template #actions="{ row }">
-          <button @click="handleEdit(row)">Edit</button>
-          <button @click="handleDelete(row)">Delete</button>
+          <!-- <button @click="handleEdit(row)">Edit</button>
+          <button @click="handleDelete(row)">Delete</button> -->
+          <img src="/src/assets/img/share.png" class="m-auto w-1/5" @click="handleEdit(row)" />
           <!-- Add more actions as needed -->
         </template>
       </BaseTable>
