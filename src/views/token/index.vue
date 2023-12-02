@@ -15,7 +15,16 @@
       <h1 class="mb-5 text-left text-xl font-bold">代币列表</h1>
       <button>部署</button>
     </div>
-    <BaseTabs :tabs="tabs" :initial-tab="selectedTabIndex" @change="handleTabSelected" />
+    <div class="my-10 flex justify-between">
+      <BaseTabs :tabs="tabs" :initial-tab="selectedTabIndex" @change="handleTabSelected" />
+      <BaseInput
+        v-model="searchToken"
+        placeholder="搜索"
+        background="background"
+        border="border"
+        class="w-1/5"
+      />
+    </div>
     <div class="tab-content">
       <!-- 根据选中的tab索引显示内容 -->
       {{ selectedTabIndex }}

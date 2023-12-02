@@ -2,7 +2,7 @@
 <template>
   <input
     type="text"
-    :class="`app-input size-${size}`"
+    :class="`app-input size-${size} app-input-${border} app-input-${background}`"
     v-bind="$attrs"
     :value="modelValue"
     @input="inputHandler"
@@ -25,6 +25,12 @@
       },
       bg: {
         type: Boolean,
+      },
+      background: {
+        type: String,
+      },
+      border: {
+        type: String,
       },
     },
     methods: {
@@ -55,7 +61,14 @@
     &,
     &:focus {
       outline: none;
-      color: @darkSecondaryBackground;
+      // color: @darkSecondaryBackground;
+    }
+    &-border {
+      border: 1px solid @darkBorderSecondaryColor;
+      color: #fff;
+    }
+    &-background {
+      background-color: @darkSecondaryBackground;
     }
   }
 </style>
