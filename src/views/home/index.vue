@@ -15,7 +15,11 @@
     </div>
     <div class="mb-5 flex justify-between">
       <span>发现超过100笔交易</span>
-      <span>下拉</span>
+      <select v-model="currentSelect" style="color: #333" @change="handleSelectChange">
+        <option v-for="option in selectOptions" :key="option.key" :value="option.key">{{
+          option.label
+        }}</option>
+      </select>
     </div>
     <div class="all-tx">
       <BaseTable :columns="tableColumns2" :data="tableData2">
@@ -130,6 +134,17 @@
         },
         // Add more data as needed
       ];
+      const currentSelect = ref<string>('1');
+      const selectOptions = [
+        { key: 1, label: '所有' },
+        { key: 2, label: '销售' },
+        { key: 3, label: '转帐' },
+      ];
+      const handleSelectChange = (event: Event) => {
+        const target = event.target as HTMLSelectElement;
+        console.log('target.value---', target.value);
+        currentSelect.value = target.value;
+      };
       const handleEdit = (row: any) => {
         // Handle edit action
         console.log('Edit', row);
@@ -144,8 +159,11 @@
         tableData,
         tableColumns2,
         tableData2,
+        selectOptions,
+        currentSelect,
         handleEdit,
         handleDelete,
+        handleSelectChange,
       };
     },
     computed: {},
