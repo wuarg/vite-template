@@ -1,17 +1,28 @@
 <template>
-  <header class="header sticky top-0 flex h-16 items-center justify-between px-10 sm:h-20">
+  <header class="header sticky top-0 flex h-16 items-center px-10 sm:h-20">
     <div class="bg delay-400 absolute transition-colors"></div>
     <div class="logo">
       <img src="/src/assets/img/logo.png" class="inline w-1/2" alt="" />
     </div>
-    <div>
+    <div class="flex w-full justify-between">
+      <div class="menu">
+        <router-link to="/home" class="mx-4" active-class="font-black">
+          <span> {{ $t('home') }}</span>
+        </router-link>
+        <router-link to="/about" class="mx-4" active-class="font-black">
+          <span> {{ $t('about.link_name') }}</span>
+        </router-link>
+      </div>
+      <div class="link">
+        <button class="nav-btn ml-2 text-center" @click="toggleLocale()">
+          <icon-carbon-language class="h-6 w-6" />
+        </button>
+      </div>
       <!-- <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
         <icon-carbon-moon v-else class="h-6 w-6" />
       </button> -->
-      <button class="nav-btn ml-2 text-center" @click="toggleLocale()">
-        <icon-carbon-language class="h-6 w-6" />
-      </button>
+
       <!-- <a href="http://soulfree.cn" target="_blank" class="ml-2 text-center">
         <button class="nav-btn">
           <icon-mdi:blogger class="h-6 w-6" />
