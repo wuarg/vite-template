@@ -27,12 +27,28 @@
     </div>
     <div class="tab-content">
       <!-- 根据选中的tab索引显示内容 -->
-      {{ selectedTabIndex }}
+      <!-- {{ selectedTabIndex }}
       <div v-if="selectedTabIndex === 0">Tab 1 content</div>
       <div v-if="selectedTabIndex === 1">Tab 2 content</div>
       <div v-if="selectedTabIndex === 2">Tab 3 content</div>
-      <div v-if="selectedTabIndex === 3">Tab 4 content</div>
+      <div v-if="selectedTabIndex === 3">Tab 4 content</div> -->
       <!-- 添加更多tab内容 -->
+      <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
+        <!-- Slot for customizing header cells -->
+        <template #header="{ column }">
+          <strong>{{ column.label }}</strong>
+        </template>
+
+        <!-- Slot for customizing body cells -->
+        <template #cell="{ cell }"> {{ cell }}</template>
+        <!-- Custom slot for actions -->
+        <template #actions="{ row }">
+          <!-- <button @click="handleEdit(row)">Edit</button>
+          <button @click="handleDelete(row)">Delete</button> -->
+          <img src="/src/assets/img/share.png" class="m-auto w-1/6" @click="handleEdit(row)" />
+          <!-- Add more actions as needed -->
+        </template>
+      </BaseTable>
     </div>
   </div>
 </template>
@@ -40,11 +56,13 @@
   import { defineComponent, ref, onMounted, getCurrentInstance } from 'vue';
   import BaseInput from '~/components/core/Input.vue';
   import BaseTabs from '~/components/core/Tabs.vue';
+  import BaseTable from '~/components/core/Table.vue';
   export default defineComponent({
     name: 'Token',
     components: {
       BaseInput,
       BaseTabs,
+      BaseTable,
     },
     setup() {
       onMounted(() => {
@@ -64,11 +82,78 @@
         // 处理选中事件，例如更新内容或执行其他逻辑
         selectedTabIndex.value = index;
       };
+      const tableColumns2 = [
+        { key: 'iost', label: '代币' },
+        { key: 'status', label: '部署时间' },
+        { key: 'from', label: '进程' },
+        { key: 'to', label: '持有地址' },
+        { key: 'Holders', label: 'Holders' },
+        { key: 'actions', label: '操作' }, // Add an actions column
+      ];
+      const tableData2 = [
+        {
+          iost: '100',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          Holders: '222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          Holders: '222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          Holders: '222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          Holders: '222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          Holders: '222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          Holders: '222',
+        },
+        {
+          iost: '13300',
+          status: '20000 IOS',
+          from: '1000',
+          to: '100000 IOST',
+          Holders: '222',
+        },
+        // Add more data as needed
+      ];
+      const handleEdit = (row: any) => {
+        // Handle edit action
+        console.log('Edit', row);
+      };
       return {
         tabs,
         searchToken,
         selectedTabIndex,
         handleTabSelected,
+        tableColumns2,
+        tableData2,
+        handleEdit,
       };
     },
     computed: {},
