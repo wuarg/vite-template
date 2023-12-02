@@ -4,12 +4,26 @@
     <table class="w-full">
       <thead>
         <tr>
-          <th v-for="(header, index) in headers" :key="index" class="py-3">{{ header }}</th>
+          <th
+            v-for="(header, index) in headers"
+            :key="index"
+            class="py-3"
+            :class="index === 0 ? 'text-left' : headers.length - 1 === index ? 'text-right' : ''"
+            >{{ header }}</th
+          >
         </tr>
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">
-          <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="py-3">{{ cell }}</td>
+          <td
+            v-for="(cell, cellIndex) in row"
+            :key="cellIndex"
+            class="py-3"
+            :class="
+              cellIndex === 0 ? 'text-left' : headers.length - 1 === cellIndex ? 'text-right' : ''
+            "
+            >{{ cell }}</td
+          >
         </tr>
       </tbody>
     </table>
