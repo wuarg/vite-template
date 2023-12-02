@@ -12,7 +12,7 @@
       </div>
       <BaseButton class="mint-button" variant="text-text" @click="openModal"> MINT </BaseButton>
     </div>
-    <Modal ref="mintModalRef" title="Select a token" no-body-padding>
+    <Modal ref="childRef" title="Select a token" no-body-padding>
       <template #headerTitle>
         <BaseButton
           class="back-to-select-token-button svg-image-to-white"
@@ -55,18 +55,21 @@
           progress.value += 10;
         }
       };
+      const childRef = ref(null);
+      const openModal = () => {
+        if (childRef.value) {
+          (childRef.value as any).show();
+        }
+      };
+
       return {
+        childRef,
         progress,
         increaseProgress,
+        openModal,
       };
     },
     computed: {},
-    methods: {
-      openModal() {
-        const a = 0;
-        console.log(0);
-      },
-    },
   });
 </script>
 <style lang="less" scoped>
