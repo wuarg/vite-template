@@ -4,26 +4,21 @@
     <table class="w-full">
       <thead>
         <tr>
-          <th
-            v-for="(header, index) in headers"
-            :key="index"
-            class="py-3"
-            :class="index === 0 ? 'text-left' : headers.length - 1 === index ? 'text-right' : ''"
-            >{{ header }}</th
-          >
+          <th v-for="column in columns" :key="column.key" class="py-3">
+            <slot name="header" :column="column">{{ column.label }}</slot>
+          </th>
+          <!-- <th v-if="hasActions">Actions</th> -->
         </tr>
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">
-          <td
-            v-for="(cell, cellIndex) in row"
-            :key="cellIndex"
-            class="py-3"
-            :class="
-              cellIndex === 0 ? 'text-left' : headers.length - 1 === cellIndex ? 'text-right' : ''
-            "
-            >{{ cell }}</td
-          >
+          <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="py-3">
+            <slot name="cell" :cell="cell" :column="columns[cellIndex]">{{ cell }}</slot>
+          </td>
+          <td v-if="hasActions">
+            <!-- Custom slot for actions -->
+            <slot name="actions" :row="row"></slot>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -42,7 +37,7 @@
 <script setup lang="ts">
   import { ref, computed, defineProps } from 'vue';
 
-  const props = defineProps(['headers', 'data']); // Accept headers and data as props
+  const props = defineProps(['columns', 'data']); // Accept columns and data as props
 
   const itemsPerPage = 10;
   const currentPage = ref(1);
@@ -66,4 +61,5 @@
       currentPage.value++;
     }
   };
+  const hasActions = computed(() => props.columns.some((column: any) => column.key === 'actions'));
 </script>
