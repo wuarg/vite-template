@@ -50,6 +50,7 @@
         </template>
       </BaseTable>
     </div>
+    <deployModal :deplay-visible="deplayVisible" />
   </div>
 </template>
 <script lang="ts">
@@ -57,12 +58,14 @@
   import BaseInput from '~/components/core/Input.vue';
   import BaseTabs from '~/components/core/Tabs.vue';
   import BaseTable from '~/components/core/Table.vue';
+  import deployModal from '~/views/token/deployModal.vue';
   export default defineComponent({
     name: 'Token',
     components: {
       BaseInput,
       BaseTabs,
       BaseTable,
+      deployModal,
     },
     setup() {
       onMounted(() => {
@@ -146,6 +149,8 @@
         // Handle edit action
         console.log('Edit', row);
       };
+
+      const deplayVisible = ref(false);
       return {
         tabs,
         searchToken,
@@ -154,6 +159,7 @@
         tableColumns2,
         tableData2,
         handleEdit,
+        deplayVisible,
       };
     },
     computed: {},
