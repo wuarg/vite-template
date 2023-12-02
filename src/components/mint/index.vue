@@ -10,7 +10,7 @@
       <div class="mx-auto my-10 w-1/3 text-center">
         <BaseProgress :percentage="progress" />
       </div>
-      <button @click="increaseProgress">Increase Progress</button>
+      <button @click="increaseProgress">MINT</button>
     </div>
   </div>
 </template>
