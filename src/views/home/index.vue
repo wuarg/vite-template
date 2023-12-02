@@ -3,7 +3,7 @@
     <BaseMint />
     <div class="last-tx">
       <h1 class="mb-5 text-left text-xl font-bold">最新交易</h1>
-      <BaseTable :columns="tableColumns" :data="tableData">
+      <BaseTable :columns="tableColumns" :data="tableData" :pagination="false">
         <!-- Slot for customizing header cells -->
         <template #header="{ column }">
           <strong>{{ column.label }}</strong>
@@ -13,7 +13,7 @@
         <template #cell="{ cell }"> {{ cell }} </template>
       </BaseTable>
     </div>
-    <div class="mb-5 flex justify-between">
+    <div class="my-10 flex justify-between">
       <span>发现超过100笔交易</span>
       <select v-model="currentSelect" style="color: #333" @change="handleSelectChange">
         <option v-for="option in selectOptions" :key="option.key" :value="option.key">{{
@@ -22,7 +22,7 @@
       </select>
     </div>
     <div class="all-tx">
-      <BaseTable :columns="tableColumns2" :data="tableData2">
+      <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
         <!-- Slot for customizing header cells -->
         <template #header="{ column }">
           <strong>{{ column.label }}</strong>

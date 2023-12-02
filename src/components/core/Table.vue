@@ -22,7 +22,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="pagination flex items-center justify-center p-10">
+    <div v-if="pagination" class="pagination flex items-center justify-center p-10">
       <button :disabled="currentPage === 1" @click="previousPage">
         <img src="/src/assets/img/left.png" class="m-auto w-1/2" />
       </button>
@@ -46,7 +46,7 @@
 <script setup lang="ts">
   import { ref, computed, defineProps } from 'vue';
 
-  const props = defineProps(['columns', 'data']); // Accept columns and data as props
+  const props = defineProps(['columns', 'data', 'pagination']); // Accept columns and data as props
 
   const itemsPerPage = 10;
   const currentPage = ref(1);
