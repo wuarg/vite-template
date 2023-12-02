@@ -1,7 +1,10 @@
 <template>
   <header class="header sticky top-0 flex h-16 items-center justify-between px-10 sm:h-20">
     <div class="bg delay-400 absolute transition-colors"></div>
-    <div class=""> <span class="title">太簇</span></div>
+    <div class="logo">
+      <img src="/src/assets/img/logo.png" class="mb-10 mt-8 inline w-20" alt="" />
+      <!-- <span class="title">太簇</span> -->
+    </div>
     <div>
       <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
