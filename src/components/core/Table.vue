@@ -24,7 +24,7 @@
     </table>
     <div class="pagination flex items-center justify-center p-10">
       <button :disabled="currentPage === 1" @click="previousPage">
-        <img src="/src/assets/img/left.png" class="w-1/2" />
+        <img src="/src/assets/img/left.png" class="m-auto w-1/2" />
       </button>
       <span class="mx-3">
         <a
@@ -37,7 +37,7 @@
         </a>
       </span>
       <button :disabled="currentPage === totalPages" @click="nextPage">
-        <img src="/src/assets/img/right.png" class="w-1/2" />
+        <img src="/src/assets/img/right.png" class="m-auto w-1/2" />
       </button>
     </div>
   </div>
