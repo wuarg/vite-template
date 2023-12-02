@@ -12,6 +12,12 @@
         <router-link to="/about" class="mx-4" active-class="font-black">
           <span> {{ $t('about.link_name') }}</span>
         </router-link>
+        <router-link to="/token" class="mx-4" active-class="font-black">
+          <span> {{ $t('tokens.menu') }}</span>
+        </router-link>
+        <router-link to="/marketplace" class="mx-4" active-class="font-black">
+          <span> {{ $t('marketplace.menu') }}</span>
+        </router-link>
       </div>
       <div class="link">
         <button class="nav-btn ml-2 text-center" @click="toggleLocale()">

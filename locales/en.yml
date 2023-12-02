@@ -24,3 +24,8 @@ failed: Failed
 
 msg:
   request: Request {state}
+
+tokens:
+  menu: Tokens
+marketplace:
+  menu: Marketplace

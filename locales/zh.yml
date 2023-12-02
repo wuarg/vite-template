@@ -23,3 +23,8 @@ failed: 失败
 count: 计数
 msg:
   request: 请求 {state}
+
+tokens:
+  menu: Tokens
+marketplace:
+  menu: 市场
