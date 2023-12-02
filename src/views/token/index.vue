@@ -10,29 +10,67 @@
       />
       <img src="/src/assets/img/dis.png" class="mr-15 w-5" />
     </div>
+    <p class="font-bold">识别所有操作，包括部署、铸造和交易</p>
+    <div class="my-10 flex justify-between">
+      <h1 class="mb-5 text-left text-xl font-bold">代币列表</h1>
+      <button>部署</button>
+    </div>
+    <BaseTabs :tabs="tabs" :initial-tab="selectedTabIndex" @change="handleTabSelected" />
+    <div class="tab-content">
+      <!-- 根据选中的tab索引显示内容 -->
+      {{ selectedTabIndex }}
+      <div v-if="selectedTabIndex === 0">Tab 1 content</div>
+      <div v-if="selectedTabIndex === 1">Tab 2 content</div>
+      <div v-if="selectedTabIndex === 2">Tab 3 content</div>
+      <div v-if="selectedTabIndex === 3">Tab 4 content</div>
+      <!-- 添加更多tab内容 -->
+    </div>
   </div>
 </template>
 <script lang="ts">
   import { defineComponent, ref, onMounted, getCurrentInstance } from 'vue';
   import BaseInput from '~/components/core/Input.vue';
+  import BaseTabs from '~/components/core/Tabs.vue';
   export default defineComponent({
     name: 'Token',
     components: {
       BaseInput,
+      BaseTabs,
     },
     setup() {
       onMounted(() => {
         //
       });
       const searchToken = ref('');
+      const tabs = ref([
+        { label: '全部', content: 'Content for Tab 1' },
+        { label: '最新', content: 'Content for Tab 2' },
+        { label: '进行中', content: 'Content for Tab 3' },
+        { label: '已完成', content: 'Content for Tab 4' },
+      ]);
+      const selectedTabIndex = ref(0);
+
+      const handleTabSelected = (index: number) => {
+        console.log('index---', index);
+        // 处理选中事件，例如更新内容或执行其他逻辑
+        selectedTabIndex.value = index;
+      };
       return {
+        tabs,
         searchToken,
+        selectedTabIndex,
+        handleTabSelected,
       };
     },
     computed: {},
   });
 </script>
 <style lang="less" scoped>
+  @import '~/style/variables.less';
+  h1 {
+    color: @success;
+    font-weight: bold;
+  }
   .title {
     font-family: REEJI-TaikoMagicGB-Flash, REEJI-TaikoMagicGB-Flash;
     font-weight: bold;
