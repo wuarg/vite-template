@@ -46,7 +46,7 @@
       </div>
       <div class="my-10 flex items-center justify-end">
         <BaseButton class="deploy-button" variant="text-text"> Cancel </BaseButton>
-        <BaseButton class="deploy-button" variant="text-text">
+        <BaseButton class="deploy-button" variant="text-text" @click="handleDeploy()">
           <span class="deploy-span">Deploy</span>
         </BaseButton>
       </div>
@@ -54,7 +54,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, onMounted, SetupContext, watch } from 'vue';
+  import { defineComponent, ref, onMounted, SetupContext, watch, handleError } from 'vue';
   import Modal from '~/components/core/Modal.vue';
   import BaseButton from '~/components/core/Button.vue';
   export default defineComponent({
@@ -108,6 +108,9 @@
         // }
         amountIn.value = amountIn.value.trim();
       };
+      const handleDeploy = async () => {
+        console.log('amountIn.value--', amountIn.value);
+      };
 
       return {
         childRef,
@@ -116,6 +119,7 @@
         amountIn,
         checkAmount,
         enterFromAmount,
+        handleDeploy,
       };
     },
     computed: {},
