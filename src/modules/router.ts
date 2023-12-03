@@ -48,6 +48,11 @@ const routes: RouteRecordRaw[] = [
         path: 'marketplace',
         component: () => import('~/views/marketplace/index.vue'),
       },
+      {
+        name: 'Irc20Detail',
+        path: 'irc20',
+        component: () => import('~/views/token/irc20Detail.vue'),
+      },
     ],
   },
 ];

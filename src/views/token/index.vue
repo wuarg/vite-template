@@ -45,7 +45,7 @@
         <template #actions="{ row }">
           <!-- <button @click="handleEdit(row)">Edit</button>
           <button @click="handleDelete(row)">Delete</button> -->
-          <img src="/src/assets/img/share.png" class="m-auto w-1/6" @click="handleEdit(row)" />
+          <img src="/src/assets/img/share.png" class="m-auto w-1/6" @click="navigateToIrc(row)" />
           <!-- Add more actions as needed -->
         </template>
       </BaseTable>
@@ -63,6 +63,7 @@
   import BaseTabs from '~/components/core/Tabs.vue';
   import BaseTable from '~/components/core/Table.vue';
   import deployModal from '~/views/token/deployModal.vue';
+  import { useRouter } from 'vue-router';
   export default defineComponent({
     name: 'Token',
     components: {
@@ -165,6 +166,10 @@
       const handleHideDeplay = () => {
         deplayVisible.value = false;
       };
+      const router = useRouter();
+      const navigateToIrc = (row: any) => {
+        router.push({ name: 'Irc20Detail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
+      };
       return {
         tabs,
         searchToken,
@@ -177,6 +182,7 @@
         handleOkDeplay,
         handleHideDeplay,
         handleDeplayModal,
+        navigateToIrc,
       };
     },
     computed: {},
