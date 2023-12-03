@@ -1,6 +1,6 @@
 <template>
   <div class="tabs">
-    <div class="tab-header">
+    <div class="tab-header flex items-center justify-center">
       <div
         v-for="(tab, index) in tabs"
         :key="index"
@@ -32,7 +32,8 @@
   }
 
   .tab-header {
-    display: flex;
+    /* display: flex; */
+
     /* border-bottom: 1px solid #ccc; */
   }
 
