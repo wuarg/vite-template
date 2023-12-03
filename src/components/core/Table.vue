@@ -12,8 +12,13 @@
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">
-          <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="py-3">
+          <!-- <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="py-3">
             <slot name="cell" :cell="cell" :column="columns[cellIndex]">{{ cell }}</slot>
+          </td> -->
+          <td v-for="(column, colIndex) in columns" :key="colIndex">
+            <slot name="column" v-bind="{ row, column }">
+              {{ row[column.key] }}
+            </slot>
           </td>
           <td v-if="hasActions">
             <!-- Custom slot for actions -->

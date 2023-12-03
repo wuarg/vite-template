@@ -29,7 +29,15 @@
         </template>
 
         <!-- Slot for customizing body cells -->
-        <template #cell="{ cell }"> {{ cell }}</template>
+        <template #column="{ row, column }">
+          <!-- Custom column content -->
+          <span v-if="column.key === 'iost'">
+            {{ row[column.key] + ' - Custom Content' }}
+          </span>
+          <span v-else>
+            {{ row[column.key] }}
+          </span>
+        </template>
         <!-- Custom slot for actions -->
         <template #actions="{ row }">
           <!-- <button @click="handleEdit(row)">Edit</button>
