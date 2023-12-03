@@ -53,6 +53,11 @@ const routes: RouteRecordRaw[] = [
         path: 'irc20',
         component: () => import('~/views/token/irc20Detail.vue'),
       },
+      {
+        name: 'MarketplaceDetail',
+        path: 'marketplaceDetail',
+        component: () => import('~/views/marketplace/mkDetail.vue'),
+      },
     ],
   },
 ];

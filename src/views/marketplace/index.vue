@@ -34,6 +34,7 @@
   import { defineComponent, ref, onMounted, getCurrentInstance } from 'vue';
   import BaseInput from '~/components/core/Input.vue';
   import BaseTable from '~/components/core/Table.vue';
+  import { useRouter } from 'vue-router';
   export default defineComponent({
     name: 'Token',
     components: {
@@ -110,9 +111,11 @@
         },
         // Add more data as needed
       ];
+      const router = useRouter();
       const handleEdit = (row: any) => {
         // Handle edit action
         console.log('Edit', row);
+        router.push({ name: 'MarketplaceDetail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
       };
       return {
         searchToken,
