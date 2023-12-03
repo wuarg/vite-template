@@ -13,17 +13,9 @@
   });
 </script>
 <template>
-  <div class="my-10 text-center text-lg">
-    <router-link to="/about" class="mx-4" active-class="font-normal">
-      <span>
-        <sup class="sub">{{ str }}</sup> {{ $t('about.link_name') }}</span
-      >
-    </router-link>
-    <router-link to="/home" class="mx-4" active-class="font-normal">
-      <span
-        ><sup>{{ str }}</sup> {{ $t('home') }}</span
-      >
-    </router-link>
+  <div class="my-10 flex items-center justify-center">
+    <img src="/src/assets/img/twitter.png" class="mx-5 w-20" />
+    <img src="/src/assets/img/discord.png" class="mx-5 w-20" />
   </div>
 </template>
 <style lang="less" scoped>
