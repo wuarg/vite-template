@@ -6,12 +6,34 @@ import Icons from 'unplugin-icons/vite';
 import Components from 'unplugin-vue-components/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 
+// 自动导入vue中hook reactive ref等
+import AutoImport from 'unplugin-auto-import/vite';
+//自动导入ui-组件 比如说ant-design-vue  element-plus等
+import Components from 'unplugin-vue-components/vite';
+//ant-design-vue
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+
 // https://vitejs.dev/config/
 export default defineConfig({
   css: {
     postcss: {
       plugins: [require('postcss-import'), require('tailwindcss'), require('autoprefixer')],
     },
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
+    // loaderOptions: {
+    //   less: {
+    //     lessOptions: {
+    //       modifyVars: {
+    //         // 这里根据需要定制主题
+    //       },
+    //       javascriptEnabled: true,
+    //     },
+    //   },
+    // },
   },
   resolve: {
     alias: {
@@ -49,11 +71,19 @@ export default defineConfig({
       autoInstall: true,
       compiler: 'vue3',
     }),
+    AutoImport({
+      //安装两行后你会发现在组件中不用再导入ref，reactive等
+      imports: ['vue', 'vue-router'],
+      dts: 'src/auto-import.d.ts',
+      //ant-design-vue
+      resolvers: [AntDesignVueResolver()],
+    }),
     Components({
       resolvers: [
         IconsResolver({
           prefix: 'icon',
         }),
+        AntDesignVueResolver({ importStyle: true, resolveIcons: true }),
       ],
       dts: 'src/components.d.ts',
     }),
