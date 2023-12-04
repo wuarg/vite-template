@@ -28,7 +28,9 @@ export default defineConfig({
     //   less: {
     //     lessOptions: {
     //       modifyVars: {
-    //         // 这里根据需要定制主题
+    //         'primary-color': '#8456FC',
+    //         'link-color': '#8456FC',
+    //         'border-radius-base': '2px',
     //       },
     //       javascriptEnabled: true,
     //     },
@@ -95,7 +97,7 @@ export default defineConfig({
         IconsResolver({
           prefix: 'icon',
         }),
-        AntDesignVueResolver({ importStyle: true, resolveIcons: true }),
+        AntDesignVueResolver({ importStyle: false, resolveIcons: true }),
       ],
       dts: 'src/components.d.ts',
     }),

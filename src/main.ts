@@ -2,10 +2,10 @@ import { createApp } from 'vue';
 import App from './app.vue';
 import 'tailwindcss/tailwind.css';
 import './style/index.less';
-
 // //ant-design-vue
 import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+// import 'ant-design-vue/dist/antd.less';
+import './style/theme.less';
 
 const app = createApp(App);
 

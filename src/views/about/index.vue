@@ -6,9 +6,8 @@
     <a-drawer
       v-model:visible="visible"
       class="custom-class"
-      root-class-name="root-class-name"
-      :root-style="{ color: 'blue' }"
-      style="color: red"
+      :header-style="{ background: '#8456FC' }"
+      :drawer-style="{ background: '#8456FC' }"
       title="Basic Drawer"
       placement="right"
       @after-visible-change="afterVisibleChange"
