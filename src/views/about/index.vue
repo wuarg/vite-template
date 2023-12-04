@@ -1,7 +1,22 @@
 <template>
   <div class="font-normal">
     <span class="text-3xl" @click="handleClick()">About</span>
-
+    <a-checkbox v-model:checked="checked">Checkbox</a-checkbox>
+    <a-button type="primary" @click="showDrawer">Open</a-button>
+    <a-drawer
+      v-model:visible="visible"
+      class="custom-class"
+      root-class-name="root-class-name"
+      :root-style="{ color: 'blue' }"
+      style="color: red"
+      title="Basic Drawer"
+      placement="right"
+      @after-visible-change="afterVisibleChange"
+    >
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-drawer>
     <p class="text-2xl">{{ $t('about.title') }}</p>
     <!-- <p class=""> Vite + Vue3、Pinia、TypeScript、Eslint、Prettier、LintStaged、Tailwindcss </p> -->
     <ul class="m-auto mt-4 inline-block w-auto list-disc text-left text-xl">
@@ -55,11 +70,12 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { labelSystem } from '~/api/index';
   import { cancelToken } from '~/utils/service';
   export default defineComponent({
     name: 'About',
+    components: {},
     setup() {
       const handleClick = async () => {
         await labelSystem()
@@ -77,10 +93,23 @@
           cancelToken.cancel('取消请求');
         }
       };
+      const visible = ref<boolean>(false);
 
+      const afterVisibleChange = (bool: boolean) => {
+        console.log('open', bool);
+      };
+
+      const showDrawer = () => {
+        visible.value = true;
+      };
+      const checked = ref(false);
       return {
         handleClick,
         handleCancel,
+        visible,
+        showDrawer,
+        afterVisibleChange,
+        checked,
       };
     },
   });
