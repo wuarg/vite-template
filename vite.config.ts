@@ -43,8 +43,20 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
+    // 热更新
+    hmr: true,
     watch: {
       ignored: ['./config/*', './locales/*'],
+    },
+    proxy: {
+      '/portalApi': {
+        target: process.env.VUE_APP_URL || 'http://10.40.127.46:30000/', //开发环境
+        ws: false, // 是否跨域
+        changeOrigin: true,
+        pathRewrite: {
+          '^/portalApi': '/', // 除了测试环境以外
+        },
+      },
     },
   },
   esbuild: {

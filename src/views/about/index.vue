@@ -1,6 +1,6 @@
 <template>
   <div class="font-normal">
-    <span class="text-3xl">About</span>
+    <span class="text-3xl" @click="handleClick()">About</span>
 
     <p class="text-2xl">{{ $t('about.title') }}</p>
     <!-- <p class=""> Vite + Vue3、Pinia、TypeScript、Eslint、Prettier、LintStaged、Tailwindcss </p> -->
@@ -56,10 +56,32 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import { labelSystem } from '~/api/index';
+  import { cancelToken } from '~/utils/service';
   export default defineComponent({
     name: 'About',
     setup() {
-      return {};
+      const handleClick = async () => {
+        await labelSystem()
+          .then((res) => {
+            console.log('res: ', res);
+          })
+          .catch(() => {
+            // ElMessage.error('请求失败 请求已取消！');
+          });
+      };
+
+      const handleCancel = () => {
+        // 在适当的时机调用取消请求（例如点击取消按钮）
+        if (cancelToken) {
+          cancelToken.cancel('取消请求');
+        }
+      };
+
+      return {
+        handleClick,
+        handleCancel,
+      };
     },
   });
 </script>
