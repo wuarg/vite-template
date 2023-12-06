@@ -4,7 +4,7 @@
     <div class="logo">
       <img src="/src/assets/img/logo.png" class="inline w-1/2" alt="" />
     </div>
-    <div class="flex w-full justify-between">
+    <div class="flex w-full items-center justify-between">
       <div class="menu">
         <router-link to="/home" class="mx-4" active-class="font-black text-white">
           <span> {{ $t('home') }}</span>
@@ -18,9 +18,11 @@
         <router-link to="/marketplace" class="mx-4" active-class="font-black text-white">
           <span> {{ $t('marketplace.menu') }}</span>
         </router-link>
-        {{ account }}
       </div>
-      <div class="link">
+      <div class="link flex justify-end">
+        <BaseButton class="bg-button" variant="text-text" style="height: 40px; width: auto">
+          {{ account }}
+        </BaseButton>
         <button class="nav-btn ml-2 text-center" @click="toggleLocale()">
           <icon-carbon-language class="h-6 w-6" />
         </button>
@@ -52,6 +54,7 @@
   const { themeAni } = useThemeChang(isDark);
 </script> -->
 <script lang="ts">
+  import BaseButton from '~/components/core/Button.vue';
   import { commonStore } from '~/stores/modules/common';
   import { defineComponent } from 'vue';
   import { isDark, useThemeChang } from '~/composables';
@@ -59,6 +62,9 @@
   import { useI18n } from '~/modules/i18n';
   export default defineComponent({
     name: 'LayoutHeader',
+    components: {
+      BaseButton,
+    },
     setup() {
       const { t, toggleLocale } = useI18n();
       const appStore = commonStore();
