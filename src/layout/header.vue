@@ -98,6 +98,17 @@
             </template>
           </a-table>
         </div>
+        <div class="shop-total my-5 flex items-center justify-between p-5">
+          <div class="num">
+            <p>总共支付</p>
+            <p class="num__p">450 IOST</p>
+          </div>
+          <div class="btn">
+            <BaseButton class="bg-button" variant="text-text" style="height: 50px; width: auto">
+              现在购买
+            </BaseButton>
+          </div>
+        </div>
       </a-drawer>
     </div>
   </header>
@@ -143,14 +154,14 @@
   ];
 
   const data: DataType[] = [];
-  for (let i = 0; i < 6; i++) {
-    data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      age: 32,
-      address: `London, Park Lane no. ${i}`,
-    });
-  }
+  // for (let i = 0; i < 6; i++) {
+  //   data.push({
+  //     key: i,
+  //     name: `Edward King ${i}`,
+  //     age: 32,
+  //     address: `London, Park Lane no. ${i}`,
+  //   });
+  // }
 
   export default defineComponent({
     name: 'LayoutHeader',
@@ -242,5 +253,14 @@
   }
   /deep/ .ant-table-thead > tr > th {
     // color: #fff;
+  }
+  .shop-total {
+    background: #8c6dff;
+    .num {
+      &__p {
+        font-weight: bold;
+        color: #fff132;
+      }
+    }
   }
 </style>
