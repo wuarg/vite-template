@@ -18,13 +18,13 @@
         <router-link to="/marketplace" class="mx-4" active-class="font-black text-white">
           <span> {{ $t('marketplace.menu') }}</span>
         </router-link>
+        {{ account }}
       </div>
       <div class="link">
         <button class="nav-btn ml-2 text-center" @click="toggleLocale()">
           <icon-carbon-language class="h-6 w-6" />
         </button>
       </div>
-      <div class="fixed inset-x-0 bottom-0 my-10 text-center text-lg"> {{ account }} </div>
       <!-- <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
         <icon-carbon-moon v-else class="h-6 w-6" />
@@ -43,24 +43,29 @@
     </div>
   </header>
 </template>
-<script setup lang="ts">
+<!-- <script setup lang="ts">
   import { isDark, useThemeChang } from '~/composables';
   // import { useI18n } from "vue-i18n";
   import { useI18n } from '~/modules/i18n';
   const { t, toggleLocale } = useI18n();
 
   const { themeAni } = useThemeChang(isDark);
-</script>
+</script> -->
 <script lang="ts">
   import { commonStore } from '~/stores/modules/common';
   import { defineComponent } from 'vue';
+  import { isDark, useThemeChang } from '~/composables';
+  // import { useI18n } from "vue-i18n";
+  import { useI18n } from '~/modules/i18n';
   export default defineComponent({
     name: 'LayoutHeader',
     setup() {
+      const { t, toggleLocale } = useI18n();
       const appStore = commonStore();
       const account = appStore.getAccount;
       return {
         account,
+        toggleLocale,
       };
     },
   });
