@@ -22,7 +22,7 @@ export const myAddress = '';
 export const myIOST = {};
 export const ContractService = {
   async init() {
-    console.log('window---', window, window['IWalletJS']);
+    console.log('window---', window, window['IWalletJS'], window['IOST']);
     if (window['IWalletJS']) {
       this.myIOST = window['IWalletJS'].newIOST(window['IOST']);
 
