@@ -1,9 +1,10 @@
 <template>
   <div class="tabs">
-    <div class="tab-header flex items-center justify-center">
+    <div class="tab-header flex items-center">
       <div
         v-for="(tab, index) in tabs"
         :key="index"
+        class="tabs-list"
         :class="{ 'active-tab': selectedIndex === index }"
         @click="selectTab(index)"
       >
@@ -28,7 +29,7 @@
 
 <style scoped>
   .tabs {
-    width: 300px;
+    /* width: 300px; */
   }
 
   .tab-header {
@@ -41,6 +42,7 @@
     padding: 5px 10px;
     cursor: pointer;
     border: 1px solid #767676;
+    min-width: 80px;
   }
 
   .tab-header .active-tab {
