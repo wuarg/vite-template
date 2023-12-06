@@ -80,9 +80,9 @@
               <span>IOST</span>
             </div>
             <div class="content py-6">
-              <h3 class="">1000</h3>
+              <h3 class="yellow">1000</h3>
               <p>
-                <span class="">$ 3.24</span>/
+                <span class="green">$ 3.24</span>/
                 <span>iosi</span>
               </p>
             </div>
@@ -236,6 +236,12 @@
     }
     .buy {
       background: @purple2;
+    }
+    .yellow {
+      color: @yellow;
+    }
+    .green {
+      color: @green;
     }
   }
 </style>
