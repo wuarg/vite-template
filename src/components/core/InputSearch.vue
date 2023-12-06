@@ -37,6 +37,7 @@
 <style lang="less" scoped>
   /deep/ .ant-input {
     background: transparent !important;
+    color: #fff !important;
   }
   /deep/ .ant-btn,
   /deep/ .ant-input-group-addon {
