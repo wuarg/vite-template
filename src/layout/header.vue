@@ -24,6 +24,7 @@
           <icon-carbon-language class="h-6 w-6" />
         </button>
       </div>
+      <div class="fixed inset-x-0 bottom-0 my-10 text-center text-lg"> {{ account }} </div>
       <!-- <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
         <icon-carbon-moon v-else class="h-6 w-6" />
@@ -51,9 +52,17 @@
   const { themeAni } = useThemeChang(isDark);
 </script>
 <script lang="ts">
+  import { commonStore } from '~/stores/modules/common';
   import { defineComponent } from 'vue';
   export default defineComponent({
     name: 'LayoutHeader',
+    setup() {
+      const appStore = commonStore();
+      const account = appStore.getAccount;
+      return {
+        account,
+      };
+    },
   });
 </script>
 <style lang="less" scoped>
