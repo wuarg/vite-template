@@ -94,7 +94,7 @@
     border-radius: 20px;
     // background-color: @lightBackground;
     overflow: hidden;
-    background: url('../../assets/img/mint-modal.png') no-repeat;
+    background: url('../../assets/img/mint-modal1.png') no-repeat;
     background-size: 100% 100%;
     // background-attachment: fixed;
   }

@@ -66,6 +66,52 @@
         ></a-select>
       </div>
     </div>
+    <div class="mk-list my-10">
+      <a-row :gutter="[16, 16]" class="mk-list__row">
+        <a-col v-for="i in 4" :key="i" :span="6" class="mk-list__col pb-8">
+          <div class="mk-list__col__div">
+            <div class="header flex items-center justify-between p-5">
+              <span>IOST</span>
+              <span><img src="/src/assets/img/success2.png" class="w-5" /></span>
+            </div>
+            <div class="tags flex items-center justify-between px-5">
+              <span>IOST</span>
+              <span>IOST</span>
+              <span>IOST</span>
+            </div>
+            <div class="content py-6">
+              <h3 class="">1000</h3>
+              <p>
+                <span class="">$ 3.24</span>/
+                <span>iosi</span>
+              </p>
+            </div>
+            <div class="buy p-5">
+              <div class="flex items-center justify-between py-3">
+                <span>#3133234</span>
+                <span>CFb5vN...</span>
+              </div>
+              <div class="flex items-center justify-between py-3">
+                <span class="flex items-center">
+                  <img src="/src/assets/img/iost.png" alt="" class="mr-3 w-4" />100
+                </span>
+                <span>$4.67</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <BaseButton class="bg-button" variant="text-text" style="height: 30px; width: auto">
+                  BUY
+                </BaseButton>
+                <img src="/src/assets/img/shop.png" alt="shop" class="h-5 w-5" />
+              </div>
+            </div>
+          </div>
+        </a-col>
+      </a-row>
+      <!-- <div class="mk-list__div"> 232 </div>
+      <div class="mk-list__div"> 232 </div>
+      <div class="mk-list__div"> 232 </div>
+      <div class="mk-list__div"> 232 </div> -->
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -74,12 +120,14 @@
   import { useRoute } from 'vue-router';
   import BaseTabs from '~/components/core/Tabs.vue';
   import BaseInput from '~/components/core/Input.vue';
+  import BaseButton from '~/components/core/Button.vue';
 
   export default defineComponent({
     name: 'MKDetail',
     components: {
       BaseTabs,
       BaseInput,
+      BaseButton,
     },
     setup() {
       onMounted(() => {
@@ -174,5 +222,20 @@
   h1 {
     color: @success;
     font-weight: bold;
+  }
+  .mk-list {
+    &__col__div {
+      // width: 100%;
+      // max-width: 600px;
+      // border: 1px solid @lightSecondaryBackground;
+      border-radius: 20px;
+      // background-color: @lightBackground;
+      overflow: hidden;
+      background: url('../../assets/img/mint-modal1.png') no-repeat;
+      background-size: 100% 100%;
+    }
+    .buy {
+      background: @purple2;
+    }
   }
 </style>
