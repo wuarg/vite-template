@@ -34,7 +34,8 @@
           <span>1000</span>
         </div>
       </div>
-      <div class="mint-tip pt-5">
+      <div class="mint-tip flex pt-5">
+        <img src="/src/assets/img/tip.png" alt="" class="h-6 w-6" />
         <p>在Mint过程中，每张铭文将消耗10OST至黑洞地址</p>
       </div>
       <template #footer>
