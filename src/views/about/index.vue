@@ -73,17 +73,24 @@
       <a-select-option value="option2">Option 2</a-select-option>
       <a-select-option value="option3">Option 3</a-select-option>
     </BaseSelect>
+
+    <BaseInputSearch
+      v-model="searchValue"
+      :default-search-value="defaultSearchValue"
+      style="width: 200px"
+    />
   </div>
 </template>
 
 <script lang="ts">
   import BaseSelect from '~/components/core/Select.vue';
+  import BaseInputSearch from '~/components/core/InputSearch.vue';
   import { defineComponent, ref } from 'vue';
   import { labelSystem } from '~/api/index';
   import { cancelToken } from '~/utils/service';
   export default defineComponent({
     name: 'About',
-    components: { BaseSelect },
+    components: { BaseSelect, BaseInputSearch },
     setup() {
       const handleClick = async () => {
         await labelSystem()
@@ -115,6 +122,9 @@
       //select 组件
       const selectedValue = ref<string | number | null>(null);
       const defaultSelectedValue = 'option2';
+      // search 组件
+      const searchValue = ref<string>('');
+      const defaultSearchValue = 'initial search text';
       return {
         handleClick,
         handleCancel,
@@ -124,6 +134,8 @@
         checked,
         selectedValue,
         defaultSelectedValue,
+        searchValue,
+        defaultSearchValue,
       };
     },
   });
