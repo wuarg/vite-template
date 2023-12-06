@@ -19,10 +19,13 @@
           <span> {{ $t('marketplace.menu') }}</span>
         </router-link>
       </div>
-      <div class="link flex justify-end">
+      <div class="link flex items-center justify-end">
         <BaseButton class="bg-button" variant="text-text" style="height: 40px; width: auto">
           {{ account }}
         </BaseButton>
+        <div class="shop-box mx-4 w-8" @click="showDrawer">
+          <img src="/src/assets/img/shop.png" alt="shop" />
+        </div>
         <button class="nav-btn ml-2 text-center" @click="toggleLocale()">
           <icon-carbon-language class="h-6 w-6" />
         </button>
@@ -42,6 +45,19 @@
           <icon-carbon:logo-github class="h-6 w-6" />
         </button>
       </a> -->
+      <a-drawer
+        v-model:visible="visible"
+        class="custom-class"
+        :header-style="{ background: '#8456FC' }"
+        :drawer-style="{ background: '#8456FC' }"
+        title="Basic Drawer"
+        placement="right"
+        @after-visible-change="afterVisibleChange"
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </a-drawer>
     </div>
   </header>
 </template>
@@ -56,7 +72,7 @@
 <script lang="ts">
   import BaseButton from '~/components/core/Button.vue';
   import { commonStore } from '~/stores/modules/common';
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { isDark, useThemeChang } from '~/composables';
   // import { useI18n } from "vue-i18n";
   import { useI18n } from '~/modules/i18n';
@@ -69,9 +85,21 @@
       const { t, toggleLocale } = useI18n();
       const appStore = commonStore();
       const account = appStore.getAccount;
+
+      // 购物车
+      const visible = ref<boolean>(false);
+      const afterVisibleChange = (bool: boolean) => {
+        console.log('open', bool);
+      };
+      const showDrawer = () => {
+        visible.value = true;
+      };
       return {
         account,
         toggleLocale,
+        visible,
+        afterVisibleChange,
+        showDrawer,
       };
     },
   });
