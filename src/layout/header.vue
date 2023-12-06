@@ -9,9 +9,9 @@
         <router-link to="/home" class="mx-4" active-class="font-black text-white">
           <span> {{ $t('home') }}</span>
         </router-link>
-        <router-link to="/about" class="mx-4" active-class="font-black text-white">
+        <!-- <router-link to="/about" class="mx-4" active-class="font-black text-white">
           <span> {{ $t('about.link_name') }}</span>
-        </router-link>
+        </router-link> -->
         <router-link to="/token" class="mx-4" active-class="font-black text-white">
           <span> {{ $t('tokens.menu') }}</span>
         </router-link>
