@@ -62,6 +62,21 @@
             浏览集合
           </BaseButton>
         </div>
+        <div class="shop-list">
+          <a-button type="primary" :disabled="!hasSelected" :loading="loading" @click="start">
+            Reload
+          </a-button>
+          <span style="margin-left: 8px">
+            <template v-if="hasSelected">
+              {{ `Selected ${selectedRowKeys.length} items` }}
+            </template>
+          </span>
+          <a-table
+            :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+            :columns="columns"
+            :data-source="data"
+          />
+        </div>
       </a-drawer>
     </div>
   </header>
@@ -77,10 +92,45 @@
 <script lang="ts">
   import BaseButton from '~/components/core/Button.vue';
   import { commonStore } from '~/stores/modules/common';
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, computed, reactive, toRefs } from 'vue';
   import { isDark, useThemeChang } from '~/composables';
   // import { useI18n } from "vue-i18n";
   import { useI18n } from '~/modules/i18n';
+
+  type Key = string | number;
+
+  interface DataType {
+    key: Key;
+    name: string;
+    age: number;
+    address: string;
+  }
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+    },
+  ];
+
+  const data: DataType[] = [];
+  for (let i = 0; i < 46; i++) {
+    data.push({
+      key: i,
+      name: `Edward King ${i}`,
+      age: 32,
+      address: `London, Park Lane no. ${i}`,
+    });
+  }
+
   export default defineComponent({
     name: 'LayoutHeader',
     components: {
@@ -99,12 +149,41 @@
       const showDrawer = () => {
         visible.value = true;
       };
+      //测试table
+      const state = reactive<{
+        selectedRowKeys: Key[];
+        loading: boolean;
+      }>({
+        selectedRowKeys: [], // Check here to configure the default column
+        loading: false,
+      });
+      const hasSelected = computed(() => state.selectedRowKeys.length > 0);
+
+      const start = () => {
+        state.loading = true;
+        // ajax request after empty completing
+        setTimeout(() => {
+          state.loading = false;
+          state.selectedRowKeys = [];
+        }, 1000);
+      };
+      const onSelectChange = (selectedRowKeys: Key[]) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        state.selectedRowKeys = selectedRowKeys;
+      };
       return {
         account,
         toggleLocale,
         visible,
         afterVisibleChange,
         showDrawer,
+        data,
+        columns,
+        hasSelected,
+        ...toRefs(state),
+        // func
+        start,
+        onSelectChange,
       };
     },
   });
