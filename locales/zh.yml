@@ -3,7 +3,7 @@ my: 我的
 dark: 暗夜
 light: 日间
 toggle: 切换到{mode}
-home: Hello
+home: Home
 about:
   link_name: 关于
   title: 一个 Vue3 开发模版

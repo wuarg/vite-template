@@ -2,7 +2,7 @@ helloWorld: Hello World
 dark: Dark
 light: Light
 toggle: Toggle to {mode}
-home: Hello
+home: Home
 about:
   link_name: About
   title: A Vue3 development template

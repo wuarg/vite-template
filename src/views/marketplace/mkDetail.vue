@@ -98,7 +98,12 @@
                 <span>$4.67</span>
               </div>
               <div class="flex items-center justify-between">
-                <BaseButton class="bg-button" variant="text-text" style="height: 30px; width: auto">
+                <BaseButton
+                  class="bg-button"
+                  variant="text-text"
+                  style="height: 30px; width: auto"
+                  @click="handleBuyModal(i)"
+                >
                   BUY
                 </BaseButton>
                 <img src="/src/assets/img/shop.png" alt="shop" class="h-5 w-5" />
@@ -112,6 +117,7 @@
       <div class="mk-list__div"> 232 </div>
       <div class="mk-list__div"> 232 </div> -->
     </div>
+    <buyModal :buy-visible="buyVisible" @onOk="handleOkBuy()" @onHide="handleHideBuy()" />
   </div>
 </template>
 <script lang="ts">
@@ -121,6 +127,7 @@
   import BaseTabs from '~/components/core/Tabs.vue';
   import BaseInput from '~/components/core/Input.vue';
   import BaseButton from '~/components/core/Button.vue';
+  import buyModal from '~/views/marketplace/buyModal.vue';
 
   export default defineComponent({
     name: 'MKDetail',
@@ -128,6 +135,7 @@
       BaseTabs,
       BaseInput,
       BaseButton,
+      buyModal,
     },
     setup() {
       onMounted(() => {
@@ -200,6 +208,18 @@
       const filterOption = (input: string, option: any) => {
         return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
       };
+      // 购买弹窗
+      const buyVisible = ref(false);
+      const handleBuyModal = (i: any) => {
+        console.log('2222', i);
+        buyVisible.value = true;
+      };
+      const handleOkBuy = () => {
+        buyVisible.value = false;
+      };
+      const handleHideBuy = () => {
+        buyVisible.value = false;
+      };
 
       return {
         tabs,
@@ -212,6 +232,10 @@
         handleFocus,
         handleChange,
         options,
+        buyVisible,
+        handleBuyModal,
+        handleOkBuy,
+        handleHideBuy,
       };
     },
     computed: {},
