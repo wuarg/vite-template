@@ -1,14 +1,14 @@
 <template>
   <div class="token-container p-10">
     <h3 class="title text-4xl">查看地址的代币余额</h3>
-    <div class="search-box input-with-background-image m-auto my-10 flex w-1/2 justify-between">
+    <div class="search-box input-with-background-image m-auto my-10 flex w-1/2 items-center">
       <BaseInput
         v-model="searchToken"
         size="large"
         placeholder="Search name or paste address"
-        class="w-3/4"
+        class="w-10/12"
       />
-      <img src="/src/assets/img/dis.png" class="mr-15 w-5" />
+      <img src="/src/assets/img/search.png" class="pl-15 h-8 w-8" />
     </div>
     <p class="font-bold">识别所有操作，包括部署、铸造和交易</p>
     <div class="my-10 flex justify-between">
