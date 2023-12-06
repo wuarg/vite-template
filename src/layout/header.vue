@@ -63,9 +63,9 @@
           </BaseButton>
         </div>
         <div class="shop-list">
-          <a-button type="primary" :disabled="!hasSelected" :loading="loading" @click="start">
+          <!-- <a-button type="primary" :disabled="!hasSelected" :loading="loading" @click="start">
             Reload
-          </a-button>
+          </a-button> -->
           <span style="margin-left: 8px">
             <template v-if="hasSelected">
               {{ `Selected ${selectedRowKeys.length} items` }}
@@ -75,7 +75,28 @@
             :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             :columns="columns"
             :data-source="data"
-          />
+            :loading="false"
+            :pagination="false"
+          >
+            <!-- <template #emptyText> 空数据 </template> -->
+            <template #bodyCell="{ column, record }">
+              <template v-if="column.dataIndex === 'name'">
+                <div class="flex items-center justify-between">
+                  <div class="img w-16">
+                    <img src="/src/assets/img/twitter.png" alt="twitter" />
+                  </div>
+                  <div class="desc">
+                    <p>IRC-100</p>
+                    <p>#1029</p>
+                  </div>
+                  <div class="desc">
+                    <p>{{ record.name }}</p>
+                    <p>#1033</p>
+                  </div>
+                </div>
+              </template>
+            </template>
+          </a-table>
         </div>
       </a-drawer>
     </div>
@@ -108,21 +129,21 @@
 
   const columns = [
     {
-      title: 'Name',
+      title: 'items',
       dataIndex: 'name',
     },
     {
-      title: 'Age',
+      title: 'Quantity',
       dataIndex: 'age',
     },
     {
-      title: 'Address',
+      title: 'Value',
       dataIndex: 'address',
     },
   ];
 
   const data: DataType[] = [];
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i < 6; i++) {
     data.push({
       key: i,
       name: `Edward King ${i}`,
@@ -211,5 +232,15 @@
   }
   .title {
     @apply text-2xl font-normal text-base-13   delay-300  dark:text-base-1 dark:transition-colors;
+  }
+
+  /deep/.ant-table {
+    background: transparent;
+  }
+  /deep/ .ant-table-thead > tr > th {
+    background: transparent;
+  }
+  /deep/ .ant-table-thead > tr > th {
+    // color: #fff;
   }
 </style>
