@@ -65,16 +65,25 @@
 
     <p class="mt-4 text-lg">{{ $t('about.desc') }} </p>
     <code> new FastifyIdea(); </code>
+
+    {{ selectedValue }} -- {{ defaultSelectedValue }}
+    <BaseSelect v-model="selectedValue" :default-value="defaultSelectedValue" style="width: 200px">
+      <!-- 这里是 MySelect 的插槽内容 -->
+      <a-select-option value="option1">Option 1</a-select-option>
+      <a-select-option value="option2">Option 2</a-select-option>
+      <a-select-option value="option3">Option 3</a-select-option>
+    </BaseSelect>
   </div>
 </template>
 
 <script lang="ts">
+  import BaseSelect from '~/components/core/Select.vue';
   import { defineComponent, ref } from 'vue';
   import { labelSystem } from '~/api/index';
   import { cancelToken } from '~/utils/service';
   export default defineComponent({
     name: 'About',
-    components: {},
+    components: { BaseSelect },
     setup() {
       const handleClick = async () => {
         await labelSystem()
@@ -102,6 +111,10 @@
         visible.value = true;
       };
       const checked = ref(false);
+
+      //select 组件
+      const selectedValue = ref<string | number | null>(null);
+      const defaultSelectedValue = 'option2';
       return {
         handleClick,
         handleCancel,
@@ -109,6 +122,8 @@
         showDrawer,
         afterVisibleChange,
         checked,
+        selectedValue,
+        defaultSelectedValue,
       };
     },
   });
