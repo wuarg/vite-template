@@ -68,7 +68,7 @@
     </div>
     <div class="mk-list my-10">
       <a-row :gutter="[16, 16]" class="mk-list__row">
-        <a-col v-for="i in 4" :key="i" :span="6" class="mk-list__col pb-8">
+        <a-col v-for="i in 6" :key="i" :span="6" class="mk-list__col pb-8">
           <div class="mk-list__col__div">
             <div class="header flex items-center justify-between p-5">
               <span>IOST</span>
