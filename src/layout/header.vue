@@ -50,13 +50,18 @@
         class="custom-class"
         :header-style="{ background: '#8456FC' }"
         :drawer-style="{ background: '#8456FC' }"
-        title="Basic Drawer"
+        title="购物车"
         placement="right"
+        width="40%"
         @after-visible-change="afterVisibleChange"
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <div class="empty text-center">
+          <img src="/src/assets/img/shop.png" alt="shop" class="mx-auto" />
+          <p class="my-5">暂没有商品加入购物车</p>
+          <BaseButton class="bg-button" variant="text-text" style="height: 50px; width: auto">
+            浏览集合
+          </BaseButton>
+        </div>
       </a-drawer>
     </div>
   </header>
