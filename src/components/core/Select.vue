@@ -1,5 +1,5 @@
 <template>
-  <a-select v-bind="$attrs" v-model="innerValue" @change="handleChange">
+  <a-select v-bind="$attrs" v-model="innerValue" placeholder="请选择" @change="handleChange">
     <!-- 这里可以添加其他插槽或者修改内容 -->
     <slot></slot>
   </a-select>

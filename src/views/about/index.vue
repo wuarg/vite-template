@@ -66,12 +66,16 @@
     <p class="mt-4 text-lg">{{ $t('about.desc') }} </p>
     <code> new FastifyIdea(); </code>
 
-    {{ selectedValue }} -- {{ defaultSelectedValue }}
-    <BaseSelect v-model="selectedValue" :default-value="defaultSelectedValue" style="width: 200px">
+    <BaseSelect
+      v-model:value="selectedValue"
+      :default-value="defaultSelectedValue"
+      style="width: 200px"
+      @change="handleSelectChange"
+    >
       <!-- 这里是 MySelect 的插槽内容 -->
-      <a-select-option value="option1">Option 1</a-select-option>
-      <a-select-option value="option2">Option 2</a-select-option>
-      <a-select-option value="option3">Option 3</a-select-option>
+      <a-select-option value="1">Option 1</a-select-option>
+      <a-select-option value="2">Option 2</a-select-option>
+      <a-select-option value="3">Option 3</a-select-option>
     </BaseSelect>
 
     <BaseInputSearch
@@ -121,7 +125,10 @@
 
       //select 组件
       const selectedValue = ref<string | number | null>(null);
-      const defaultSelectedValue = 'option2';
+      const defaultSelectedValue = '2';
+      const handleSelectChange = (value: any) => {
+        console.log('Selected value:', value);
+      };
       // search 组件
       const searchValue = ref<string>('');
       const defaultSearchValue = 'initial search text';
@@ -134,6 +141,7 @@
         checked,
         selectedValue,
         defaultSelectedValue,
+        handleSelectChange,
         searchValue,
         defaultSearchValue,
       };
