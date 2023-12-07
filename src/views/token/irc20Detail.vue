@@ -1,7 +1,8 @@
 <template>
   <div class="irc--container m-auto w-3/4">
-    <div class="my-10 flex justify-between">
-      <h1 class="mb-5 text-left text-xl font-bold">代币列表</h1>
+    <div class="my-10 flex items-center">
+      <img src="/src/assets/img/back.png" alt="back" class="mr-3 w-5" />
+      <h1 class="mb-0 text-left text-xl font-bold">代币列表</h1>
     </div>
     <div class="mx-auto my-10 text-center">
       <BaseProgress :percentage="progress" />

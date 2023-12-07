@@ -33,14 +33,14 @@
         <img src="/src/assets/img/refresh.png" alt="refresh" class="mx-3 w-5" />
       </div>
       <div class="irc20-search-input">
-        <BaseInput
+        <!-- <BaseInput
           v-model="searchToken"
           placeholder="根据铭文ID搜索"
           background="background"
           border="border"
           class="mx-5"
-        />
-        <a-select
+        /> -->
+        <!-- <a-select
           v-model:value="selectValue"
           class="mx-5"
           show-search
@@ -63,7 +63,36 @@
           @focus="handleFocus"
           @blur="handleBlur"
           @change="handleChange"
-        ></a-select>
+        ></a-select> -->
+        <BaseInputSearch
+          v-model="searchValue"
+          :default-search-value="defaultSearchValue"
+          style="width: 200px"
+        />
+        <BaseSelect
+          v-model:value="selectedValue"
+          :default-value="defaultSelectedValue"
+          style="width: 200px; margin: 0 10px"
+          class="mx-5"
+          @change="handleSelectChange"
+        >
+          <!-- 这里是 MySelect 的插槽内容 -->
+          <a-select-option value="1">Option 1</a-select-option>
+          <a-select-option value="2">Option 2</a-select-option>
+          <a-select-option value="3">Option 3</a-select-option>
+        </BaseSelect>
+        <BaseSelect
+          v-model:value="selectedValue"
+          :default-value="defaultSelectedValue"
+          style="width: 200px; margin: 0 10px"
+          class="mx-5"
+          @change="handleSelectChange"
+        >
+          <!-- 这里是 MySelect 的插槽内容 -->
+          <a-select-option value="1">Option 1</a-select-option>
+          <a-select-option value="2">Option 2</a-select-option>
+          <a-select-option value="3">Option 3</a-select-option>
+        </BaseSelect>
       </div>
     </div>
     <div class="mk-list my-10">
@@ -128,14 +157,18 @@
   import BaseInput from '~/components/core/Input.vue';
   import BaseButton from '~/components/core/Button.vue';
   import buyModal from '~/views/marketplace/buyModal.vue';
+  import BaseSelect from '~/components/core/Select.vue';
+  import BaseInputSearch from '~/components/core/InputSearch.vue';
 
   export default defineComponent({
     name: 'MKDetail',
     components: {
       BaseTabs,
-      BaseInput,
+      // BaseInput,
       BaseButton,
       buyModal,
+      BaseSelect,
+      BaseInputSearch,
     },
     setup() {
       onMounted(() => {
@@ -221,6 +254,16 @@
         buyVisible.value = false;
       };
 
+      //select 组件
+      const selectedValue = ref<string | number | null>(null);
+      const defaultSelectedValue = '2';
+      const handleSelectChange = (value: any) => {
+        console.log('Selected value:', value);
+      };
+      // search 组件
+      const searchValue = ref<string>('');
+      const defaultSearchValue = 'initial search text';
+
       return {
         tabs,
         selectedTabIndex,
@@ -236,6 +279,11 @@
         handleBuyModal,
         handleOkBuy,
         handleHideBuy,
+        selectedValue,
+        defaultSelectedValue,
+        handleSelectChange,
+        searchValue,
+        defaultSearchValue,
       };
     },
     computed: {},
