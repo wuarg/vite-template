@@ -83,18 +83,21 @@
       :default-search-value="defaultSearchValue"
       style="width: 200px"
     />
+
+    <BaseDropdown :trigger-text="triggerText" :dropdown-items="menuItems" />
   </div>
 </template>
 
 <script lang="ts">
   import BaseSelect from '~/components/core/Select.vue';
   import BaseInputSearch from '~/components/core/InputSearch.vue';
+  import BaseDropdown from '~/components/core/Dropdown.vue';
   import { defineComponent, ref } from 'vue';
   import { labelSystem } from '~/api/index';
   import { cancelToken } from '~/utils/service';
   export default defineComponent({
     name: 'About',
-    components: { BaseSelect, BaseInputSearch },
+    components: { BaseSelect, BaseInputSearch, BaseDropdown },
     setup() {
       const handleClick = async () => {
         await labelSystem()
@@ -132,6 +135,14 @@
       // search 组件
       const searchValue = ref<string>('');
       const defaultSearchValue = 'initial search text';
+      //
+      const triggerText = 'Click me';
+
+      const menuItems = [
+        { key: 'item1', title: 'Item 1' },
+        { key: 'item2', title: 'Item 2' },
+        { key: 'item3', title: 'Item 3' },
+      ];
       return {
         handleClick,
         handleCancel,
@@ -144,6 +155,8 @@
         handleSelectChange,
         searchValue,
         defaultSearchValue,
+        triggerText,
+        menuItems,
       };
     },
   });
