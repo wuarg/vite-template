@@ -20,9 +20,12 @@
         </router-link>
       </div>
       <div class="link flex items-center justify-end">
-        <BaseButton class="bg-button" variant="text-text" style="height: 40px; width: auto">
-          {{ account }}
-        </BaseButton>
+        <BaseDropdown :dropdown-items="menuItems">
+          <BaseButton class="bg-button" variant="text-text" style="height: 40px; width: auto">
+            {{ account }}
+          </BaseButton>
+        </BaseDropdown>
+
         <div class="shop-box mx-4 w-8" @click="showDrawer">
           <img src="/src/assets/img/shop.png" alt="shop" />
         </div>
@@ -123,6 +126,7 @@
 </script> -->
 <script lang="ts">
   import BaseButton from '~/components/core/Button.vue';
+  import BaseDropdown from '~/components/core/Dropdown.vue';
   import { commonStore } from '~/stores/modules/common';
   import { defineComponent, ref, computed, reactive, toRefs } from 'vue';
   import { isDark, useThemeChang } from '~/composables';
@@ -167,6 +171,7 @@
     name: 'LayoutHeader',
     components: {
       BaseButton,
+      BaseDropdown,
     },
     setup() {
       const { t, toggleLocale } = useI18n();
@@ -203,6 +208,13 @@
         console.log('selectedRowKeys changed: ', selectedRowKeys);
         state.selectedRowKeys = selectedRowKeys;
       };
+
+      const menuItems = [
+        { key: 'item1', title: 'Item 1' },
+        { key: 'item2', title: 'Item 2' },
+        { key: 'item3', title: 'Item 3' },
+      ];
+
       return {
         account,
         toggleLocale,
@@ -216,6 +228,7 @@
         // func
         start,
         onSelectChange,
+        menuItems,
       };
     },
   });
