@@ -23,7 +23,15 @@
         </template>
 
         <!-- Slot for customizing body cells -->
-        <template #cell="{ cell }"> {{ cell }}</template>
+        <template #column="{ row, column }">
+          <!-- Custom column content -->
+          <span v-if="column.key === 'iost'" @click="handleDetail(row, column)">
+            {{ row[column.key] + ' - Custom Content' }}
+          </span>
+          <span v-else @click="handleDetail(row, column)">
+            {{ row[column.key] }}
+          </span>
+        </template>
         <!-- Custom slot for actions -->
         <template #actions="{ row }">
           <!-- <button @click="handleEdit(row)">Edit</button>
@@ -127,6 +135,11 @@
       // search 组件
       const searchValue = ref<string>('');
       const defaultSearchValue = 'initial search text';
+      //
+      const handleDetail = (row: any, column: any) => {
+        console.log('row, column---', row, column);
+        router.push({ name: 'MarketplaceDetail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
+      };
       return {
         searchToken,
         tableColumns2,
@@ -134,6 +147,7 @@
         handleEdit,
         searchValue,
         defaultSearchValue,
+        handleDetail,
       };
     },
     computed: {},
