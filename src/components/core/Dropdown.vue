@@ -7,10 +7,7 @@
         </a-menu-item>
       </a-menu>
     </template>
-    <a-button>
-      {{ triggerText }}
-      <a-icon :type="visible ? 'up' : 'down'" />
-    </a-button>
+    <slot></slot>
   </a-dropdown>
 </template>
 

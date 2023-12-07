@@ -84,7 +84,12 @@
       style="width: 200px"
     />
 
-    <BaseDropdown :trigger-text="triggerText" :dropdown-items="menuItems" />
+    <BaseDropdown :dropdown-items="menuItems">
+      <a-button>
+        {{ triggerText }}
+        <a-icon :type="visible ? 'up' : 'down'" />
+      </a-button>
+    </BaseDropdown>
   </div>
 </template>
 
