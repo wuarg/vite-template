@@ -1,5 +1,5 @@
 <template>
-  <a-input-search v-bind="$attrs" v-model="innerValue" @search="handleSearch">
+  <a-input-search v-bind="$attrs" v-model="innerValue" placeholder="请输入" @search="handleSearch">
     <!-- <template #enterButton>
       <img src="/src/assets/img/search.png" alt="search"  class="w-4 h-4"/>
     </template> -->
