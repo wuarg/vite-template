@@ -1,65 +1,132 @@
 <template>
-  <div class="font-normal">
-    <span class="text-3xl">About</span>
-
-    <p class="text-2xl">{{ $t('about.title') }}</p>
-    <!-- <p class=""> Vite + Vue3、Pinia、TypeScript、Eslint、Prettier、LintStaged、Tailwindcss </p> -->
-    <ul class="m-auto mt-4 inline-block w-auto list-disc text-left text-xl">
-      <li>
-        ⚡️ <a target="_blank" href="https://github.com/vuejs/vue-next">Vue 3</a>,
-        <a target="_blank" href="https://github.com/vitejs/vite">Vite</a>,
-        <a target="_blank" href="https://www.typescriptlang.org/zh/" rel="nofollow">TypeScript</a>
-        Yes!</li
-      >
-      <li>
-        🍍 <a target="_blank" href="https://pinia.esm.dev/" rel="nofollow">Pinia</a> -
-        {{ $t('about.package_pinia') }}
-      </li>
-      <li>
-        😃
-        <a target="_blank" href="https://github.com/antfu/unocss/tree/main/packages/preset-icons"
-          >Iconify
-        </a>
-        <span> - {{ $t('about.package_icon') }} </span>
-        <a target="_blank" href="https://icones.netlify.app/" rel="nofollow">🔍 Icones</a>
-      </li>
-      <li>
-        🌍 <a target="_blank" href="/AxyLm/vite-taicu/blob/main/locales">I18n </a
-        >{{ $t('about.package_i18n') }}
-      </li>
-      <li
-        >🎨 <a target="_blank" href="https://www.tailwindcss.cn/" rel="nofollow">Tailwindcss</a>
-        <span> - {{ $t('about.package_tailwindcss') }} </span>
-      </li>
-      <li>
-        🛠 <a target="_blank" href="https://github.com/antfu/vueuse">VueUse</a>
-        <span>- {{ $t('about.package_vueuse') }}</span>
-      </li>
-      <li>
-        <a target="_blank" href="http://eslint.cn/" rel="nofollow">Eslint</a> +
-        <a target="_blank" href="https://prettier.io/" rel="nofollow">Prettier</a> +
-        <a target="_blank" href="https://typicode.github.io/husky/" rel="nofollow">Husky</a>
-        {{ $t('about.package_format') }}
-      </li>
-      <li>
-        <a target="_blank" href="https://github.com/AxyLm/vite-taicu/blob/main/LICENSE"
-          >MIT License</a
-        >
-        {{ $t('about.package_license') }}
-      </li>
-    </ul>
-
-    <p class="mt-4 text-lg">{{ $t('about.desc') }} </p>
-    <code> new FastifyIdea(); </code>
+  <div class="my-10 font-normal">
+    <!-- <span class="text-3xl">About</span> -->
+    <BaseButton @click="handleDeploy()">handleDeploy</BaseButton>
+    <BaseButton @click="handleMint()">handleMint</BaseButton>
+    <BaseButton @click="handleBuy()">handleBuy</BaseButton>
+    <BaseButton @click="handleTransfer()">handleTransfer</BaseButton>
+    <BaseButton @click="handleList()">handleList</BaseButton>
+    <BaseButton @click="handleUnList()">handleUnList</BaseButton>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import BaseButton from '~/components/core/Button.vue';
+  import { defineComponent, ref, onMounted } from 'vue';
+  import { commonStore } from '~/stores/modules/common';
+  import { BigNumber } from 'bignumber.js';
+  import { environment } from '~/utils/iostConfig';
+
+  import { ContractService } from '~/utils/contractServe';
   export default defineComponent({
     name: 'About',
+    components: {
+      BaseButton,
+    },
     setup() {
-      return {};
+      const handleDeploy = async () => {
+        try {
+          const res = await ContractService.deployFunc('test', 10000, 1000);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleMint = async () => {
+        try {
+          const res = await ContractService.mintFunc('test', 1000);
+          console.log('handleMint----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleBuy = async () => {
+        try {
+          const res = await ContractService.buyFunc('test', 0);
+          console.log('handleBuy----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleTransfer = async () => {
+        try {
+          const res = await ContractService.transferFunc('test', 0, 'hulala');
+          console.log('handleTransfer----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleList = async () => {
+        try {
+          const res = await ContractService.listFunc('test', 0, 10);
+          console.log('handleList----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleUnList = async () => {
+        try {
+          const res = await ContractService.unlistFunc('test', 0);
+          console.log('handleUnList----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      return {
+        handleDeploy,
+        handleMint,
+        handleBuy,
+        handleTransfer,
+        handleList,
+        handleUnList,
+      };
     },
   });
 </script>

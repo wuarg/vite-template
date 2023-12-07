@@ -572,4 +572,134 @@ export const ContractService = {
         });
     });
   },
+
+  // 铭文合约
+  deployFunc(name: string, total: number, limit: number) {
+    const tx = this.myIOST.callABI(environment.irc, 'deploy', [
+      name,
+      total.toString(),
+      limit.toString(),
+    ]);
+    return new Promise((resolve, reject) => {
+      this.myIOST
+        .signAndSend(tx)
+        .on('success', (result) => {
+          console.log('success-result', result);
+          resolve('');
+        })
+        .on('failed', (result) => {
+          if (typeof result == 'object' && result.message) {
+            console.log('failed-result', result);
+            result = result.message;
+          }
+          reject(result);
+        });
+    });
+  },
+  // 铭文mint
+  mintFunc(name: string, limit: number) {
+    const tx = this.myIOST.callABI(environment.irc, 'mint', [name, limit.toString()]);
+    console.log('tx-----', tx);
+    const limitAmount = 0.001;
+    tx.addApprove('iost', limitAmount);
+    return new Promise((resolve, reject) => {
+      this.myIOST
+        .signAndSend(tx)
+        .on('success', (result) => {
+          console.log('success-result', result);
+          resolve('');
+        })
+        .on('failed', (result) => {
+          if (typeof result == 'object' && result.message) {
+            console.log('failed-result', result);
+            result = result.message;
+          }
+          reject(result);
+        });
+    });
+  },
+  // 铭文下架
+  unlistFunc(name: string, id: number) {
+    const tx = this.myIOST.callABI(environment.irc, 'unlist', [name, id.toString()]);
+    console.log('tx-----', tx);
+    return new Promise((resolve, reject) => {
+      this.myIOST
+        .signAndSend(tx)
+        .on('success', (result) => {
+          console.log('success-result', result);
+          resolve('');
+        })
+        .on('failed', (result) => {
+          if (typeof result == 'object' && result.message) {
+            console.log('failed-result', result);
+            result = result.message;
+          }
+          reject(result);
+        });
+    });
+  },
+  // 铭文上架
+  listFunc(name: string, id: number, price: number) {
+    const tx = this.myIOST.callABI(environment.irc, 'list', [
+      name,
+      id.toString(),
+      price.toString(),
+    ]);
+    console.log('tx-----', tx);
+    return new Promise((resolve, reject) => {
+      this.myIOST
+        .signAndSend(tx)
+        .on('success', (result) => {
+          console.log('success-result', result);
+          resolve('');
+        })
+        .on('failed', (result) => {
+          if (typeof result == 'object' && result.message) {
+            console.log('failed-result', result);
+            result = result.message;
+          }
+          reject(result);
+        });
+    });
+  },
+  // 铭文转让
+  transferFunc(name: string, id: number, to: string) {
+    const tx = this.myIOST.callABI(environment.irc, 'transfer', [name, id.toString(), to]);
+    console.log('tx-----', tx);
+    return new Promise((resolve, reject) => {
+      this.myIOST
+        .signAndSend(tx)
+        .on('success', (result) => {
+          console.log('success-result', result);
+          resolve('');
+        })
+        .on('failed', (result) => {
+          if (typeof result == 'object' && result.message) {
+            console.log('failed-result', result);
+            result = result.message;
+          }
+          reject(result);
+        });
+    });
+  },
+  //铭文购买
+  buyFunc(name: string, id: number) {
+    const tx = this.myIOST.callABI(environment.irc, 'buy', [name, id.toString()]);
+    console.log('tx-----', tx);
+    return new Promise((resolve, reject) => {
+      this.myIOST
+        .signAndSend(tx)
+        .on('success', (result) => {
+          console.log('success-result', result);
+          resolve('');
+        })
+        .on('failed', (result) => {
+          if (typeof result == 'object' && result.message) {
+            console.log('failed-result', result);
+            result = result.message;
+          }
+          reject(result);
+        });
+    });
+  },
 };
