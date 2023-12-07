@@ -1,5 +1,5 @@
 <template>
-  <div class="home-container mx-auto w-3/4">
+  <div class="home-container mx-auto w-3/4 sm:w-4/5">
     <BaseMint />
     <div class="last-tx">
       <h1 class="mb-5 text-left text-xl font-bold">最新交易</h1>

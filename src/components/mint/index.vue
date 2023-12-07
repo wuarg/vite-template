@@ -1,6 +1,8 @@
 <template>
-  <div class="mint-container p-10">
-    <p class="mt-10 text-3xl">The frst inscription platform on IOST</p>
+  <div class="mint-container p-2 sm:p-10 md:p-10 lg:p-10">
+    <p class="mt-10 text-base sm:text-xl md:text-3xl lg:text-3xl"
+      >The frst inscription platform on IOST</p
+    >
     <img src="/src/assets/img/banner.png" class="mb-10 mt-8 inline w-1/3" alt="" />
     <div class="mint-process">
       <p class="mint-process__price">
