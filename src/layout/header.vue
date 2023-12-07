@@ -19,20 +19,23 @@
           <span> {{ $t('marketplace.menu') }}</span>
         </router-link>
       </div>
-      <div class="link flex items-center justify-end">
-        <BaseDropdown :dropdown-items="menuItems">
-          <BaseButton class="bg-button" variant="text-text" style="height: 40px; width: auto">
-            {{ account }}
-          </BaseButton>
-        </BaseDropdown>
+      <div class="hidden sm:block">
+        <div class="link flex items-center justify-end">
+          <BaseDropdown :dropdown-items="menuItems">
+            <BaseButton class="bg-button" variant="text-text" style="height: 40px; width: auto">
+              {{ account }}
+            </BaseButton>
+          </BaseDropdown>
 
-        <div class="shop-box mx-4 w-8" @click="showDrawer">
-          <img src="/src/assets/img/shop.png" alt="shop" />
+          <div class="shop-box mx-4 w-8" @click="showDrawer">
+            <img src="/src/assets/img/shop.png" alt="shop" />
+          </div>
+          <button class="nav-btn ml-2 text-center" @click="toggleLocale()">
+            <icon-carbon-language class="h-6 w-6" />
+          </button>
         </div>
-        <button class="nav-btn ml-2 text-center" @click="toggleLocale()">
-          <icon-carbon-language class="h-6 w-6" />
-        </button>
       </div>
+
       <!-- <button class="nav-btn" @click="themeAni">
         <icon-carbon-sun v-if="!isDark" class="h-6 w-6" />
         <icon-carbon-moon v-else class="h-6 w-6" />
