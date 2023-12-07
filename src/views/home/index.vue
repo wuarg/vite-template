@@ -15,11 +15,22 @@
     </div>
     <div class="my-10 flex justify-between">
       <span>发现超过100笔交易</span>
-      <select v-model="currentSelect" style="color: #333" @change="handleSelectChange">
+      <!-- <select v-model="currentSelect" style="color: #333" @change="handleSelectChange">
         <option v-for="option in selectOptions" :key="option.key" :value="option.key">{{
           option.label
         }}</option>
-      </select>
+      </select> -->
+      <BaseSelect
+        v-model:value="selectedValue"
+        :default-value="defaultSelectedValue"
+        style="width: 200px"
+        @change="handleSelectChange"
+      >
+        <!-- 这里是 MySelect 的插槽内容 -->
+        <a-select-option v-for="(item, index) in selectOptions" :key="index" :value="item.key">
+          {{ item.label }}
+        </a-select-option>
+      </BaseSelect>
     </div>
     <div class="all-tx">
       <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
@@ -53,11 +64,13 @@
   import { defineComponent, ref, onMounted } from 'vue';
   import BaseMint from '~/components/mint/index.vue';
   import BaseTable from '~/components/core/Table.vue';
+  import BaseSelect from '~/components/core/Select.vue';
   export default defineComponent({
     name: 'HomeContainer',
     components: {
       BaseMint,
       BaseTable,
+      BaseSelect,
     },
     setup() {
       onMounted(() => {
@@ -149,11 +162,6 @@
         { key: 2, label: '销售' },
         { key: 3, label: '转帐' },
       ];
-      const handleSelectChange = (event: Event) => {
-        const target = event.target as HTMLSelectElement;
-        console.log('target.value---', target.value);
-        currentSelect.value = target.value;
-      };
       const handleEdit = (row: any) => {
         // Handle edit action
         console.log('Edit', row);
@@ -163,6 +171,13 @@
         // Handle delete action
         console.log('Delete', row);
       };
+      //select 组件
+      const selectedValue = ref<string | number | null>(null);
+      const defaultSelectedValue = '2';
+      const handleSelectChange = (value: any) => {
+        console.log('Selected value:', value);
+      };
+
       return {
         tableColumns,
         tableData,
@@ -173,6 +188,8 @@
         handleEdit,
         handleDelete,
         handleSelectChange,
+        selectedValue,
+        defaultSelectedValue,
       };
     },
     computed: {},
