@@ -1,8 +1,8 @@
 <template>
-  <header class="header sticky top-0 z-40 flex h-20 items-center px-10">
+  <header class="header sticky top-0 z-40 flex h-20 items-center px-5 sm:px-10">
     <div class="bg delay-400 absolute transition-colors"></div>
     <div class="logo">
-      <img src="/src/assets/img/logo.png" class="inline w-1/2" alt="" />
+      <img src="/src/assets/img/logo.png" class="inline w-full sm:w-1/2" alt="" />
     </div>
     <div class="flex w-full items-center justify-between">
       <div class="menu">
