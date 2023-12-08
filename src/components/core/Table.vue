@@ -4,7 +4,7 @@
     <table class="w-full">
       <thead>
         <tr>
-          <th v-for="column in columns" :key="column.key" class="py-3">
+          <th v-for="column in columns" :key="column.key" class="py-3 font-black sm:text-lg">
             <slot name="header" :column="column">{{ column.label }}</slot>
           </th>
           <!-- <th v-if="hasActions">Actions</th> -->
@@ -15,12 +15,12 @@
           <!-- <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="py-3">
             <slot name="cell" :cell="cell" :column="columns[cellIndex]">{{ cell }}</slot>
           </td> -->
-          <td v-for="(column, colIndex) in columns" :key="colIndex">
+          <td v-for="(column, colIndex) in columns" :key="colIndex" class="py-3">
             <slot name="column" v-bind="{ row, column }">
               {{ row[column.key] }}
             </slot>
           </td>
-          <td v-if="hasActions">
+          <td v-if="hasActions" class="py-3">
             <!-- Custom slot for actions -->
             <slot name="actions" :row="row"></slot>
           </td>
