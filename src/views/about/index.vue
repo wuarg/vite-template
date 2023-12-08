@@ -109,7 +109,7 @@
   import BaseButton from '~/components/core/Button.vue';
   import Spinner from '~/components/core/Spinner.vue';
 
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, inject } from 'vue';
   import { labelSystem } from '~/api/index';
   import { cancelToken } from '~/utils/service';
   import { BigNumber } from 'bignumber.js';
@@ -121,6 +121,14 @@
     components: { BaseSelect, BaseInputSearch, BaseDropdown, BaseButton, Spinner },
     setup() {
       const loading = ref<boolean>(false);
+      const $customMessage = inject<{
+        success: (content: string, duration: number) => void;
+        error: (content: string, duration: number) => void;
+        warning: (content: string, duration: number) => void;
+      }>('$customMessage')!;
+
+      const messageRef = ref('This is a message');
+
       const handleClick = async () => {
         await labelSystem()
           .then((res) => {
@@ -182,6 +190,9 @@
         }
       };
       const handleMint = async () => {
+        // $customMessage.success(messageRef.value, 10000);
+        // $customMessage.error(messageRef.value, 10000);
+        $customMessage.warning(messageRef.value, 10000);
         try {
           const res = await ContractService.mintFunc('test', 1000);
           console.log('handleMint----', res);
