@@ -64,7 +64,7 @@
       </a> -->
       <a-drawer
         v-model:visible="visible"
-        class="custom-class"
+        class="custom-class hidden sm:block"
         :header-style="{ background: '#8456FC' }"
         :drawer-style="{ background: '#8456FC' }"
         title="购物车"
@@ -73,7 +73,72 @@
         @after-visible-change="afterVisibleChange"
       >
         <div class="empty text-center">
-          <img src="/src/assets/img/shop.png" alt="shop" class="mx-auto" />
+          <img src="/src/assets/img/empty-shop.png" alt="shop" class="mx-auto" />
+          <p class="my-5">暂没有商品加入购物车</p>
+          <BaseButton class="bg-button" variant="text-text" style="height: 50px; width: auto">
+            浏览集合
+          </BaseButton>
+        </div>
+        <div class="shop-list">
+          <!-- <a-button type="primary" :disabled="!hasSelected" :loading="loading" @click="start">
+            Reload
+          </a-button> -->
+          <span style="margin-left: 8px">
+            <template v-if="hasSelected">
+              {{ `Selected ${selectedRowKeys.length} items` }}
+            </template>
+          </span>
+          <a-table
+            :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+            :columns="columns"
+            :data-source="data"
+            :loading="false"
+            :pagination="false"
+          >
+            <!-- <template #emptyText> 空数据 </template> -->
+            <template #bodyCell="{ column, record }">
+              <template v-if="column.dataIndex === 'name'">
+                <div class="flex items-center justify-between">
+                  <div class="img w-16">
+                    <img src="/src/assets/img/twitter.png" alt="twitter" />
+                  </div>
+                  <div class="desc">
+                    <p>IRC-100</p>
+                    <p>#1029</p>
+                  </div>
+                  <div class="desc">
+                    <p>{{ record.name }}</p>
+                    <p>#1033</p>
+                  </div>
+                </div>
+              </template>
+            </template>
+          </a-table>
+        </div>
+        <div class="shop-total my-5 flex items-center justify-between p-5">
+          <div class="num">
+            <p>总共支付</p>
+            <p class="num__p">450 IOST</p>
+          </div>
+          <div class="btn">
+            <BaseButton class="bg-button" variant="text-text" style="height: 50px; width: auto">
+              现在购买
+            </BaseButton>
+          </div>
+        </div>
+      </a-drawer>
+      <a-drawer
+        v-model:visible="visible"
+        class="custom-class block sm:hidden"
+        :header-style="{ background: '#8456FC' }"
+        :drawer-style="{ background: '#8456FC' }"
+        title="购物车"
+        placement="right"
+        width="90%"
+        @after-visible-change="afterVisibleChange"
+      >
+        <div class="empty text-center">
+          <img src="/src/assets/img/empty-shop.png" alt="shop" class="mx-auto w-5" />
           <p class="my-5">暂没有商品加入购物车</p>
           <BaseButton class="bg-button" variant="text-text" style="height: 50px; width: auto">
             浏览集合
