@@ -81,7 +81,7 @@ export const ContractService = {
         .signAndSend(tx)
         .on('success', (result) => {
           console.log('success-result', result);
-          resolve('');
+          resolve(result);
         })
         .on('failed', (result) => {
           if (typeof result == 'object' && result.message) {
@@ -103,7 +103,7 @@ export const ContractService = {
         .signAndSend(tx)
         .on('success', (result) => {
           console.log('success-result', result);
-          resolve('');
+          resolve(result);
         })
         .on('failed', (result) => {
           if (typeof result == 'object' && result.message) {
@@ -123,7 +123,7 @@ export const ContractService = {
         .signAndSend(tx)
         .on('success', (result) => {
           console.log('success-result', result);
-          resolve('');
+          resolve(result);
         })
         .on('failed', (result) => {
           if (typeof result == 'object' && result.message) {
@@ -147,7 +147,7 @@ export const ContractService = {
         .signAndSend(tx)
         .on('success', (result) => {
           console.log('success-result', result);
-          resolve('');
+          resolve(result);
         })
         .on('failed', (result) => {
           if (typeof result == 'object' && result.message) {
@@ -167,7 +167,7 @@ export const ContractService = {
         .signAndSend(tx)
         .on('success', (result) => {
           console.log('success-result', result);
-          resolve('');
+          resolve(result);
         })
         .on('failed', (result) => {
           if (typeof result == 'object' && result.message) {
@@ -187,7 +187,7 @@ export const ContractService = {
         .signAndSend(tx)
         .on('success', (result) => {
           console.log('success-result', result);
-          resolve('');
+          resolve(result);
         })
         .on('failed', (result) => {
           if (typeof result == 'object' && result.message) {

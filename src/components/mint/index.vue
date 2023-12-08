@@ -14,7 +14,7 @@
       </div>
       <BaseButton class="mint-button" variant="text-text" @click="openModal"> MINT </BaseButton>
     </div>
-    <Modal ref="childRef" title="">
+    <Modal ref="childRef" title="" @onHide="onHide">
       <template #headerTitle>
         <h3 class="header-title"> IOST 铭文 </h3>
       </template>
@@ -41,16 +41,18 @@
         <p>在Mint过程中，每张铭文将消耗10OST至黑洞地址</p>
       </div>
       <template #footer>
-        <BaseButton class="mint-button" variant="text-text"> OK </BaseButton>
+        <BaseButton class="mint-button" variant="text-text" @click="handleMint"> OK </BaseButton>
       </template>
     </Modal>
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, onMounted, getCurrentInstance } from 'vue';
+  import { defineComponent, ref, onMounted, getCurrentInstance, inject, SetupContext } from 'vue';
   import BaseProgress from '~/components/core/Progress.vue';
   import BaseButton from '~/components/core/Button.vue';
   import Modal from '~/components/core/Modal.vue';
+  import { environment } from '~/utils/iostConfig';
+  import { ContractService } from '~/utils/contractServe';
   export default defineComponent({
     name: 'Mint',
     components: {
@@ -58,7 +60,7 @@
       BaseButton,
       Modal,
     },
-    setup() {
+    setup(props, context: SetupContext) {
       onMounted(() => {
         //
       });
@@ -74,12 +76,48 @@
           (childRef.value as any).show();
         }
       };
+      const onHide = () => {
+        if (childRef.value) {
+          (childRef.value as any).hide();
+        }
+      };
+
+      const $customMessage = inject<{
+        success: (content: string, duration: number) => void;
+        error: (content: string, duration: number) => void;
+        warning: (content: string, duration: number) => void;
+      }>('$customMessage')!;
+
+      const handleMint = async () => {
+        try {
+          const res = await ContractService.mintFunc('test', 1000);
+          console.log('handleMint----', res);
+          $customMessage.success('交易成功!  等待区块确认', 1.5);
+          onHide();
+        } catch (err: any) {
+          console.log('err--', err);
+          if (err.indexOf('gas not enough') >= 0) {
+            $customMessage.error('Gas不足,请通过抵押获得更多', 1.5);
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            $customMessage.error('Ram不足,请通过购买获得更多', 1.5);
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            $customMessage.error('交易失败,请再次尝试', 1.5);
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
 
       return {
         childRef,
         progress,
         increaseProgress,
         openModal,
+        onHide,
+        handleMint,
       };
     },
     computed: {},

@@ -177,11 +177,15 @@
       const handleDeploy = async () => {
         try {
           const res = await ContractService.deployFunc('test', 10000, 1000);
+          $customMessage.success('交易成功!  等待区块确认', 1.5);
         } catch (err: any) {
+          console.log('err--', err);
           if (err.indexOf('gas not enough') >= 0) {
+            $customMessage.error('Gas不足,请通过抵押获得更多', 1.5);
             // this.showAlert('Gas不足', 'Gas not enough',
             //     '请通过抵押获得更多', 'Please pledge IOST to get more');
           } else if (err.indexOf('pay ram failed') >= 0) {
+            $customMessage.error('Ram不足,请通过购买获得更多', 1.5);
             // this.showAlert('Ram不足', 'Ram not enough',
             //     '请通过购买获得更多', 'Please buy some with IOST');
           } else {
@@ -190,17 +194,21 @@
         }
       };
       const handleMint = async () => {
-        $customMessage.success(messageRef.value, 10000);
+        // $customMessage.success(messageRef.value, 1.5);
         // $customMessage.error(messageRef.value, 10000);
         // $customMessage.warning(messageRef.value, 10000);
         try {
           const res = await ContractService.mintFunc('test', 1000);
           console.log('handleMint----', res);
+          $customMessage.success('交易成功!  等待区块确认', 1.5);
         } catch (err: any) {
+          console.log('err--', err);
           if (err.indexOf('gas not enough') >= 0) {
+            $customMessage.error('Gas不足,请通过抵押获得更多', 1.5);
             // this.showAlert('Gas不足', 'Gas not enough',
             //     '请通过抵押获得更多', 'Please pledge IOST to get more');
           } else if (err.indexOf('pay ram failed') >= 0) {
+            $customMessage.error('Ram不足,请通过购买获得更多', 1.5);
             // this.showAlert('Ram不足', 'Ram not enough',
             //     '请通过购买获得更多', 'Please buy some with IOST');
           } else {
@@ -212,11 +220,15 @@
         try {
           const res = await ContractService.buyFunc('test', 0);
           console.log('handleBuy----', res);
+          $customMessage.success('交易成功!  等待区块确认', 1.5);
         } catch (err: any) {
+          console.log('err--', err);
           if (err.indexOf('gas not enough') >= 0) {
+            $customMessage.error('Gas不足,请通过抵押获得更多', 1.5);
             // this.showAlert('Gas不足', 'Gas not enough',
             //     '请通过抵押获得更多', 'Please pledge IOST to get more');
           } else if (err.indexOf('pay ram failed') >= 0) {
+            $customMessage.error('Ram不足,请通过购买获得更多', 1.5);
             // this.showAlert('Ram不足', 'Ram not enough',
             //     '请通过购买获得更多', 'Please buy some with IOST');
           } else {
@@ -229,11 +241,15 @@
         try {
           const res = await ContractService.transferFunc('test', 0, 'hulala');
           console.log('handleTransfer----', res);
+          $customMessage.success('交易成功!  等待区块确认', 1.5);
         } catch (err: any) {
+          console.log('err--', err);
           if (err.indexOf('gas not enough') >= 0) {
+            $customMessage.error('Gas不足,请通过抵押获得更多', 1.5);
             // this.showAlert('Gas不足', 'Gas not enough',
             //     '请通过抵押获得更多', 'Please pledge IOST to get more');
           } else if (err.indexOf('pay ram failed') >= 0) {
+            $customMessage.error('Ram不足,请通过购买获得更多', 1.5);
             // this.showAlert('Ram不足', 'Ram not enough',
             //     '请通过购买获得更多', 'Please buy some with IOST');
           } else {
@@ -245,11 +261,15 @@
         try {
           const res = await ContractService.listFunc('test', 0, 10);
           console.log('handleList----', res);
+          $customMessage.success('交易成功!  等待区块确认', 1.5);
         } catch (err: any) {
+          console.log('err--', err);
           if (err.indexOf('gas not enough') >= 0) {
+            $customMessage.error('Gas不足,请通过抵押获得更多', 1.5);
             // this.showAlert('Gas不足', 'Gas not enough',
             //     '请通过抵押获得更多', 'Please pledge IOST to get more');
           } else if (err.indexOf('pay ram failed') >= 0) {
+            $customMessage.error('Ram不足,请通过购买获得更多', 1.5);
             // this.showAlert('Ram不足', 'Ram not enough',
             //     '请通过购买获得更多', 'Please buy some with IOST');
           } else {
@@ -261,11 +281,15 @@
         try {
           const res = await ContractService.unlistFunc('test', 0);
           console.log('handleUnList----', res);
+          $customMessage.success('交易成功!  等待区块确认', 1.5);
         } catch (err: any) {
+          console.log('err--', err);
           if (err.indexOf('gas not enough') >= 0) {
+            $customMessage.error('Gas不足,请通过抵押获得更多', 1.5);
             // this.showAlert('Gas不足', 'Gas not enough',
             //     '请通过抵押获得更多', 'Please pledge IOST to get more');
           } else if (err.indexOf('pay ram failed') >= 0) {
+            $customMessage.error('Ram不足,请通过购买获得更多', 1.5);
             // this.showAlert('Ram不足', 'Ram not enough',
             //     '请通过购买获得更多', 'Please buy some with IOST');
           } else {
