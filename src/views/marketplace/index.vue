@@ -1,5 +1,5 @@
 <template>
-  <div class="token-container p-10">
+  <div class="token-container mx-auto w-11/12 sm:w-3/4">
     <div class="my-10 flex justify-between">
       <h1 class="mb-5 text-left text-xl font-bold">热门代币</h1>
       <!-- <BaseInput
@@ -15,7 +15,7 @@
         style="width: 200px"
       />
     </div>
-    <div class="tab-content">
+    <div class="tab-content hidden sm:block">
       <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
         <!-- Slot for customizing header cells -->
         <template #header="{ column }">
@@ -41,6 +41,9 @@
         </template>
       </BaseTable>
     </div>
+    <div class="mobile-tx mt-10 block sm:hidden">
+      <MobileTable />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -48,6 +51,7 @@
   // import BaseInput from '~/components/core/Input.vue';
   import BaseTable from '~/components/core/Table.vue';
   import BaseInputSearch from '~/components/core/InputSearch.vue';
+  import MobileTable from './mobileTable.vue';
   import { useRouter } from 'vue-router';
   export default defineComponent({
     name: 'Token',
@@ -55,6 +59,7 @@
       // BaseInput,
       BaseTable,
       BaseInputSearch,
+      MobileTable,
     },
     setup() {
       onMounted(() => {
