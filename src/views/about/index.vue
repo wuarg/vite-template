@@ -97,6 +97,8 @@
     <BaseButton @click="handleTransfer()">handleTransfer</BaseButton>
     <BaseButton @click="handleList()">handleList</BaseButton>
     <BaseButton @click="handleUnList()">handleUnList</BaseButton>
+    <!-- // -->
+    <Spinner v-if="loading" size="small" class="loader" />
   </div>
 </template>
 
@@ -105,6 +107,8 @@
   import BaseInputSearch from '~/components/core/InputSearch.vue';
   import BaseDropdown from '~/components/core/Dropdown.vue';
   import BaseButton from '~/components/core/Button.vue';
+  import Spinner from '~/components/core/Spinner.vue';
+
   import { defineComponent, ref } from 'vue';
   import { labelSystem } from '~/api/index';
   import { cancelToken } from '~/utils/service';
@@ -114,8 +118,9 @@
   import { ContractService } from '~/utils/contractServe';
   export default defineComponent({
     name: 'About',
-    components: { BaseSelect, BaseInputSearch, BaseDropdown, BaseButton },
+    components: { BaseSelect, BaseInputSearch, BaseDropdown, BaseButton, Spinner },
     setup() {
+      const loading = ref<boolean>(false);
       const handleClick = async () => {
         await labelSystem()
           .then((res) => {
@@ -209,6 +214,7 @@
         }
       };
       const handleTransfer = async () => {
+        loading.value = true;
         try {
           const res = await ContractService.transferFunc('test', 0, 'hulala');
           console.log('handleTransfer----', res);
@@ -257,6 +263,7 @@
         }
       };
       return {
+        loading,
         handleClick,
         handleCancel,
         visible,
