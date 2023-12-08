@@ -95,6 +95,7 @@
           $customMessage.success('交易成功!  等待区块确认', 1.5);
           onHide();
         } catch (err: any) {
+          onHide();
           console.log('err--', err);
           if (err.indexOf('gas not enough') >= 0) {
             $customMessage.error('Gas不足,请通过抵押获得更多', 1.5);

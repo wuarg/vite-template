@@ -8,45 +8,38 @@
       <div class="my-10 flex items-center justify-between">
         <span class="label-span">Tick</span>
         <input
-          v-model="amountIn"
+          v-model="ircName"
           class="form-input w-2/3"
           type="text"
-          placeholder="0.0"
+          placeholder="ircName"
           :disabled="waiting"
-          @keydown="checkAmount($event)"
-          @keyup="enterFromAmount()"
-          @change="enterFromAmount()"
+          @keyup="ircNameTrim()"
+          @change="ircNameTrim()"
         />
       </div>
       <div class="my-10 flex items-center justify-between">
         <span class="label-span">Total Supply</span>
         <input
-          v-model="amountIn"
+          v-model="ircTotal"
           class="form-input w-2/3"
           type="text"
           placeholder="0.0"
           :disabled="waiting"
-          @keydown="checkAmount($event)"
-          @keyup="enterFromAmount()"
-          @change="enterFromAmount()"
         />
       </div>
       <div class="my-10 flex items-center justify-between">
         <span class="label-span">Limit Per Mint</span>
         <input
-          v-model="amountIn"
+          v-model="ircLimit"
           class="form-input w-2/3"
           type="text"
           placeholder="0.0"
           :disabled="waiting"
-          @keydown="checkAmount($event)"
-          @keyup="enterFromAmount()"
-          @change="enterFromAmount()"
         />
       </div>
       <div class="my-10 flex items-center justify-end">
-        <BaseButton class="deploy-button" variant="text-text"> Cancel </BaseButton>
-        <BaseButton class="deploy-button" variant="text-text" @click="handleDeploy()">
+        <BaseButton class="deploy-button" variant="text-text" @click="onHide"> Cancel </BaseButton>
+        <BaseButton class="deploy-button ok-btn" variant="text-text" @click="handleDeploy()">
           <span class="deploy-span">Deploy</span>
         </BaseButton>
       </div>
@@ -75,9 +68,17 @@
           console.log('newValue, oldValue---', newValue, oldValue);
           if (newValue === true) {
             callChildMethod();
+          } else {
+            if (childRef.value) {
+              (childRef.value as any).hide();
+            }
           }
         },
       );
+      onMounted(() => {
+        //
+      });
+      // modal 方法调用
       const childRef = ref(null);
       const callChildMethod = () => {
         console.log('callChildMethod---', childRef.value);
@@ -86,39 +87,34 @@
         }
       };
       const onHide = () => {
+        console.log('onHide====');
         context.emit('onHide');
+        // if (childRef.value) {
+        //   (childRef.value as any).hide();
+        // }
       };
 
-      onMounted(() => {
-        //
-      });
-
-      const amountIn = ref('');
       const waiting = ref(false);
-      const checkAmount = ($event: any) => {
-        // if (environment.allowedKeycodes.indexOf($event.which) < 0) {
-        //   return false;
-        // }
-        return true;
-      };
-      const enterFromAmount = async () => {
-        // if (isNaN(+amountIn.value)) {
-        //   amountIn.value = amountInOld.value;
-        //   return;
-        // }
-        amountIn.value = amountIn.value.trim();
+
+      const ircName = ref('');
+      const ircTotal = ref(0);
+      const ircLimit = ref(0);
+      const ircNameTrim = async () => {
+        ircName.value = ircName.value.trim();
       };
       const handleDeploy = async () => {
-        console.log('amountIn.value--', amountIn.value);
+        console.log('amountIn.value--', ircName.value, ircTotal.value, ircLimit.value);
+        onHide();
       };
 
       return {
         childRef,
         onHide,
         waiting,
-        amountIn,
-        checkAmount,
-        enterFromAmount,
+        ircName,
+        ircTotal,
+        ircLimit,
+        ircNameTrim,
         handleDeploy,
       };
     },
@@ -141,6 +137,10 @@
     width: 200px;
     height: 60px;
     color: #333;
+  }
+  .ok-btn {
+    background: url('../../assets/img/button-ok.png') no-repeat !important;
+    background-size: 100% 100% !important;
   }
   // .deploy-span{
   //   display: inline-block;
