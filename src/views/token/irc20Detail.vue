@@ -1,7 +1,7 @@
 <template>
-  <div class="irc--container m-auto w-3/4">
+  <div class="irc--container mx-auto w-11/12 sm:w-3/4">
     <div class="my-10 flex items-center">
-      <img src="/src/assets/img/back.png" alt="back" class="mr-3 w-5" />
+      <img src="/src/assets/img/back.png" alt="back" class="mr-3 w-5" @click="goBack()" />
       <h1 class="mb-0 text-left text-xl font-bold">代币列表</h1>
     </div>
     <div class="mx-auto my-10 text-center">
@@ -47,7 +47,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, onMounted, watchEffect } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import BaseProgress from '~/components/core/Progress.vue';
   import BaseTabs from '~/components/core/Tabs.vue';
   import BaseTable from '~/components/core/Table.vue';
@@ -156,6 +156,10 @@
         },
         // Add more data as needed
       ];
+      const router = useRouter();
+      const goBack = () => {
+        router.push({ name: 'Tokens' });
+      };
       return {
         progress,
         tabs,
@@ -163,6 +167,7 @@
         handleTabSelected,
         tableColumns2,
         tableData2,
+        goBack,
       };
     },
     computed: {},

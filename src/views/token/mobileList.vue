@@ -1,6 +1,11 @@
 <template>
   <div class="table-content my-5">
-    <div v-for="i in 5" :key="i" class="table-content__div my-3 flex rounded p-2">
+    <div
+      v-for="i in 5"
+      :key="i"
+      class="table-content__div my-3 flex rounded p-2"
+      @click="navigateToIrc(i)"
+    >
       <div class="left mr-5">
         <img src="/src/assets/img/twitter.png" class="h-8 w-8" />
       </div>
@@ -49,6 +54,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
   import BaseProgress from '~/components/core/Progress.vue';
   export default defineComponent({
     name: 'TableList',
@@ -65,9 +71,14 @@
           progress.value += 10;
         }
       };
+      const router = useRouter();
+      const navigateToIrc = (i: any) => {
+        router.push({ name: 'Irc20Detail', query: { id: i } }); // 使用路由的 name 属性进行跳转
+      };
       return {
         progress,
         increaseProgress,
+        navigateToIrc,
       };
     },
     computed: {},
