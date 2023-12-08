@@ -16,13 +16,6 @@
           {{ row[column.key] }}
         </span>
       </template>
-      <!-- Custom slot for actions -->
-      <template #actions="{ row }">
-        <!-- <button @click="handleEdit(row)">Edit</button>
-          <button @click="handleDelete(row)">Delete</button> -->
-        <img src="/src/assets/img/share.png" class="m-auto w-1/6" @click="handleEdit(row)" />
-        <!-- Add more actions as needed -->
-      </template>
     </BaseTable>
   </div>
 </template>
@@ -103,9 +96,14 @@
         console.log('row, column---', row, column);
         router.push({ name: 'MarketplaceDetail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
       };
+      const handleDetail = (row: any, column: any) => {
+        console.log('row, column---', row, column);
+        router.push({ name: 'MarketplaceDetail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
+      };
       return {
         tableColumns2,
         tableData2,
+        handleDetail,
         handleEdit,
       };
     },

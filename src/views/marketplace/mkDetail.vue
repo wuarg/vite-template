@@ -1,30 +1,54 @@
 <template>
-  <div class="irc--container m-auto w-3/4">
-    <div class="my-10 flex justify-between">
-      <h1 class="mb-5 text-left text-xl font-bold">热门代币</h1>
+  <div class="irc--container mx-auto w-11/12 sm:w-3/4">
+    <div class="my-10 flex items-center">
+      <img src="/src/assets/img/back.png" alt="back" class="mr-3 w-5" @click="goBack()" />
+      <h1 class="mb-0 text-left text-xl font-bold">热门代币</h1>
     </div>
-    <div class="irc20-info flex items-center justify-between">
-      <div class="irc20-info__img">
-        <img src="/src/assets/img/twitter.png" alt="twitter" />
-      </div>
-      <div class="irc20-info__div">
-        <p>IRC- 100 IOST</p>
-        <p>低价- 100 IOST</p>
-      </div>
-      <div class="irc20-info__div">
-        <p>单价$ 0.5</p>
-      </div>
-      <div class="irc20-info__div">
-        <p>拥有者 1450</p>
-      </div>
-      <div class="irc20-info__div">
-        <p>在售 540</p>
-      </div>
-      <div class="irc20-info__div">
-        <p>总供应量 21000000</p>
+    <div class="pc hidden sm:block">
+      <div class="irc20-info flex items-center justify-between">
+        <div class="irc20-info__img">
+          <img src="/src/assets/img/twitter.png" alt="twitter" />
+        </div>
+        <div class="irc20-info__div">
+          <p>IRC- 100 IOST</p>
+          <p>低价- 100 IOST</p>
+        </div>
+        <div class="irc20-info__div">
+          <p>单价$ 0.5</p>
+        </div>
+        <div class="irc20-info__div">
+          <p>拥有者 1450</p>
+        </div>
+        <div class="irc20-info__div">
+          <p>在售 540</p>
+        </div>
+        <div class="irc20-info__div">
+          <p>总供应量 21000000</p>
+        </div>
       </div>
     </div>
-    <div class="my-10 flex justify-start">
+    <div class="mobile block sm:hidden">
+      <div class="irc20-info">
+        <div class="irc20-info__img flex items-center justify-center">
+          <img src="/src/assets/img/twitter.png" alt="twitter" class="w-10" />
+        </div>
+        <div class="irc20-info__div mt-5 text-left">
+          <p style="color: #fff132">IRC- 100 IOST</p>
+          <p>低价- 100 IOST</p>
+        </div>
+        <div class="irc20-info__div flex items-center text-left">
+          <p>单价$ 0.5</p>
+          <p class="mx-3">总交易量 10000 iost</p>
+        </div>
+        <div class="irc20-info__div flex items-center text-left">
+          <p>拥有者 1450</p>
+          <p class="mx-3">在售 540</p>
+          <p class="mx-3">总供应量 21000000</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-10 flex justify-center sm:justify-start">
       <BaseTabs :tabs="tabs" :initial-tab="selectedTabIndex" @change="handleTabSelected" />
     </div>
     <div class="irc20-search my-10 flex justify-between">
@@ -32,7 +56,7 @@
         <span style="color: #fff132">数量：21000</span>
         <img src="/src/assets/img/refresh.png" alt="refresh" class="mx-3 w-5" />
       </div>
-      <div class="irc20-search-input">
+      <div class="irc20-search-input hidden sm:block">
         <!-- <BaseInput
           v-model="searchToken"
           placeholder="根据铭文ID搜索"
@@ -95,7 +119,7 @@
         </BaseSelect>
       </div>
     </div>
-    <div class="mk-list my-10">
+    <div class="pc mk-list my-10 hidden sm:block">
       <a-row :gutter="[16, 16]" class="mk-list__row">
         <a-col v-for="i in 6" :key="i" :span="6" class="mk-list__col pb-8">
           <div class="mk-list__col__div">
@@ -141,10 +165,53 @@
           </div>
         </a-col>
       </a-row>
-      <!-- <div class="mk-list__div"> 232 </div>
-      <div class="mk-list__div"> 232 </div>
-      <div class="mk-list__div"> 232 </div>
-      <div class="mk-list__div"> 232 </div> -->
+    </div>
+    <div class="mobile mk-list my-10 block sm:hidden">
+      <a-row :gutter="[8, 8]" class="mk-list__row">
+        <a-col v-for="i in 6" :key="i" :span="24" class="mk-list__col">
+          <div class="mk-list__col__div">
+            <div class="header flex items-center justify-between p-5">
+              <span>IOST</span>
+              <span><img src="/src/assets/img/success2.png" class="w-5" /></span>
+            </div>
+            <div class="tags flex items-center justify-between px-5">
+              <span>IOST</span>
+              <span>IOST</span>
+              <span>IOST</span>
+            </div>
+            <div class="content py-6">
+              <h3 class="yellow">1000</h3>
+              <p>
+                <span class="green">$ 3.24</span>/
+                <span>iosi</span>
+              </p>
+            </div>
+            <div class="buy p-5">
+              <div class="flex items-center justify-between py-3">
+                <span>#3133234</span>
+                <span>CFb5vN...</span>
+              </div>
+              <div class="flex items-center justify-between py-3">
+                <span class="flex items-center">
+                  <img src="/src/assets/img/iost.png" alt="" class="mr-3 w-4" />100
+                </span>
+                <span>$4.67</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <BaseButton
+                  class="bg-button"
+                  variant="text-text"
+                  style="height: 30px; width: auto"
+                  @click="handleBuyModal(i)"
+                >
+                  BUY
+                </BaseButton>
+                <img src="/src/assets/img/shop.png" alt="shop" class="h-5 w-5" />
+              </div>
+            </div>
+          </div>
+        </a-col>
+      </a-row>
     </div>
     <buyModal :buy-visible="buyVisible" @onOk="handleOkBuy()" @onHide="handleHideBuy()" />
   </div>
@@ -152,7 +219,7 @@
 <script lang="ts">
   import type { SelectProps } from 'ant-design-vue';
   import { defineComponent, ref, onMounted, watchEffect } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import BaseTabs from '~/components/core/Tabs.vue';
   import BaseInput from '~/components/core/Input.vue';
   import BaseButton from '~/components/core/Button.vue';
@@ -264,6 +331,11 @@
       const searchValue = ref<string>('');
       const defaultSearchValue = 'initial search text';
 
+      const router = useRouter();
+      const goBack = () => {
+        router.push({ name: 'Tokens' });
+      };
+
       return {
         tabs,
         selectedTabIndex,
@@ -284,6 +356,7 @@
         handleSelectChange,
         searchValue,
         defaultSearchValue,
+        goBack,
       };
     },
     computed: {},
