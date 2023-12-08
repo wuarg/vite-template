@@ -52,6 +52,9 @@ export const environment = {
     ['husd_xplus', 'xlp1629538467333', '5.25'],
     ['husd_iost', 'xlp1634630264660', '3.5'],
   ],
+
+  //铭文合约
+  irc: 'ContractEomvF8zhbmEwHXwE9uyvLs1rgqaMeb7TDfBpUMGfKpGj',
 };
 
 /*
