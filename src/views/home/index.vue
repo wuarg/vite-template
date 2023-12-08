@@ -1,7 +1,7 @@
 <template>
-  <div class="home-container mx-auto w-10/12 sm:w-3/4">
+  <div class="home-container mx-auto w-11/12 sm:w-3/4">
     <BaseMint />
-    <div class="last-tx">
+    <div class="last-tx py-5 sm:py-10">
       <h1 class="mb-5 text-left text-xl font-bold">最新交易</h1>
       <BaseTable :columns="tableColumns" :data="tableData" :pagination="false">
         <!-- Slot for customizing header cells -->
@@ -13,7 +13,7 @@
         <template #cell="{ cell }"> {{ cell }}</template>
       </BaseTable>
     </div>
-    <div class="my-10 flex justify-between">
+    <div class="my-5 flex justify-between sm:my-10">
       <span>发现超过100笔交易</span>
       <!-- <select v-model="currentSelect" style="color: #333" @change="handleSelectChange">
         <option v-for="option in selectOptions" :key="option.key" :value="option.key">{{
@@ -32,7 +32,7 @@
         </a-select-option>
       </BaseSelect>
     </div>
-    <div class="all-tx">
+    <div class="all-tx hidden sm:block">
       <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
         <!-- Slot for customizing header cells -->
         <template #header="{ column }">
@@ -58,6 +58,9 @@
         </template>
       </BaseTable>
     </div>
+    <div class="all-tx block sm:hidden">
+      <TableList />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -65,12 +68,14 @@
   import BaseMint from '~/components/mint/index.vue';
   import BaseTable from '~/components/core/Table.vue';
   import BaseSelect from '~/components/core/Select.vue';
+  import TableList from './tableList.vue';
   export default defineComponent({
     name: 'HomeContainer',
     components: {
       BaseMint,
       BaseTable,
       BaseSelect,
+      TableList,
     },
     setup() {
       onMounted(() => {

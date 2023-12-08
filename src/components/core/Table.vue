@@ -4,7 +4,11 @@
     <table class="w-full">
       <thead>
         <tr>
-          <th v-for="column in columns" :key="column.key" class="py-3 font-black sm:text-lg">
+          <th
+            v-for="column in columns"
+            :key="column.key"
+            class="py-3 text-sm font-black sm:text-lg"
+          >
             <slot name="header" :column="column">{{ column.label }}</slot>
           </th>
           <!-- <th v-if="hasActions">Actions</th> -->

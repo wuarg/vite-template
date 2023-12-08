@@ -5,7 +5,7 @@
       <img src="/src/assets/img/logo.png" class="inline w-full sm:w-1/2" alt="" />
     </div>
     <div class="flex w-full items-center justify-between">
-      <div class="menu">
+      <div class="menu hidden sm:block">
         <router-link to="/home" class="mx-4" active-class="font-black text-white">
           <span> {{ $t('home') }}</span>
         </router-link>
@@ -19,29 +19,31 @@
           <span> {{ $t('marketplace.menu') }}</span>
         </router-link>
       </div>
-      <div class="hidden sm:block">
+      <div class="">
         <div class="link flex items-center justify-end">
           <BaseDropdown v-if="account" :dropdown-items="menuItems">
-            <BaseButton class="bg-button" variant="text-text" style="height: 40px; width: auto">
+            <BaseButton class="bg-button h-1/4 w-auto" variant="text-text">
               {{ account }}
             </BaseButton>
           </BaseDropdown>
           <BaseButton
             v-else
-            class="bg-button"
+            class="bg-button h-1/4 w-auto"
             variant="text-text"
-            style="height: 40px; width: auto"
             @click="handleConnectWallet()"
           >
             Connect Wallet
           </BaseButton>
 
-          <div class="shop-box mx-4 w-8" @click="showDrawer">
+          <div class="shop-box mx-2 w-8 sm:mx-4 sm:w-8" @click="showDrawer">
             <img src="/src/assets/img/shop.png" alt="shop" />
           </div>
           <button class="nav-btn ml-2 text-center" @click="toggleLocale()">
             <icon-carbon-language class="h-6 w-6" />
           </button>
+          <BaseDropdown class="block sm:hidden" :dropdown-items="menuItems">
+            <img src="/src/assets/img/menu-m.png" class="ml-2 h-5 w-5" />
+          </BaseDropdown>
         </div>
       </div>
 
