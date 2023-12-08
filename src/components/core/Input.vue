@@ -20,7 +20,7 @@
         type: String,
         default: 'medium',
         validator(value) {
-          return ['medium', 'large'].includes(value);
+          return ['medium', 'small', 'large'].includes(value);
         },
       },
       bg: {
@@ -53,7 +53,10 @@
     // background-color: @darkSecondaryBackground;
     color: @darkSecondaryBackground;
     box-sizing: border-box;
-
+    &.size-small {
+      font-size: 12px;
+      padding: 8px 50px;
+    }
     &.size-large {
       font-size: 18px;
       padding: 16px 50px;

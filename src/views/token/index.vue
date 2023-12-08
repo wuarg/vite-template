@@ -1,36 +1,47 @@
 <template>
-  <div class="token-container p-10">
-    <h3 class="title text-4xl">查看地址的代币余额</h3>
-    <div class="search-box input-with-background-image m-auto my-10 flex w-1/2 items-center">
+  <div class="token-container mx-auto w-11/12 sm:w-3/4">
+    <span class="title text-white block py-5 text-base sm:text-4xl">查看地址的代币余额</span>
+    <div
+      class="search-box input-with-background-image m-auto my-5 flex items-center sm:my-10 sm:w-1/2"
+    >
       <BaseInput
         v-model="searchToken"
         size="large"
         placeholder="Search name or paste address"
-        class="w-10/12"
+        class="hidden w-10/12 sm:block"
       />
-      <img src="/src/assets/img/search.png" class="pl-15 h-8 w-8" />
+      <BaseInput
+        v-model="searchToken"
+        size="small"
+        placeholder="Search name or paste address"
+        class="block w-10/12 text-base sm:hidden"
+      />
+      <img src="/src/assets/img/search.png" class="sm:pl-15 h-5 w-5 sm:h-8 sm:w-8" />
     </div>
     <p class="font-bold">识别所有操作，包括部署、铸造和交易</p>
-    <div class="my-10 flex justify-between">
-      <h1 class="mb-5 text-left text-xl font-bold">代币列表</h1>
-      <a-button type="primary" @click="handleDeplayModal()">部署</a-button>
+    <div class="mt-5 flex justify-between sm:my-10">
+      <h1 class="text-left text-base font-bold sm:mb-5 sm:text-xl">代币列表</h1>
+      <div class="deploy hidden sm:block">
+        <a-button type="primary" @click="handleDeplayModal()">部署</a-button>
+      </div>
     </div>
-    <div class="my-10 flex justify-between">
-      <BaseTabs :tabs="tabs" :initial-tab="selectedTabIndex" @change="handleTabSelected" />
-      <!-- <BaseInput
-        v-model="searchToken"
-        placeholder="搜索"
-        background="background"
-        border="border"
-        class="w-1/5"
-      /> -->
+    <div class="my-5 flex justify-between sm:my-10">
+      <div class="deploy block sm:hidden">
+        <a-button type="primary" @click="handleDeplayModal()">部署</a-button>
+      </div>
+      <BaseTabs
+        :tabs="tabs"
+        :initial-tab="selectedTabIndex"
+        class="hidden sm:block"
+        @change="handleTabSelected"
+      />
       <BaseInputSearch
         v-model="searchValue"
         :default-search-value="defaultSearchValue"
         style="width: 200px"
       />
     </div>
-    <div class="tab-content">
+    <div class="tab-content hidden sm:block">
       <!-- 根据选中的tab索引显示内容 -->
       <!-- {{ selectedTabIndex }}
       <div v-if="selectedTabIndex === 0">Tab 1 content</div>
@@ -55,6 +66,15 @@
         </template>
       </BaseTable>
     </div>
+    <div class="mobile-tx mt-10 block sm:hidden">
+      <BaseTabs
+        :tabs="tabs"
+        :initial-tab="selectedTabIndex"
+        class="flex justify-center"
+        @change="handleTabSelected"
+      />
+      <MobileTable />
+    </div>
     <deployModal
       :deplay-visible="deplayVisible"
       @handleDeploy="handleOkDeplay()"
@@ -69,6 +89,7 @@
   import BaseTabs from '~/components/core/Tabs.vue';
   import BaseTable from '~/components/core/Table.vue';
   import deployModal from '~/views/token/deployModal.vue';
+  import MobileTable from './mobileList.vue';
   import { useRouter } from 'vue-router';
   export default defineComponent({
     name: 'Token',
@@ -78,6 +99,7 @@
       BaseTable,
       deployModal,
       BaseInputSearch,
+      MobileTable,
     },
     setup() {
       onMounted(() => {

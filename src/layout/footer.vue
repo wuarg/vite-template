@@ -13,9 +13,9 @@
   });
 </script>
 <template>
-  <div class="my-10 flex items-center justify-center">
-    <img src="/src/assets/img/twitter.png" class="mx-5 w-20" />
-    <img src="/src/assets/img/discord.png" class="mx-5 w-20" />
+  <div class="flex items-center justify-center p-10">
+    <img src="/src/assets/img/twitter.png" class="mx-5 w-10 sm:w-20" />
+    <img src="/src/assets/img/discord.png" class="mx-5 w-10 sm:w-20" />
   </div>
 </template>
 <style lang="less" scoped>
