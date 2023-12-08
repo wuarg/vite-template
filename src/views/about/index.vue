@@ -90,6 +90,13 @@
         <a-icon :type="visible ? 'up' : 'down'" />
       </a-button>
     </BaseDropdown>
+
+    <BaseButton @click="handleDeploy()">handleDeploy</BaseButton>
+    <BaseButton @click="handleMint()">handleMint</BaseButton>
+    <BaseButton @click="handleBuy()">handleBuy</BaseButton>
+    <BaseButton @click="handleTransfer()">handleTransfer</BaseButton>
+    <BaseButton @click="handleList()">handleList</BaseButton>
+    <BaseButton @click="handleUnList()">handleUnList</BaseButton>
   </div>
 </template>
 
@@ -97,12 +104,17 @@
   import BaseSelect from '~/components/core/Select.vue';
   import BaseInputSearch from '~/components/core/InputSearch.vue';
   import BaseDropdown from '~/components/core/Dropdown.vue';
+  import BaseButton from '~/components/core/Button.vue';
   import { defineComponent, ref } from 'vue';
   import { labelSystem } from '~/api/index';
   import { cancelToken } from '~/utils/service';
+  import { BigNumber } from 'bignumber.js';
+  import { environment } from '~/utils/iostConfig';
+
+  import { ContractService } from '~/utils/contractServe';
   export default defineComponent({
     name: 'About',
-    components: { BaseSelect, BaseInputSearch, BaseDropdown },
+    components: { BaseSelect, BaseInputSearch, BaseDropdown, BaseButton },
     setup() {
       const handleClick = async () => {
         await labelSystem()
@@ -148,6 +160,102 @@
         { key: 'item2', title: 'Item 2' },
         { key: 'item3', title: 'Item 3' },
       ];
+      //
+      const handleDeploy = async () => {
+        try {
+          const res = await ContractService.deployFunc('test', 10000, 1000);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleMint = async () => {
+        try {
+          const res = await ContractService.mintFunc('test', 1000);
+          console.log('handleMint----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleBuy = async () => {
+        try {
+          const res = await ContractService.buyFunc('test', 0);
+          console.log('handleBuy----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleTransfer = async () => {
+        try {
+          const res = await ContractService.transferFunc('test', 0, 'hulala');
+          console.log('handleTransfer----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleList = async () => {
+        try {
+          const res = await ContractService.listFunc('test', 0, 10);
+          console.log('handleList----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
+      const handleUnList = async () => {
+        try {
+          const res = await ContractService.unlistFunc('test', 0);
+          console.log('handleUnList----', res);
+        } catch (err: any) {
+          if (err.indexOf('gas not enough') >= 0) {
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
+      };
       return {
         handleClick,
         handleCancel,
@@ -162,13 +270,14 @@
         defaultSearchValue,
         triggerText,
         menuItems,
+        //
+        handleDeploy,
+        handleMint,
+        handleBuy,
+        handleTransfer,
+        handleList,
+        handleUnList,
       };
     },
   });
 </script>
-
-<style lang="less" scoped>
-  ul a {
-    @apply text-skin-700 dark:text-skin-600;
-  }
-</style>
