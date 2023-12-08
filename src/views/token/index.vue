@@ -57,8 +57,8 @@
     </div>
     <deployModal
       :deplay-visible="deplayVisible"
-      @onOk="handleOkDeplay()"
-      @onHide="handleHideDeplay()"
+      @handleDeploy="handleOkDeplay()"
+      @handleCancle="handleHideDeplay()"
     />
   </div>
 </template>
@@ -168,9 +168,11 @@
         deplayVisible.value = true;
       };
       const handleOkDeplay = () => {
+        console.log('handleOkDeplay');
         deplayVisible.value = false;
       };
       const handleHideDeplay = () => {
+        console.log('handleHideDeplay');
         deplayVisible.value = false;
       };
       const router = useRouter();
