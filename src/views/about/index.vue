@@ -190,9 +190,9 @@
         }
       };
       const handleMint = async () => {
-        // $customMessage.success(messageRef.value, 10000);
+        $customMessage.success(messageRef.value, 10000);
         // $customMessage.error(messageRef.value, 10000);
-        $customMessage.warning(messageRef.value, 10000);
+        // $customMessage.warning(messageRef.value, 10000);
         try {
           const res = await ContractService.mintFunc('test', 1000);
           console.log('handleMint----', res);
