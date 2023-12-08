@@ -51,7 +51,7 @@
     <div class="my-10 flex justify-center sm:justify-start">
       <BaseTabs :tabs="tabs" :initial-tab="selectedTabIndex" @change="handleTabSelected" />
     </div>
-    <div class="irc20-search my-10 flex justify-between">
+    <div class="irc20-search my-5 flex justify-between sm:my-10">
       <div class="irc20-search-refresh flex items-center justify-between">
         <span style="color: #fff132">数量：21000</span>
         <img src="/src/assets/img/refresh.png" alt="refresh" class="mx-3 w-5" />
@@ -166,7 +166,15 @@
         </a-col>
       </a-row>
     </div>
-    <div class="mobile mk-list my-10 block sm:hidden">
+    <div class="mobile mk-list block sm:my-10 sm:hidden">
+      <div class="search mb-5">
+        <BaseInputSearch
+          v-model="searchValue"
+          :default-search-value="defaultSearchValue"
+          class="w-full"
+        />
+      </div>
+
       <a-row :gutter="[8, 8]" class="mk-list__row">
         <a-col v-for="i in 6" :key="i" :span="24" class="mk-list__col">
           <div class="mk-list__col__div">
