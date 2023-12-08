@@ -21,11 +21,20 @@
       </div>
       <div class="hidden sm:block">
         <div class="link flex items-center justify-end">
-          <BaseDropdown :dropdown-items="menuItems">
+          <BaseDropdown v-if="account" :dropdown-items="menuItems">
             <BaseButton class="bg-button" variant="text-text" style="height: 40px; width: auto">
               {{ account }}
             </BaseButton>
           </BaseDropdown>
+          <BaseButton
+            v-else
+            class="bg-button"
+            variant="text-text"
+            style="height: 40px; width: auto"
+            @click="handleConnectWallet()"
+          >
+            Connect Wallet
+          </BaseButton>
 
           <div class="shop-box mx-4 w-8" @click="showDrawer">
             <img src="/src/assets/img/shop.png" alt="shop" />
@@ -118,6 +127,7 @@
       </a-drawer>
     </div>
   </header>
+  <WalletConnect :wallet-visible="walletVisible" @handleClose="handleClose" />
 </template>
 <!-- <script setup lang="ts">
   import { isDark, useThemeChang } from '~/composables';
@@ -128,6 +138,7 @@
   const { themeAni } = useThemeChang(isDark);
 </script> -->
 <script lang="ts">
+  import WalletConnect from '~/components/wallet/WalletConnect.vue';
   import BaseButton from '~/components/core/Button.vue';
   import BaseDropdown from '~/components/core/Dropdown.vue';
   import { commonStore } from '~/stores/modules/common';
@@ -135,6 +146,8 @@
   import { isDark, useThemeChang } from '~/composables';
   // import { useI18n } from "vue-i18n";
   import { useI18n } from '~/modules/i18n';
+  import { connect } from 'http2';
+  import ConnectWallet from '~/components/wallet/ConnectWallet.vue';
 
   type Key = string | number;
 
@@ -175,6 +188,7 @@
     components: {
       BaseButton,
       BaseDropdown,
+      WalletConnect,
     },
     setup() {
       const { t, toggleLocale } = useI18n();
@@ -218,6 +232,17 @@
         { key: 'item3', title: 'Item 3' },
       ];
 
+      // Wallet
+      const walletVisible = ref(false);
+      const handleConnectWallet = () => {
+        console.log('handleConnectWallet');
+        walletVisible.value = true;
+      };
+      const handleClose = () => {
+        console.log('handleClose');
+        walletVisible.value = false;
+      };
+
       return {
         account,
         toggleLocale,
@@ -232,6 +257,9 @@
         start,
         onSelectChange,
         menuItems,
+        walletVisible,
+        handleConnectWallet,
+        handleClose,
       };
     },
   });

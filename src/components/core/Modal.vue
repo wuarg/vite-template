@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div v-if="isVisible" class="app-modal" @click.self="hide">
-      <section class="app-modal-content">
+      <section class="app-modal-content" :style="{ maxWidth: maxWidth }">
         <header class="app-modal-header">
           <slot v-if="$slots.headerTitle" name="headerTitle" />
 
@@ -51,6 +51,10 @@
       noBodyPadding: {
         type: Boolean,
       },
+      maxWidth: {
+        type: String,
+        default: '600px',
+      },
     },
     data() {
       return {
@@ -89,7 +93,7 @@
   }
   .app-modal-content {
     width: 100%;
-    max-width: 600px;
+    // max-width: 600px;
     // border: 1px solid @lightSecondaryBackground;
     border-radius: 20px;
     // background-color: @lightBackground;
