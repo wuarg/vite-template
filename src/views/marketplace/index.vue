@@ -16,7 +16,7 @@
       />
     </div>
     <div class="tab-content hidden sm:block">
-      <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
+      <BaseTable :columns="tableColumns" :data="tableData" :pagination="true">
         <!-- Slot for customizing header cells -->
         <template #header="{ column }">
           <strong>{{ column.label }}</strong>
@@ -42,7 +42,7 @@
       </BaseTable>
     </div>
     <div class="mobile-tx mt-10 block sm:hidden">
-      <MobileTable />
+      <MobileTable :table-data="tableData" />
     </div>
   </div>
 </template>
@@ -53,6 +53,7 @@
   import BaseInputSearch from '~/components/core/InputSearch.vue';
   import MobileTable from './mobileTable.vue';
   import { useRouter } from 'vue-router';
+  import { getMkList, getMkInfo } from '~/api/index';
   export default defineComponent({
     name: 'Token',
     components: {
@@ -63,79 +64,28 @@
     },
     setup() {
       onMounted(() => {
-        //
+        _getMkList();
       });
       const searchToken = ref('');
 
-      const tableColumns2 = [
-        { key: 'iost', label: '集合' },
-        { key: 'status', label: '低价' },
-        { key: 'from', label: '单价' },
-        { key: 'to', label: '24小时成交量' },
-        { key: 'Holders', label: '24小时销售' },
+      const tableColumns = [
+        { key: 'tick', label: '集合' },
+        { key: 'floorPrice', label: '地板价' },
+        // { key: 'from', label: '单价' },
+        { key: 'volumeDay', label: '24小时成交量' },
+        { key: 'amountDay', label: '24小时销售' },
         { key: '12', label: '市值' },
-        { key: '1', label: '拥有者' },
-        { key: '123', label: '总销售额' },
-        { key: '124', label: '总销售量' },
-        { key: '125', label: '在售' },
+        { key: 'counts', label: '拥有者' },
+        { key: 'volume', label: '总销售额' },
+        { key: 'amount', label: '总销售量' },
+        { key: 'shell', label: '在售' },
       ];
-      const tableData2 = [
-        {
-          iost: '100',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        // Add more data as needed
-      ];
+      const tableData = ref([]);
       const router = useRouter();
       const handleEdit = (row: any) => {
         // Handle edit action
         console.log('Edit', row);
-        router.push({ name: 'MarketplaceDetail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
+        router.push({ name: 'MarketplaceDetail', query: { id: row.tick } }); // 使用路由的 name 属性进行跳转
       };
       // search 组件
       const searchValue = ref<string>('');
@@ -143,12 +93,18 @@
       //
       const handleDetail = (row: any, column: any) => {
         console.log('row, column---', row, column);
-        router.push({ name: 'MarketplaceDetail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
+        router.push({ name: 'MarketplaceDetail', query: { id: row.tick } }); // 使用路由的 name 属性进行跳转
+      };
+      // mk list
+      const _getMkList = async () => {
+        const { data: res } = await getMkList('IOSI');
+        console.log('getMkList---', res);
+        tableData.value = [res];
       };
       return {
         searchToken,
-        tableColumns2,
-        tableData2,
+        tableColumns,
+        tableData,
         handleEdit,
         searchValue,
         defaultSearchValue,

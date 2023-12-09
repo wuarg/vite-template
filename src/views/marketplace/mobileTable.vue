@@ -1,6 +1,6 @@
 <template>
   <div class="table-content my-5">
-    <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
+    <BaseTable :columns="tableColumns" :data="tableData" :pagination="true">
       <!-- Slot for customizing header cells -->
       <template #header="{ column }">
         <strong>{{ column.label }}</strong>
@@ -28,81 +28,34 @@
     components: {
       BaseTable,
     },
+    props: {
+      tableData: {
+        type: Array,
+      },
+    },
     setup() {
       onMounted(() => {
         // connectWith(connectors[0]);
       });
-      const tableColumns2 = [
-        { key: 'iost', label: '集合' },
-        { key: 'status', label: '低价' },
-        { key: 'from', label: '单价' },
-        { key: 'to', label: '24小时成交量' },
-        { key: 'Holders', label: '24小时销售' },
+      const tableColumns = [
+        { key: 'tick', label: '集合' },
+        { key: 'floorPrice', label: '地板价' },
+        // { key: 'from', label: '单价' },
+        { key: 'volumeDay', label: '24小时成交量' },
+        { key: 'amountDay', label: '24小时销售' },
       ];
-      const tableData2 = [
-        {
-          iost: '100',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        // Add more data as needed
-      ];
+
       const router = useRouter();
       const handleEdit = (row: any, column: any) => {
         console.log('row, column---', row, column);
-        router.push({ name: 'MarketplaceDetail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
+        router.push({ name: 'MarketplaceDetail', query: { id: row.tick } }); // 使用路由的 name 属性进行跳转
       };
       const handleDetail = (row: any, column: any) => {
         console.log('row, column---', row, column);
-        router.push({ name: 'MarketplaceDetail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
+        router.push({ name: 'MarketplaceDetail', query: { id: row.tick } }); // 使用路由的 name 属性进行跳转
       };
       return {
-        tableColumns2,
-        tableData2,
+        tableColumns,
         handleDetail,
         handleEdit,
       };
