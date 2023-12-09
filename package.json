@@ -12,11 +12,6 @@
     "prettier"
   ],
   "license": "MIT",
-  "author": {
-    "name": "wy",
-    "email": "sfotrio@outlook.com",
-    "url": "https://github.com/AxyLm"
-  },
   "contributors": [],
   "scripts": {
     "prebuild": "lint-staged && vue-tsc --noEmit ",
