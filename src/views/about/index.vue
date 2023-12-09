@@ -1,6 +1,5 @@
 <template>
   <div class="font-normal">
-    <span class="text-3xl" @click="handleClick()">About</span>
     <a-checkbox v-model:checked="checked">Checkbox</a-checkbox>
     <a-button type="primary" @click="showDrawer">Open</a-button>
     <a-drawer
@@ -113,7 +112,7 @@
   import Spinner from '~/components/core/Spinner.vue';
 
   import { defineComponent, ref, inject } from 'vue';
-  import { labelSystem, getLastTransaction } from '~/api/index';
+  import { getLastTransaction } from '~/api/index';
   import { cancelToken } from '~/utils/service';
   import { BigNumber } from 'bignumber.js';
   import { environment } from '~/utils/iostConfig';
@@ -132,15 +131,15 @@
 
       const messageRef = ref('This is a message');
 
-      const handleClick = async () => {
-        await labelSystem()
-          .then((res) => {
-            console.log('res: ', res);
-          })
-          .catch(() => {
-            // ElMessage.error('请求失败 请求已取消！');
-          });
-      };
+      // const handleClick = async () => {
+      //   await labelSystem()
+      //     .then((res) => {
+      //       console.log('res: ', res);
+      //     })
+      //     .catch(() => {
+      //       // ElMessage.error('请求失败 请求已取消！');
+      //     });
+      // };
 
       const handleCancel = () => {
         // 在适当的时机调用取消请求（例如点击取消按钮）
@@ -312,7 +311,7 @@
       };
       return {
         loading,
-        handleClick,
+        // handleClick,
         handleCancel,
         visible,
         showDrawer,

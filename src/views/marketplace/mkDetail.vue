@@ -90,28 +90,29 @@
     </div>
     <div class="pc mk-list my-10 hidden sm:block">
       <a-row :gutter="[16, 16]" class="mk-list__row">
-        <a-col v-for="i in 6" :key="i" :span="6" class="mk-list__col pb-8">
+        <a-col v-for="(item, index) in mkResData" :key="index" :span="6" class="mk-list__col pb-8">
           <div class="mk-list__col__div">
             <div class="header flex items-center justify-between p-5">
-              <span>IOST</span>
+              <span>{{ item.tick }}</span>
               <span><img src="/src/assets/img/success2.png" class="w-5" /></span>
             </div>
             <div class="tags flex items-center justify-between px-5">
-              <span>IOST</span>
-              <span>IOST</span>
-              <span>IOST</span>
+              <span>Irc-10</span>
+              <span>mint</span>
+              <span>#{{ item.blockNumber }}</span>
             </div>
             <div class="content py-6">
-              <h3 class="yellow">1000</h3>
+              <h3 class="yellow">{{ item.amt }}</h3>
               <p>
-                <span class="green">$ 3.24</span>/
-                <span>iosi</span>
+                <span class="green">$ {{ item.price }}</span
+                >/
+                <span>{{ item.tick }}</span>
               </p>
             </div>
             <div class="buy p-5">
               <div class="flex items-center justify-between py-3">
-                <span>#3133234</span>
-                <span>CFb5vN...</span>
+                <span>#{{ item.inscriptionId }}</span>
+                <span>{{ item.owner }}</span>
               </div>
               <div class="flex items-center justify-between py-3">
                 <span class="flex items-center">
@@ -124,7 +125,7 @@
                   class="bg-button"
                   variant="text-text"
                   style="height: 30px; width: auto"
-                  @click="handleBuyModal(i)"
+                  @click="handleBuyModal(item)"
                 >
                   BUY
                 </BaseButton>
@@ -145,28 +146,28 @@
       </div>
 
       <a-row :gutter="[8, 8]" class="mk-list__row">
-        <a-col v-for="i in 6" :key="i" :span="24" class="mk-list__col">
+        <a-col v-for="(item, index) in mkResData" :key="index" :span="24" class="mk-list__col">
           <div class="mk-list__col__div">
             <div class="header flex items-center justify-between p-5">
-              <span>IOST</span>
+              <span>{{ item.tick }}</span>
               <span><img src="/src/assets/img/success2.png" class="w-5" /></span>
             </div>
             <div class="tags flex items-center justify-between px-5">
-              <span>IOST</span>
-              <span>IOST</span>
-              <span>IOST</span>
+              <span>Irc-10</span>
+              <span>mint</span>
+              <span>#{{ item.blockNumber }}</span>
             </div>
             <div class="content py-6">
-              <h3 class="yellow">1000</h3>
+              <h3 class="yellow">{{ item.amt }}</h3>
               <p>
                 <span class="green">$ 3.24</span>/
-                <span>iosi</span>
+                <span>{{ item.tick }}</span>
               </p>
             </div>
             <div class="buy p-5">
               <div class="flex items-center justify-between py-3">
-                <span>#3133234</span>
-                <span>CFb5vN...</span>
+                <span>#{{ item.inscriptionId }}</span>
+                <span>{{ item.owner }}</span>
               </div>
               <div class="flex items-center justify-between py-3">
                 <span class="flex items-center">
@@ -179,7 +180,7 @@
                   class="bg-button"
                   variant="text-text"
                   style="height: 30px; width: auto"
-                  @click="handleBuyModal(i)"
+                  @click="handleBuyModal(item)"
                 >
                   BUY
                 </BaseButton>
@@ -190,7 +191,12 @@
         </a-col>
       </a-row>
     </div>
-    <buyModal :buy-visible="buyVisible" @onOk="handleOkBuy()" @onHide="handleHideBuy()" />
+    <buyModal
+      :buy-visible="buyVisible"
+      :tick="buyTick"
+      @handleOk="handleOkBuy()"
+      @handleCancle="handleHideBuy()"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -219,7 +225,9 @@
       onMounted(() => {
         // connectWith(connectors[0]);
       });
+      const buyTick = ref('');
       const ircInfo = ref({});
+      const mkResData = ref([]);
       // 模拟异步请求方法
       const fetchData = async (param: string) => {
         console.log('param---', param);
@@ -229,6 +237,9 @@
           // 处理请求结果，例如更新组件状态
           console.log('response---', response);
           ircInfo.value = response.data;
+          const mkRes = await getMkInfo(param);
+          console.log('mkRes---', mkRes.data.nodes);
+          mkResData.value = mkRes.data.nodes;
           // 处理请求结果，例如更新组件状态
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -243,10 +254,7 @@
         // 在路由变化时更新 queryParam 的值
         queryParam.value = (route.query.id as string) || null;
         console.log('queryParam.value111---', queryParam.value);
-      });
-      // 在 queryParam 变化时触发请求方法
-      watchEffect(() => {
-        console.log('queryParam.value222---', queryParam.value);
+        // 在 queryParam 变化时触发请求方法
         if (queryParam.value) {
           // 执行你的请求方法，例如 fetchData 方法
           fetchData(queryParam.value);
@@ -290,7 +298,8 @@
       // 购买弹窗
       const buyVisible = ref(false);
       const handleBuyModal = (i: any) => {
-        console.log('2222', i);
+        console.log('2222--', i);
+        buyTick.value = i.tick;
         buyVisible.value = true;
       };
       const handleOkBuy = () => {
@@ -337,6 +346,8 @@
         defaultSearchValue,
         goBack,
         ircInfo,
+        mkResData,
+        buyTick,
       };
     },
     computed: {},

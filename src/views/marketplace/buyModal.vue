@@ -36,8 +36,10 @@
         </div>
       </div>
       <div class="my-10 flex items-center justify-end">
-        <BaseButton class="buy-button" variant="text-text"> Cancel </BaseButton>
-        <BaseButton class="buy-button buy-button-ok" variant="text-text" @click="handleDeploy()">
+        <BaseButton class="buy-button" variant="text-text" @click="handleCancle()">
+          Cancel
+        </BaseButton>
+        <BaseButton class="buy-button buy-button-ok" variant="text-text" @click="handleBuy()">
           <span class="deploy-span">OK</span>
         </BaseButton>
       </div>
@@ -45,9 +47,11 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, onMounted, SetupContext, watch, handleError } from 'vue';
+  import { defineComponent, ref, onMounted, SetupContext, watch, inject } from 'vue';
   import Modal from '~/components/core/Modal.vue';
   import BaseButton from '~/components/core/Button.vue';
+  import { environment } from '~/utils/iostConfig';
+  import { ContractService } from '~/utils/contractServe';
   export default defineComponent({
     name: 'Deplay',
     components: {
@@ -58,6 +62,10 @@
       buyVisible: {
         type: Boolean,
       },
+      tick: {
+        type: String,
+        default: '',
+      },
     },
     setup(props, context: SetupContext) {
       watch(
@@ -66,6 +74,10 @@
           console.log('newValue, oldValue---', newValue, oldValue);
           if (newValue === true) {
             callChildMethod();
+          } else {
+            if (childRef.value) {
+              (childRef.value as any).hide();
+            }
           }
         },
       );
@@ -77,40 +89,56 @@
         }
       };
       const onHide = () => {
-        context.emit('onHide');
+        // context.emit('onHide');
+        context.emit('handleCancle');
       };
 
       onMounted(() => {
         //
       });
 
-      const amountIn = ref('');
       const waiting = ref(false);
-      const checkAmount = ($event: any) => {
-        // if (environment.allowedKeycodes.indexOf($event.which) < 0) {
-        //   return false;
-        // }
-        return true;
+
+      const $customMessage = inject<{
+        success: (content: string, duration: number) => void;
+        error: (content: string, duration: number) => void;
+        warning: (content: string, duration: number) => void;
+      }>('$customMessage')!;
+
+      const handleBuy = async () => {
+        console.log('props--', props.tick);
+        try {
+          const res = await ContractService.buyFunc(props.tick, 0);
+          console.log('handleBuy----', res);
+          $customMessage.success('交易成功!  等待区块确认', 1.5);
+          context.emit('handleOk');
+        } catch (err: any) {
+          context.emit('handleCancle');
+          console.log('err--', err);
+          if (err.indexOf('gas not enough') >= 0) {
+            $customMessage.error('Gas不足,请通过抵押获得更多', 1.5);
+            // this.showAlert('Gas不足', 'Gas not enough',
+            //     '请通过抵押获得更多', 'Please pledge IOST to get more');
+          } else if (err.indexOf('pay ram failed') >= 0) {
+            $customMessage.error('Ram不足,请通过购买获得更多', 1.5);
+            // this.showAlert('Ram不足', 'Ram not enough',
+            //     '请通过购买获得更多', 'Please buy some with IOST');
+          } else {
+            // this.showAlert('交易失败', 'Transaction Failed', '请再次尝试', 'Please try again')
+          }
+        }
       };
-      const enterFromAmount = async () => {
-        // if (isNaN(+amountIn.value)) {
-        //   amountIn.value = amountInOld.value;
-        //   return;
-        // }
-        amountIn.value = amountIn.value.trim();
-      };
-      const handleDeploy = async () => {
-        console.log('amountIn.value--', amountIn.value);
+      const handleCancle = async () => {
+        // onHide();
+        context.emit('handleCancle');
       };
 
       return {
         childRef,
         onHide,
         waiting,
-        amountIn,
-        checkAmount,
-        enterFromAmount,
-        handleDeploy,
+        handleBuy,
+        handleCancle,
       };
     },
     computed: {},
