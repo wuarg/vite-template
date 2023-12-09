@@ -2,7 +2,7 @@
   <a-dropdown :trigger="['click']" @visibleChange="handleVisibleChange">
     <template #overlay>
       <a-menu @click="handleMenuClick">
-        <a-menu-item v-for="item in dropdownItems" :key="item.key">
+        <a-menu-item v-for="item in dropdownItems" :key="item">
           {{ item.title }}
         </a-menu-item>
       </a-menu>
@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts">
+  import { useRouter } from 'vue-router';
   import { ref } from 'vue';
 
   export default {
@@ -32,10 +33,13 @@
       const handleVisibleChange = (isVisible: boolean) => {
         visible.value = isVisible;
       };
-
+      const router = useRouter();
       const handleMenuClick = ({ key }) => {
         console.log('Clicked item key:', key);
         visible.value = false; // Close the dropdown after clicking an item
+        if (key.isMenu) {
+          router.push({ name: key.routerName }); // 使用路由的 name 属性进行跳转
+        }
       };
 
       return {

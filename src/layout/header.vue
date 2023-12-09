@@ -21,7 +21,7 @@
       </div>
       <div class="">
         <div class="link flex items-center justify-end">
-          <BaseDropdown v-if="account" :dropdown-items="menuItems">
+          <BaseDropdown v-if="account" :dropdown-items="menuItems2">
             <BaseButton class="bg-button h-1/4 w-auto" variant="text-text">
               {{ account }}
             </BaseButton>
@@ -293,10 +293,15 @@
         state.selectedRowKeys = selectedRowKeys;
       };
 
-      const menuItems = [
+      const menuItems2 = [
         { key: 'item1', title: 'Item 1' },
         { key: 'item2', title: 'Item 2' },
         { key: 'item3', title: 'Item 3' },
+      ];
+      const menuItems = [
+        { key: 'Home', title: 'Home', routerName: 'Home', isMenu: true },
+        { key: 'Token', title: 'Token', routerName: 'Tokens', isMenu: true },
+        { key: 'Marketplace', title: 'Marketplace', routerName: 'Marketplace', isMenu: true },
       ];
 
       // Wallet
@@ -324,6 +329,7 @@
         start,
         onSelectChange,
         menuItems,
+        menuItems2,
         walletVisible,
         handleConnectWallet,
         handleClose,
