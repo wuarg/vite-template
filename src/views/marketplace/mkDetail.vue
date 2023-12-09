@@ -34,16 +34,16 @@
         </div>
         <div class="irc20-info__div mt-5 text-left">
           <p style="color: #fff132">IRC- 100 IOST</p>
-          <p>低价- 100 IOST</p>
+          <p>低价- {{ ircInfo.floorPrice }} IOST</p>
         </div>
         <div class="irc20-info__div flex items-center text-left">
-          <p>单价$ 0.5</p>
-          <p class="mx-3">总交易量 10000 iost</p>
+          <p>单价$ {{ ircInfo.floorPrice }}</p>
+          <p class="mx-3">总交易量 {{ ircInfo.amount }} iost</p>
         </div>
         <div class="irc20-info__div flex items-center text-left">
-          <p>拥有者 1450</p>
-          <p class="mx-3">在售 540</p>
-          <p class="mx-3">总供应量 21000000</p>
+          <p>拥有者 {{ ircInfo.holders }}</p>
+          <p class="mx-3">在售 err--</p>
+          <p class="mx-3">总供应量 {{ ircInfo.max }}</p>
         </div>
       </div>
     </div>
@@ -53,41 +53,10 @@
     </div>
     <div class="irc20-search my-5 flex justify-between sm:my-10">
       <div class="irc20-search-refresh flex items-center justify-between">
-        <span style="color: #fff132">数量：21000</span>
+        <span style="color: #fff132">数量：{{ ircInfo.max }}</span>
         <img src="/src/assets/img/refresh.png" alt="refresh" class="mx-3 w-5" />
       </div>
       <div class="irc20-search-input hidden sm:block">
-        <!-- <BaseInput
-          v-model="searchToken"
-          placeholder="根据铭文ID搜索"
-          background="background"
-          border="border"
-          class="mx-5"
-        /> -->
-        <!-- <a-select
-          v-model:value="selectValue"
-          class="mx-5"
-          show-search
-          placeholder="显示所有"
-          style="width: 200px; margin: 0 10px"
-          :options="options"
-          :filter-option="filterOption"
-          @focus="handleFocus"
-          @blur="handleBlur"
-          @change="handleChange"
-        ></a-select>
-        <a-select
-          v-model:value="selectValue"
-          class="mx-5"
-          show-search
-          placeholder="价格从高到低"
-          style="width: 200px"
-          :options="options"
-          :filter-option="filterOption"
-          @focus="handleFocus"
-          @blur="handleBlur"
-          @change="handleChange"
-        ></a-select> -->
         <BaseInputSearch
           v-model="searchValue"
           :default-search-value="defaultSearchValue"
