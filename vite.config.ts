@@ -30,6 +30,17 @@ export default defineConfig({
     watch: {
       ignored: ['./config/*', './locales/*'],
     },
+    //
+    proxy: {
+      '/portalApi': {
+        target: 'https://api.iostmarket.io/', // 线上开发环境
+        ws: false, // 是否跨域
+        changeOrigin: true,
+        pathRewrite: {
+          '^/portalApi': '', // 除了测试环境以外
+        },
+      },
+    },
   },
   esbuild: {
     pure: ['console.log'],

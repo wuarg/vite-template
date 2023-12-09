@@ -31,19 +31,6 @@ import request from '../utils/requestMethod';
  * @lastFixDate 2023/07/04 15:18:14
  */
 
-export const getDataText = (params: object): Promise<AxiosResponse<any, any>> =>
-  request({
-    method: 'POST',
-    url: '/ai/chat',
-    params,
-  });
-
-export const labelSystem = () =>
-  request({
-    url: '/system/label-system/list/all',
-    method: 'get',
-  });
-
 // 如何在组件使用
 /* 
 // post请求
@@ -73,3 +60,60 @@ if (res.meta.status !== 200) return ELMessage.error("修改状态失败！");
 ELMessage.success("修改状态成功！");
 getUserList();
 */
+
+export const getDataText = (params: object): Promise<AxiosResponse<any, any>> =>
+  request({
+    method: 'POST',
+    url: '/ai/chat',
+    params,
+  });
+
+export const labelSystem = () =>
+  request({
+    url: '/system/label-system/list/all',
+    method: 'get',
+  });
+// https://api.iostmarket.io/irc100/{tick}
+
+// 获取最新交易
+export const getLastTransaction = (tick: string) =>
+  request({
+    url: `/irc100/${tick}`,
+    method: 'get',
+  });
+
+// 最新列表 https://api.iostmarket.io/activity/{tick}?page=1&take=100
+export const getLastTransactionList = (params) =>
+  request({
+    url: `/activity/${params.tick}`,
+    method: 'get',
+    params,
+  });
+
+// 铭文列表
+export const getTokenList = (tick) =>
+  request({
+    url: '/irc100',
+    method: 'get',
+  });
+
+// 铭文详情
+export const getTokenInfo = (tick) =>
+  request({
+    url: `/irc100/${tick}`,
+    method: 'get',
+  });
+
+// 市场列表
+export const getMkList = (tick) =>
+  request({
+    url: `/irc100/${tick}`,
+    method: 'get',
+  });
+
+// 市场详情
+export const getMkInfo = (tick) =>
+  request({
+    url: `/ticks/listed/${tick}`,
+    method: 'get',
+  });

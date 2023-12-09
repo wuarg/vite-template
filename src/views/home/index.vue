@@ -3,15 +3,24 @@
     <BaseMint />
     <div class="last-tx py-5 sm:py-10">
       <h1 class="mb-5 text-left text-xl font-bold">最新交易</h1>
-      <BaseTable :columns="tableColumns" :data="tableData" :pagination="false">
-        <!-- Slot for customizing header cells -->
-        <template #header="{ column }">
-          <strong>{{ column.label }}</strong>
-        </template>
-
-        <!-- Slot for customizing body cells -->
-        <template #cell="{ cell }"> {{ cell }}</template>
-      </BaseTable>
+      <div class="last-info flex items-center justify-between">
+        <div class="last-info__div">
+          <span class="label block py-3 text-sm font-black sm:text-lg">销售(24小时)</span>
+          <span class="value block py-3">{{ lastInfo.volumeDay }}</span>
+        </div>
+        <div class="last-info__div">
+          <span class="label block py-3 text-sm font-black sm:text-lg">销售额(24小时)</span>
+          <span class="value block py-3">{{ lastInfo.amountDay }}</span>
+        </div>
+        <div class="last-info__div">
+          <span class="label block py-3 text-sm font-black sm:text-lg">总销售</span>
+          <span class="value block py-3">{{ lastInfo.volume }}</span>
+        </div>
+        <div class="last-info__div">
+          <span class="label block py-3 text-sm font-black sm:text-lg">总销售额</span>
+          <span class="value block py-3">{{ lastInfo.amount }}</span>
+        </div>
+      </div>
     </div>
     <div class="my-5 flex justify-between sm:my-10">
       <span>发现超过100笔交易</span>
@@ -33,7 +42,7 @@
       </BaseSelect>
     </div>
     <div class="all-tx hidden sm:block">
-      <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
+      <BaseTable :columns="tableColumns2" :data="activeListData" :pagination="true">
         <!-- Slot for customizing header cells -->
         <template #header="{ column }">
           <strong>{{ column.label }}</strong>
@@ -69,6 +78,7 @@
   import BaseTable from '~/components/core/Table.vue';
   import BaseSelect from '~/components/core/Select.vue';
   import TableList from './tableList.vue';
+  import { getLastTransaction, getLastTransactionList } from '~/api/index';
   export default defineComponent({
     name: 'HomeContainer',
     components: {
@@ -80,87 +90,33 @@
     setup() {
       onMounted(() => {
         // connectWith(connectors[0]);
+        _getLastTransaction();
+        // _getLastTransactionList({ tick: 'IOSI', page: 1, take: 100 });
       });
       const tableColumns = [
-        { key: 'name', label: '销售(24小时)' },
-        { key: 'age', label: '销售额(24小时)' },
-        { key: 'city', label: '总销售' },
-        { key: 'city2', label: '总销售额' },
+        { key: 'volumeDay', label: '销售(24小时)' },
+        { key: 'amountDay', label: '销售额(24小时)' },
+        { key: 'volume', label: '总销售' },
+        { key: 'amount', label: '总销售额' },
         // Add more columns as needed
       ];
-      const tableData = [
-        { name: '100', age: '20000 IOS', city: '1000', city2: '100000 IOST' },
-        // Add more data as needed
-      ];
+      const lastInfo = ref({
+        volumeDay: 0,
+        amountDay: 0,
+        volume: 0,
+        amount: 0,
+      });
 
       const tableColumns2 = [
-        { key: 'iost', label: 'IOST 铭文' },
-        { key: 'status', label: '状态' },
+        { key: 'tick', label: 'IOST 铭文' },
+        { key: 'op', label: '状态' },
         { key: 'from', label: '从' },
         { key: 'to', label: '到' },
-        { key: 'amount', label: '金额' },
-        { key: 'time', label: '时间' },
+        { key: 'price', label: '金额' },
+        { key: 'blockTime', label: '时间' },
         { key: 'actions', label: '操作' }, // Add an actions column
       ];
-      const tableData2 = [
-        {
-          iost: '100',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          amount: '211122',
-          time: '22231',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          amount: '2233332',
-          time: '22222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          amount: '2233332',
-          time: '22222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          amount: '2233332',
-          time: '22222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          amount: '2233332',
-          time: '22222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          amount: '2233332',
-          time: '22222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          amount: '2233332',
-          time: '22222',
-        },
-        // Add more data as needed
-      ];
+      const activeListData = ref([]);
       const currentSelect = ref<string>('1');
       const selectOptions = [
         { key: 1, label: '所有' },
@@ -183,11 +139,24 @@
         console.log('Selected value:', value);
       };
 
+      // 获取最新交易
+      const _getLastTransaction = async () => {
+        const res = await getLastTransaction('IOSI');
+        console.log('res--222-', res);
+        lastInfo.value = res.data;
+        _getLastTransactionList({ tick: 'IOSI', page: 1, take: 100 });
+      };
+      // 列表 getLastTransactionList
+      const _getLastTransactionList = async (params: object) => {
+        const { data: res } = await getLastTransactionList(params);
+        console.log('_getLastTransactionList---', res.nodes);
+        activeListData.value = res.nodes;
+      };
       return {
         tableColumns,
-        tableData,
+        lastInfo,
         tableColumns2,
-        tableData2,
+        activeListData,
         selectOptions,
         currentSelect,
         handleEdit,
@@ -205,5 +174,9 @@
   h1 {
     color: @success;
     font-weight: bold;
+  }
+  .last-info__div {
+    .label {
+    }
   }
 </style>

@@ -97,6 +97,9 @@
     <BaseButton @click="handleTransfer()">handleTransfer</BaseButton>
     <BaseButton @click="handleList()">handleList</BaseButton>
     <BaseButton @click="handleUnList()">handleUnList</BaseButton>
+    <div>
+      <BaseButton @click="_getLastTransaction()">_getLastTransaction</BaseButton>
+    </div>
     <!-- // -->
     <Spinner v-if="loading" size="small" class="loader" />
   </div>
@@ -110,7 +113,7 @@
   import Spinner from '~/components/core/Spinner.vue';
 
   import { defineComponent, ref, inject } from 'vue';
-  import { labelSystem } from '~/api/index';
+  import { labelSystem, getLastTransaction } from '~/api/index';
   import { cancelToken } from '~/utils/service';
   import { BigNumber } from 'bignumber.js';
   import { environment } from '~/utils/iostConfig';
@@ -297,6 +300,16 @@
           }
         }
       };
+      // 获取最新交易
+      const _getLastTransaction = async () => {
+        await getLastTransaction('IOSI')
+          .then((res) => {
+            console.log('res-------: ', res);
+          })
+          .catch(() => {
+            // ElMessage.error('请求失败 请求已取消！');
+          });
+      };
       return {
         loading,
         handleClick,
@@ -319,6 +332,8 @@
         handleTransfer,
         handleList,
         handleUnList,
+        //
+        _getLastTransaction,
       };
     },
   });

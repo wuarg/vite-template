@@ -54,7 +54,7 @@ export const environment = {
   ],
 
   //铭文合约
-  irc: 'ContractEomvF8zhbmEwHXwE9uyvLs1rgqaMeb7TDfBpUMGfKpGj',
+  irc: 'ContractHpdLYLvwhVRUya25iT19m6vwkEyKCR9N1btmmztuUWHE',
 };
 
 /*

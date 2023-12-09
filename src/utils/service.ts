@@ -8,7 +8,7 @@ let cancelToken: CancelTokenSource | null = null;
 
 // 创建 Axios 实例
 const service: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/portalApi', // 设置基础 URL
+  baseURL: 'https://api.iostmarket.io', // 设置基础 URL
   timeout: 6000, // 设置超时时间
   headers: { 'Content-Type': 'application/json' }, // 设置请求头
 });
@@ -37,11 +37,12 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
+    console.log('response---', response);
     // 对响应成功数据做点什么？
     const res = response.data;
-    if (res.code && res.code !== 200) {
+    if (response.status && response.status !== 200) {
       // 处理一些常见的错误情况
-      if (res.code === 401 || res.code === 4001) {
+      if (response.code === 401 || response.code === 4001) {
         // 退出登录并跳转到登录页
         Session.clear();
         // window.location.href = '/home';
@@ -51,7 +52,7 @@ service.interceptors.response.use(
       }
       return Promise.reject(response);
     } else {
-      return response.data;
+      return response;
     }
   },
   (error) => {
