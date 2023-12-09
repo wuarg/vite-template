@@ -11,15 +11,31 @@
       <h1 class="mb-5 text-left text-xl font-bold">Overview</h1>
       <div class="my-5 flex justify-between">
         <span class="text-l text-left font-bold">Total Supply</span>
-        <span class="text-l text-left font-bold">21000</span>
+        <span class="text-l text-left font-bold">{{ ircInfo.max }}</span>
       </div>
       <div class="my-5 flex justify-between">
-        <span class="text-l text-left font-bold">Total Supply</span>
-        <span class="text-l text-left font-bold">21000</span>
+        <span class="text-l text-left font-bold">Minted</span>
+        <span class="text-l text-left font-bold">{{ ircInfo.counts }}</span>
       </div>
       <div class="my-5 flex justify-between">
-        <span class="text-l text-left font-bold">Total Supply</span>
-        <span class="text-l text-left font-bold">21000</span>
+        <span class="text-l text-left font-bold">Limit per mint</span>
+        <span class="text-l text-left font-bold">{{ ircInfo.lim }}</span>
+      </div>
+      <div class="my-5 flex justify-between">
+        <span class="text-l text-left font-bold">Deploy By</span>
+        <span class="text-l text-left font-bold">{{ ircInfo.deployer }}</span>
+      </div>
+      <div class="my-5 flex justify-between">
+        <span class="text-l text-left font-bold">Deploy Time</span>
+        <span class="text-l text-left font-bold">{{ ircInfo.blockTime }}</span>
+      </div>
+      <div class="my-5 flex justify-between">
+        <span class="text-l text-left font-bold">Holders</span>
+        <span class="text-l text-left font-bold">{{ ircInfo.holders }}</span>
+      </div>
+      <div class="my-5 flex justify-between">
+        <span class="text-l text-left font-bold">Total Transaction</span>
+        <span class="text-l text-left font-bold">--</span>
       </div>
     </div>
     <div class="my-10 flex items-center justify-center">
@@ -33,14 +49,27 @@
       <div v-if="selectedTabIndex === 2">Tab 3 content</div>
       <div v-if="selectedTabIndex === 3">Tab 4 content</div> -->
       <!-- 添加更多tab内容 -->
-      <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
+      <BaseTable
+        :class="selectedTabIndex === 0 ? 'holders-table' : 'transfers-table'"
+        :columns="selectedTabIndex === 0 ? holdersTableColumns : transfersTableColumns"
+        :data="selectedTabIndex === 0 ? holdersResData : transfersResData"
+        :pagination="true"
+      >
         <!-- Slot for customizing header cells -->
         <template #header="{ column }">
           <strong>{{ column.label }}</strong>
         </template>
 
         <!-- Slot for customizing body cells -->
-        <template #cell="{ cell }"> {{ cell }}</template>
+        <template #column="{ row, column }">
+          <span v-if="column.key === 'actions'">
+            <img src="/src/assets/img/share.png" class="m-auto w-1/6" @click="handleToTx(row)" />
+          </span>
+          <span v-else>
+            {{ row[column.key] }}
+          </span>
+        </template>
+        <!-- Custom slot for actions -->
       </BaseTable>
     </div>
   </div>
@@ -51,6 +80,7 @@
   import BaseProgress from '~/components/core/Progress.vue';
   import BaseTabs from '~/components/core/Tabs.vue';
   import BaseTable from '~/components/core/Table.vue';
+  import { getTokenList, getTokenInfo, getTokenHolders, getTokenTransfers } from '~/api/index';
   export default defineComponent({
     name: 'IRC20',
     components: {
@@ -62,19 +92,32 @@
       onMounted(() => {
         // connectWith(connectors[0]);
       });
-      // 模拟异步请求方法
+      const ircInfo = ref({});
+      const holdersResData = ref([]);
+      const transfersResData = ref([]);
+      // 异步请求方法
       const fetchData = async (param: string) => {
         console.log('param---', param);
-        // try {
-        //   // 发起异步请求，这里可以使用你的请求库（例如 axios）
-        //   const response = await fetch(`https://example.com/api/data?param=${param}`);
-        //   const data = await response.json();
-
-        //   // 处理请求结果，例如更新组件状态
-        //   console.log(data);
-        // } catch (error) {
-        //   console.error('Error fetching data:', error);
-        // }
+        try {
+          // 发起异步请求，这里可以使用你的请求库（例如 axios）
+          const response = await getTokenInfo(param);
+          // 处理请求结果，例如更新组件状态
+          console.log('response---', response);
+          ircInfo.value = response.data;
+          const queryParam = {
+            tick: param,
+            page: 1,
+            take: 100,
+          };
+          const holdersRes = await getTokenHolders(queryParam);
+          console.log('holdersRes---', holdersRes.data.nodes);
+          holdersResData.value = holdersRes.data.nodes;
+          const transfersRes = await getTokenTransfers(queryParam);
+          console.log('transfersRes---', transfersRes.data.nodes);
+          transfersResData.value = transfersRes.data.nodes;
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
       };
       // 定义一个响应式变量，存储 query 参数的值
       const queryParam = ref<string | null>(null);
@@ -85,15 +128,13 @@
         // 在路由变化时更新 queryParam 的值
         queryParam.value = (route.query.id as string) || null;
         console.log('queryParam.value111---', queryParam.value);
-      });
-      // 在 queryParam 变化时触发请求方法
-      watchEffect(() => {
-        console.log('queryParam.value222---', queryParam.value);
+        // 在 queryParam 变化时触发请求方法
         if (queryParam.value) {
           // 执行你的请求方法，例如 fetchData 方法
           fetchData(queryParam.value);
         }
       });
+
       const progress = ref(50);
       const tabs = ref([
         { label: 'Holders', content: 'Content for Tab 1' },
@@ -105,69 +146,45 @@
         // 处理选中事件，例如更新内容或执行其他逻辑
         selectedTabIndex.value = index;
       };
-      const tableColumns2 = [
-        { key: 'iost', label: 'Rank' },
-        { key: 'status', label: 'Address' },
-        { key: 'from', label: 'Percentage' },
-        { key: 'to', label: 'Value' },
+      const holdersTableColumns = [
+        { key: 'id', label: 'Rank' },
+        { key: 'owner', label: 'Address' },
+        { key: 'percent', label: 'Percentage' },
+        { key: 'amount', label: 'Value' },
       ];
-      const tableData2 = [
-        {
-          iost: '100',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-        },
-        // Add more data as needed
+      const transfersTableColumns = [
+        { key: 'inscriptionId', label: 'Id' },
+        { key: 'method', label: 'Method' },
+        { key: 'quantity', label: 'Quantity' },
+        { key: 'from', label: 'From' },
+        { key: 'to', label: 'to' },
+        { key: 'blockTime', label: 'Data Time' },
+        { key: 'actions', label: 'Action' },
       ];
+
       const router = useRouter();
       const goBack = () => {
         router.push({ name: 'Tokens' });
       };
+
+      const handleToTx = (row: any) => {
+        // Handle edit action
+        const url = 'https://www.iostabc.com/tx/' + row.transactionHash;
+        // Open a new window with the specified URL
+        window.open(url, '_blank');
+      };
       return {
+        ircInfo,
         progress,
         tabs,
         selectedTabIndex,
         handleTabSelected,
-        tableColumns2,
-        tableData2,
+        holdersTableColumns,
+        transfersTableColumns,
+        holdersResData,
+        transfersResData,
         goBack,
+        handleToTx,
       };
     },
     computed: {},

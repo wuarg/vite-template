@@ -159,7 +159,8 @@
       };
       const router = useRouter();
       const navigateToIrc = (row: any) => {
-        router.push({ name: 'Irc20Detail', query: { id: row.iost } }); // 使用路由的 name 属性进行跳转
+        console.log('row--', row);
+        router.push({ name: 'Irc20Detail', query: { id: row.tick } }); // 使用路由的 name 属性进行跳转
       };
 
       // search 组件

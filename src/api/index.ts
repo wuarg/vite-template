@@ -98,6 +98,22 @@ export const getTokenInfo = (tick) =>
     method: 'get',
   });
 
+// /irc100/{tick}/holders page=1&take=100
+export const getTokenHolders = (params) =>
+  request({
+    url: `/irc100/${params.tick}/holders`,
+    method: 'get',
+    params,
+  });
+
+// /irc100/{tick}/transfers page=1&take=100
+export const getTokenTransfers = (params) =>
+  request({
+    url: `/irc100/${params.tick}/transfers`,
+    method: 'get',
+    params,
+  });
+
 // 市场列表
 export const getMkList = (tick) =>
   request({
