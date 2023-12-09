@@ -60,9 +60,7 @@
         </template>
         <!-- Custom slot for actions -->
         <template #actions="{ row }">
-          <!-- <button @click="handleEdit(row)">Edit</button>
-          <button @click="handleDelete(row)">Delete</button> -->
-          <img src="/src/assets/img/share.png" class="m-auto w-1/5" @click="handleEdit(row)" />
+          <img src="/src/assets/img/share.png" class="m-auto w-1/5" @click="handleToTx(row)" />
           <!-- Add more actions as needed -->
         </template>
       </BaseTable>
@@ -123,9 +121,11 @@
         { key: 2, label: '销售' },
         { key: 3, label: '转帐' },
       ];
-      const handleEdit = (row: any) => {
+      const handleToTx = (row: any) => {
         // Handle edit action
-        console.log('Edit', row);
+        const url = 'https://www.iostabc.com/tx/' + row.transactionHash;
+        // Open a new window with the specified URL
+        window.open(url, '_blank');
       };
 
       const handleDelete = (row: any) => {
@@ -159,7 +159,7 @@
         activeListData,
         selectOptions,
         currentSelect,
-        handleEdit,
+        handleToTx,
         handleDelete,
         handleSelectChange,
         selectedValue,
