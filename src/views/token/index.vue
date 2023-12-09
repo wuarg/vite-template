@@ -81,7 +81,7 @@
         class="flex justify-center"
         @change="handleTabSelected"
       />
-      <MobileTable />
+      <MobileTable :table-data="tableData" />
     </div>
     <deployModal
       :deplay-visible="deplayVisible"

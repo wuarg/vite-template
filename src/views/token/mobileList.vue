@@ -1,10 +1,10 @@
 <template>
   <div class="table-content my-5">
     <div
-      v-for="i in 5"
-      :key="i"
+      v-for="(item, index) in tableData"
+      :key="index"
       class="table-content__div my-3 flex rounded p-2"
-      @click="navigateToIrc(i)"
+      @click="navigateToIrc(item)"
     >
       <div class="left mr-5">
         <img src="/src/assets/img/twitter.png" class="h-8 w-8" />
@@ -13,23 +13,23 @@
         <div class="right__div flex items-center justify-between py-2">
           <div class="label">
             <p class="mb-2">IRC- 100 </p>
-            <p class="mb-0 opacity-50">IOST</p>
+            <p class="mb-0 opacity-50">{{ item.tick }}</p>
           </div>
         </div>
-        <div class="right__div flex items-center justify-between py-2">
+        <!-- <div class="right__div flex items-center justify-between py-2">
           <div class="label">
             <p class="mb-2 opacity-50">Address</p>
           </div>
           <div class="value">
-            <span class="num">cl-debt1817</span>
+            <span class="num">{{ item.tick }}</span>
           </div>
-        </div>
+        </div> -->
         <div class="right__div flex items-center justify-between py-2">
           <div class="label opacity-50">
             <p class="mb-2">Holder</p>
           </div>
           <div class="value">
-            <span class="num">nftcraft</span>
+            <span class="num">{{ item.holders }}</span>
           </div>
         </div>
         <div class="right__div flex items-center justify-between py-2">
@@ -42,7 +42,7 @@
         </div>
         <div class="right__div flex items-center justify-between py-2">
           <div class="label opacity-50">
-            <p class="mb-2">2023/11/26 18:00:00</p>
+            <p class="mb-2">{{ item.blockTime }}</p>
           </div>
           <div class="value">
             <img src="/src/assets/img/share.png" class="w-4" />
@@ -60,6 +60,11 @@
     name: 'TableList',
     components: {
       BaseProgress,
+    },
+    props: {
+      tableData: {
+        type: Array,
+      },
     },
     setup() {
       onMounted(() => {

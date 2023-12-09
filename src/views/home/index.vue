@@ -61,7 +61,7 @@
       </BaseTable>
     </div>
     <div class="all-tx block sm:hidden">
-      <TableList />
+      <TableList :active-list-data="activeListData" />
     </div>
   </div>
 </template>
