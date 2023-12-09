@@ -68,13 +68,7 @@ export const getDataText = (params: object): Promise<AxiosResponse<any, any>> =>
     params,
   });
 
-export const labelSystem = () =>
-  request({
-    url: '/system/label-system/list/all',
-    method: 'get',
-  });
 // https://api.iostmarket.io/irc100/{tick}
-
 // 获取最新交易
 export const getLastTransaction = (tick: string) =>
   request({
@@ -91,7 +85,7 @@ export const getLastTransactionList = (params) =>
   });
 
 // 铭文列表
-export const getTokenList = (tick) =>
+export const getTokenList = () =>
   request({
     url: '/irc100',
     method: 'get',

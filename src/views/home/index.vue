@@ -24,11 +24,6 @@
     </div>
     <div class="my-5 flex justify-between sm:my-10">
       <span>发现超过100笔交易</span>
-      <!-- <select v-model="currentSelect" style="color: #333" @change="handleSelectChange">
-        <option v-for="option in selectOptions" :key="option.key" :value="option.key">{{
-          option.label
-        }}</option>
-      </select> -->
       <BaseSelect
         v-model:value="selectedValue"
         :default-value="defaultSelectedValue"

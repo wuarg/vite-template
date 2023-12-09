@@ -49,14 +49,22 @@
       <div v-if="selectedTabIndex === 2">Tab 3 content</div>
       <div v-if="selectedTabIndex === 3">Tab 4 content</div> -->
       <!-- 添加更多tab内容 -->
-      <BaseTable :columns="tableColumns2" :data="tableData2" :pagination="true">
+      <BaseTable :columns="tableColumns" :data="tableData" :pagination="true">
         <!-- Slot for customizing header cells -->
         <template #header="{ column }">
           <strong>{{ column.label }}</strong>
         </template>
 
         <!-- Slot for customizing body cells -->
-        <template #cell="{ cell }"> {{ cell }}</template>
+        <template #column="{ row, column }">
+          <!-- Custom column content -->
+          <span v-if="column.key === 'progress'">
+            {{ (row['counts'] * row['lim']) / row['max'] }} %
+          </span>
+          <span v-else>
+            {{ row[column.key] }}
+          </span>
+        </template>
         <!-- Custom slot for actions -->
         <template #actions="{ row }">
           <!-- <button @click="handleEdit(row)">Edit</button>
@@ -91,6 +99,7 @@
   import deployModal from '~/views/token/deployModal.vue';
   import MobileTable from './mobileList.vue';
   import { useRouter } from 'vue-router';
+  import { getTokenList, getTokenInfo } from '~/api/index';
   export default defineComponent({
     name: 'Token',
     components: {
@@ -104,6 +113,7 @@
     setup() {
       onMounted(() => {
         //
+        _getTokenList();
       });
       const searchToken = ref('');
       const tabs = ref([
@@ -119,66 +129,16 @@
         // 处理选中事件，例如更新内容或执行其他逻辑
         selectedTabIndex.value = index;
       };
-      const tableColumns2 = [
-        { key: 'iost', label: '代币' },
-        { key: 'status', label: '部署时间' },
-        { key: 'from', label: '进程' },
-        { key: 'to', label: '持有地址' },
-        { key: 'Holders', label: 'Holders' },
+      const tableColumns = [
+        { key: 'tick', label: '代币' },
+        { key: 'blockTime', label: '部署时间' },
+        { key: 'progress', label: '进程' },
+        // { key: 'to', label: '持有地址' },
+        { key: 'holders', label: 'Holders' },
         { key: 'actions', label: '操作' }, // Add an actions column
       ];
-      const tableData2 = [
-        {
-          iost: '100',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        {
-          iost: '13300',
-          status: '20000 IOS',
-          from: '1000',
-          to: '100000 IOST',
-          Holders: '222',
-        },
-        // Add more data as needed
-      ];
+      const tableData = ref([]);
+
       const handleEdit = (row: any) => {
         // Handle edit action
         console.log('Edit', row);
@@ -205,13 +165,20 @@
       // search 组件
       const searchValue = ref<string>('');
       const defaultSearchValue = 'initial search text';
+
+      // token list
+      const _getTokenList = async () => {
+        const { data: res } = await getTokenList();
+        console.log('_getTokenList---', res);
+        tableData.value = res;
+      };
       return {
         tabs,
         searchToken,
         selectedTabIndex,
         handleTabSelected,
-        tableColumns2,
-        tableData2,
+        tableColumns,
+        tableData,
         handleEdit,
         deplayVisible,
         handleOkDeplay,
