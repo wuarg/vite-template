@@ -7,23 +7,23 @@
     <div class="pc hidden sm:block">
       <div class="irc20-info flex items-center justify-between">
         <div class="irc20-info__img">
-          <img src="/src/assets/img/twitter.png" alt="twitter" />
+          <img src="/src/assets/img/iost.png" alt="twitter" />
         </div>
         <div class="irc20-info__div">
           <p>IRC- 100 IOST</p>
-          <p>低价- 100 IOST</p>
+          <p>低价- {{ ircInfo.floorPrice }} IOST</p>
         </div>
         <div class="irc20-info__div">
-          <p>单价$ 0.5</p>
+          <p>单价$ {{ ircInfo.floorPrice }}</p>
         </div>
         <div class="irc20-info__div">
-          <p>拥有者 1450</p>
+          <p>拥有者 {{ ircInfo.holders }}</p>
         </div>
         <div class="irc20-info__div">
-          <p>在售 540</p>
+          <p>在售 {{ ircInfo.floorPrice }}</p>
         </div>
         <div class="irc20-info__div">
-          <p>总供应量 21000000</p>
+          <p>总供应量 {{ ircInfo.max }}</p>
         </div>
       </div>
     </div>
@@ -234,6 +234,7 @@
   import buyModal from '~/views/marketplace/buyModal.vue';
   import BaseSelect from '~/components/core/Select.vue';
   import BaseInputSearch from '~/components/core/InputSearch.vue';
+  import { getMkList, getMkInfo, getTokenInfo } from '~/api/index';
 
   export default defineComponent({
     name: 'MKDetail',
@@ -249,19 +250,20 @@
       onMounted(() => {
         // connectWith(connectors[0]);
       });
+      const ircInfo = ref({});
       // 模拟异步请求方法
       const fetchData = async (param: string) => {
         console.log('param---', param);
-        // try {
-        //   // 发起异步请求，这里可以使用你的请求库（例如 axios）
-        //   const response = await fetch(`https://example.com/api/data?param=${param}`);
-        //   const data = await response.json();
-
-        //   // 处理请求结果，例如更新组件状态
-        //   console.log(data);
-        // } catch (error) {
-        //   console.error('Error fetching data:', error);
-        // }
+        try {
+          // 发起异步请求，这里可以使用你的请求库（例如 axios）
+          const response = await getTokenInfo(param);
+          // 处理请求结果，例如更新组件状态
+          console.log('response---', response);
+          ircInfo.value = response.data;
+          // 处理请求结果，例如更新组件状态
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
       };
       // 定义一个响应式变量，存储 query 参数的值
       const queryParam = ref<string | null>(null);
@@ -365,6 +367,7 @@
         searchValue,
         defaultSearchValue,
         goBack,
+        ircInfo,
       };
     },
     computed: {},
