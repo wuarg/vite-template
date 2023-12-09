@@ -1,12 +1,6 @@
-# vite-taicu
-
-![Website](https://img.shields.io/website?url=http%3A%2F%2Ftaicu.soulfree.cn)
-
 一个 vue3 + vite + ts 的开发模版。
 
 跳过项目之始的配置环节，快速实现想法。`new FastifyIdea();`
-
-<a target="_blank" href="https://taicu.soulfree.cn">演示</a>
 
 ## 特性
 
@@ -40,31 +34,9 @@ yarn prettier
 
 ### 自动部署 git pages
 
-Go to [GitHub Pages](https://github.com/AxyLm/vite-taicu/settings/pages)
-
 1. Under "Build and deployment", under "Source", select **Deploy from a branch**.
 2. Under "Build and deployment", under "Branch", select **gh-pages**
 
 - This option can be modified in [action.yml](./.github/workflows/action.yml#L35) on line 35
 
 3. Click **Save**.
-
-<!-- ## 灵感
-
-- [Vitesse](https://github.com/antfu/vitesse.git) - [@antfu](https://github.com/antfu) -->
-
-## 灵感
-
-| 古之十二月 | [乐之十二律](https://zh.wikipedia.org/wiki/十二律) |
-| ---------- | -------------------------------------------------- |
-| 孟春之月   | 律中太簇                                           |
-| 仲春之月   | 律中夹钟                                           |
-| 季春之月   | 律中姑洗                                           |
-| ...        | ...                                                |
-| 孟冬之月   | 律中应钟                                           |
-| 仲冬之月   | 律中黄钟                                           |
-| 季冬之月   | 律中大吕                                           |
-
-## LICENSE
-
-[MIT license](./LICENSE) 完全开源，随心所欲
