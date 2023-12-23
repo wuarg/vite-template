@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './app.vue';
 import 'tailwindcss/tailwind.css';
 import './style/index.less';
+import './wagmi';
 
 const app = createApp(App);
 

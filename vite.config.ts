@@ -36,7 +36,13 @@ export default defineConfig({
     chunkSizeWarningLimit: 533,
   },
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => ['w3m-button'].includes(tag),
+        },
+      },
+    }),
     VueI18n({
       runtimeOnly: true,
       compositionOnly: true,
