@@ -4,6 +4,7 @@ import {
   NavigationGuardWithThis,
   Router,
   RouteRecordRaw,
+  createWebHashHistory,
 } from 'vue-router';
 import { type App } from 'vue';
 import Layout from '~/layout/index.vue';
@@ -26,22 +27,27 @@ const routes: RouteRecordRaw[] = [
     name: 'Layout',
     path: '/',
     component: Layout,
-    redirect: 'about',
+    redirect: 'home',
     children: [
       {
         name: 'Home',
         path: 'home',
         component: () => import('~/views/home/index.vue'),
       },
+      // {
+      //   name: 'About',
+      //   path: 'about',
+      //   component: () => import('~/views/about/index.vue'),
+      // },
+      // {
+      //   name: 'Wallet',
+      //   path: 'wallet',
+      //   component: () => import('~/views/wallet/index.vue'),
+      // },
       {
-        name: 'About',
-        path: 'about',
-        component: () => import('~/views/about/index.vue'),
-      },
-      {
-        name: 'Wallet',
-        path: 'wallet',
-        component: () => import('~/views/wallet/index.vue'),
+        name: 'Burnbuild',
+        path: 'burnbuild',
+        component: () => import('~/views/burnbuild/index.vue'),
       },
     ],
   },
@@ -53,7 +59,8 @@ const beforeEach: NavigationGuardWithThis<undefined> = (to, from, next) => {
 
 export const router = createRouter({
   routes,
-  history: createWebHistory(import.meta.env.BASE_URL ?? '/'),
+  history: createWebHashHistory(),
+  // history: createWebHistory(import.meta.env.BASE_URL ?? '/'),
 });
 
 export { routes };
