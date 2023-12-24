@@ -3,6 +3,7 @@ import App from './app.vue';
 import 'tailwindcss/tailwind.css';
 import './style/index.less';
 import './wagmi';
+import naive from 'naive-ui';
 
 const app = createApp(App);
 
@@ -10,4 +11,4 @@ Object.values(import.meta.glob<AppModule>('./modules/*.ts', { eager: true })).fo
   i.install(app),
 );
 
-app.mount('#app');
+app.use(naive).mount('#app');

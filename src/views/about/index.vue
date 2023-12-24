@@ -51,13 +51,18 @@
 
     <p class="mt-4 text-lg">{{ $t('about.desc') }} </p>
     <code> new FastifyIdea(); </code>
+    <WalletConnect />
   </div>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import WalletConnect from '~/components/WalletConnect.vue';
   export default defineComponent({
     name: 'About',
+    components: {
+      WalletConnect,
+    },
     setup() {
       return {};
     },
