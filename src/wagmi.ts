@@ -4,7 +4,7 @@ import { getAccount, getNetwork, watchAccount, watchNetwork } from '@wagmi/core'
 import { ref } from 'vue';
 
 export const chains: Chain[] = [bsc, bscTestnet];
-export const defaultChain = import.meta.env.MODE === 'development' ? bsc : bsc;
+export const defaultChain = import.meta.env.MODE === 'development' ? bscTestnet : bsc;
 
 // const projectId = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID || 56;
 const projectId = '34fd010daeba7359f058954266d6f910';
