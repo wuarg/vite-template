@@ -23,7 +23,7 @@ const web3Modal = createWeb3Modal({
   projectId,
   chains,
   defaultChain,
-  themeMode: 'light',
+  themeMode: 'dark',
 });
 
 export const account = ref(getAccount());

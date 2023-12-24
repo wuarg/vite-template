@@ -24,7 +24,7 @@ export function useThemeChang(isDark: WritableComputedRef<boolean>) {
       const rate = Math.max(x, y);
       const delp = rate * 6 + 4;
       maskEl.className = `maskEl ${
-        isDark.value ? 'bg-base-light' : 'bg-base-dark'
+        isDark.value ? 'bg-base-dark' : 'bg-base-light'
       } transition-colors delay-1000 absolute`;
       maskEl.setAttribute(
         'style',
