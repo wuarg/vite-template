@@ -1,5 +1,5 @@
 <template>
-  <header class="header sticky top-0 flex h-16 items-center justify-between px-10 sm:h-20">
+  <header class="header sticky top-0 z-40 flex h-16 items-center justify-between px-10 sm:h-20">
     <div class="bg delay-400 absolute transition-colors"></div>
     <div class="mr-10">
       <span class="title"> <img src="/src/assets/img/logo.png" class="w-16" /> </span>

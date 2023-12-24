@@ -108,7 +108,45 @@
         </div>
       </div>
     </div>
-    <div class="cat-page"></div>
+    <div class="cat-page mt-5">
+      <div class="market-info flex">
+        <div class="buy-item price-info price-com-info flex flex-1 items-center"
+          ><!---->
+          <input class="buy-item__input amount flex-1" placeholder="0.00" />
+          <span class="tag common-tag-border common-tag-theme-yellow cursor-pointer">
+            <span class="el-tag__content">MAX</span>
+            <!--v-if-->
+          </span>
+        </div>
+        <div class="flex items-center">
+          <button
+            aria-disabled="false"
+            type="button"
+            class="el-button common-button button-primary h-3/5 py-10"
+            ><!--v-if-->
+            <span class="">燃烧</span>
+          </button>
+          <!---->
+        </div>
+      </div>
+      <section class="section-item nft-info mt-5 flex items-center">
+        <div class="element flex items-center">
+          <img
+            src="https://d1vyp5kjqdxn2l.cloudfront.net/cdnstatic/img/69e7194949c1d89cd94cdbe6b58da853.png"
+          />
+        </div>
+        <div class="infos flex-1">
+          <div class="title text-2xl font-bold"><span class="token-id-m">#</span>燃烧 $burn </div>
+          <!---->
+        </div>
+        <div class="token-id">
+          <span class="tag common-tag-border common-tag-theme-green ml-2 cursor-pointer">
+            <span class="el-tag__content">复制邀请链接</span>
+            <!--v-if-->
+          </span>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -188,5 +226,76 @@
     text-transform: uppercase;
     transform: scale(0.94);
     transform-origin: left center;
+  }
+  .buy-item {
+    height: 45px;
+    font-size: 12px;
+    width: 130px;
+    border: 1px solid #494949;
+    border-radius: 8px;
+    padding: 0 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    .buy-item__input {
+      background: none;
+      text-align: right;
+      color: #fff;
+    }
+    .amount {
+      font-weight: 600;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+  }
+  .price-info .amount {
+    font-weight: 600;
+    font-size: 18px;
+    margin-right: 10px;
+  }
+  .common-button.button-primary {
+    background: linear-gradient(270deg, #85e43f, #44c323);
+  }
+  .common-button {
+    border: 0 none;
+    color: #fff;
+    display: flex;
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0 20px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border-radius: 14px;
+    transition: transform 0.2s ease;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  .common-button:hover {
+    transform: translateY(-2px);
+  }
+  .nft-info {
+    border-radius: 16px;
+    border: 1px solid #3c3c3c;
+    padding: 12px 20px 15px;
+    .element {
+      width: 56px;
+      min-width: 56px;
+      height: 56px;
+      background: #1b1b1b;
+      border-radius: 28px;
+      border: 1px solid #3c3c3c;
+      box-sizing: border-box;
+      justify-content: center;
+      margin-right: 15px;
+      img {
+        max-width: 60%;
+        max-height: 60%;
+      }
+    }
   }
 </style>
